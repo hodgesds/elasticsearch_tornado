@@ -1,4 +1,4 @@
-from el_tornado import EsClient
+from elasticsearch_tornado import EsClient
 import tornado.ioloop
 
 
