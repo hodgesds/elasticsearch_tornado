@@ -39,7 +39,7 @@ setup(
     author_email = "hodges.daniel.scott@gmail.com",
     packages=find_packages(
         where='.',
-        exclude=('test_elasticsearch*', )
+        exclude=('test_es_tornado*', )
     ),
     classifiers = [
         "Development Status :: 4 - Beta",
@@ -59,6 +59,6 @@ setup(
     ],
     install_requires=install_requires,
 
-    test_suite='test_elasticsearch.run_tests.run_all',
+    test_suite='test_es_tornado.run_tests.run_all',
     tests_require=tests_require,
 )
