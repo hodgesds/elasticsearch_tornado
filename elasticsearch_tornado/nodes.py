@@ -1,4 +1,4 @@
-from client import BaseClient
+from .client import BaseClient
 
 
 class NodesClient(object):

@@ -1,6 +1,6 @@
 import sys
-from abc import ABCMeta, abstractmethod
-from tornado.httpclient import AsyncHTTPClient, HTTPRequest
+from   abc import ABCMeta, abstractmethod
+from   tornado.httpclient import AsyncHTTPClient, HTTPRequest
 
 PY2 = sys.version_info[0] == 2
 if PY2:
