@@ -69,6 +69,5 @@ limitations under the License.
 Build status
 ------------
 
-.. image:: https://secure.travis-ci.org/hodgesds/elasticsearch_tornado
-   :target: http://travis-ci.org/#!/hodgesds/elasticsearch_tornado
-
+.. image:: https://travis-ci.org/hodgesds/elasticsearch_tornado.svg?branch=master
+    :target: https://travis-ci.org/hodgesds/elasticsearch_tornado
