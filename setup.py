@@ -29,7 +29,7 @@ if sys.version_info[:2] == (2, 6):
     install_requires.append('unittest2')
 
 setup(
-    name = 'es_tornado',
+    name = 'eslasticsearch_tornado',
     description = "Tornado HTTP client for Elasticsearch",
     license="Apache License, Version 2.0",
     url = "https://github.com/hodgesds/elasticsearch_tornado",
@@ -38,7 +38,7 @@ setup(
     author = "Daniel Hodges",
     author_email = "hodges.daniel.scott@gmail.com",
     packages=find_packages(
-        where='elasticsearch_tornado',
+        where='.*',
         exclude=('tests*', )
     ),
     classifiers = [
