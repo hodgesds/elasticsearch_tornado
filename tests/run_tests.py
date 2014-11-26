@@ -12,15 +12,14 @@ import nose
 def fetch_es_repo():
     # fetch new commits to be sure...
     td = abspath(join(dirname(__file__), 'elasticsearch'))
-    system('mkdir -p %s' % td)
-    system('mkdir -p %s/tmp' % td)
-    print('Fetching elasticsearch repo...')
+    #system('mkdir -p %s' % td)
+    #system('mkdir -p %s/tmp' % td)
+    #print('Fetching elasticsearch repo...')
     #subprocess.check_call('cd %s && git clone https://github.com/elasticsearch/elasticsearch.git' % td, shell=True)
-    system('wget http://s3-eu-west-1.amazonaws.com/build-eu.elasticsearch.org/origin/master/nightly/JDK7/elasticsearch-latest-SNAPSHOT.tar.gz')
-    #subprocess.check_call('wget http://s3-eu-west-1.amazonaws.com/build-eu.elasticsearch.org/origin/master/nightly/JDK7/elasticsearch-latest-SNAPSHOT.tar.gz | tar xz --directory=%s/tmp --strip-components=1' % td)
-    print('aa')
-    subprocess.check_call('cd %s && git clone https://github.com/elasticsearch/elasticsearch.git' % td, shell=True)
-    subprocess.check_call('./elasticsearch')
+    #system('wget http://s3-eu-west-1.amazonaws.com/build-eu.elasticsearch.org/origin/master/nightly/JDK7/elasticsearch-latest-SNAPSHOT.tar.gz')
+    ##subprocess.check_call('wget http://s3-eu-west-1.amazonaws.com/build-eu.elasticsearch.org/origin/master/nightly/JDK7/elasticsearch-latest-SNAPSHOT.tar.gz | tar xz --directory=%s/tmp --strip-components=1' % td)
+    #subprocess.check_call('cd %s && git clone https://github.com/elasticsearch/elasticsearch.git' % td, shell=True)
+    #subprocess.check_call('./elasticsearch')
     return td
 
 

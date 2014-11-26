@@ -36,7 +36,7 @@ class BaseClient(object):
     def mk_url(self, *args, **kwargs):
         params = urlencode(kwargs)
         url = '/' + '/'.join([x for x in args if x])
-        return url + params
+        return url + '?' +  params
 
     def ping(self, cb=None, **kwargs):
         self.client.fetch(
