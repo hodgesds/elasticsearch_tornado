@@ -1,9 +1,15 @@
-from client import BaseClient
-from cat import MeowClient
-from cluster import ClusterClient
-from indices import IndicesClient
-from nodes import NodesClient
-from snapshot import SnapshotClient
+from __future__ import absolute_import
+
+VERSION = (1, 0, 0)
+__version__ = VERSION
+__versionstr__ = '.'.join(map(str, VERSION))
+
+from .client import BaseClient
+from .cat import MeowClient
+from .cluster import ClusterClient
+from .indices import IndicesClient
+from .nodes import NodesClient
+from .snapshot import SnapshotClient
 
 class EsClient(BaseClient):
     def __init__(self, *args, **kwargs):

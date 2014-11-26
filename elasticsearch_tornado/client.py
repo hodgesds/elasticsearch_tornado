@@ -1,6 +1,12 @@
+import sys
 from abc import ABCMeta, abstractmethod
-from urllib import urlencode
 from tornado.httpclient import AsyncHTTPClient, HTTPRequest
+
+PY2 = sys.version_info[0] == 2
+if PY2:
+    from urllib import urlencode
+else:
+    from urllib.parse import urlencode
 
 
 class BaseClient(object):
