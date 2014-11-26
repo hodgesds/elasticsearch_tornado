@@ -38,7 +38,7 @@ setup(
     author = "Daniel Hodges",
     author_email = "hodges.daniel.scott@gmail.com",
     packages=find_packages(
-        where='.*',
+        where='.',
         exclude=('tests*', )
     ),
     classifiers = [
