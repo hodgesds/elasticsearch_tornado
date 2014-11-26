@@ -37,16 +37,7 @@ Features
 --------
 
 The client's features include:
-
- * translating basic Python data types to and from json (datetimes are not
-   decoded for performance reasons)
- * configurable automatic discovery of cluster nodes
- * persistent connections
- * load balancing (with pluggable selection strategy) across all available nodes
- * failed connection penalization (time based - failed connections won't be
-   retried until a timeout is reached)
- * thread safety
- * pluggable architecture
+ * Non blocking requests with callbacks
 
 
 License
