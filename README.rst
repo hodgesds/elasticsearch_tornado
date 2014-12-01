@@ -1,9 +1,9 @@
-Python Elasticsearch Client
+Tornado Elasticsearch Client
 ===========================
 
 Tornado http client for Elasticsearch. Its goal is to provide common
 ground for all Elasticsearch-related code in tornado and provide a
-similar api to the official elasticsearch python.
+similar api to the official elasticsearch python client.
 Compatibility
 -------------
 
