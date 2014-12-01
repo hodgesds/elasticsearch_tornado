@@ -1,6 +1,7 @@
 from .client import BaseClient
 
 
+
 class MeowClient(BaseClient):
     def __init__(self,
         *args,
