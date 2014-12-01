@@ -16,7 +16,7 @@ Example use
 
 Simple use-case::
 
-    >>> fromm elasticsearch_tornado import EsClient
+    >>> from elasticsearch_tornado import EsClient
     >>> import tornado.ioloop
 
     >>> def ex_cb(req):

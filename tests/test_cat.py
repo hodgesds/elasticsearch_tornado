@@ -108,8 +108,6 @@ class MeowClientTest(TestCase):
         mc.shards(cb=test_cb)
         io_loop.start()
 
-    # TODO: wat?!
-    @SkipTest
     def test_segments(self):
         mc = MeowClient()
         io_loop = tornado.ioloop.IOLoop.current()

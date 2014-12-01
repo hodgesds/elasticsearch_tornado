@@ -1,7 +1,7 @@
 from .client import BaseClient
 
 
-class NodesClient(object):
+class NodesClient(BaseClient):
     def __init__(self,
         *args,
         **kwargs

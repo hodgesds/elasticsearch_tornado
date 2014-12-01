@@ -1,7 +1,7 @@
 from .client import BaseClient
 
 
-class ClusterClient(object):
+class ClusterClient(BaseClient):
     def __init__(self,
         *args,
         **kwargs
@@ -162,5 +162,3 @@ class ClusterClient(object):
             self.mk_req(url, method='PUT', **kwargs),
             callback = cb
         )
-        _, data = self.transport.perform_request('PUT', '/_cluster/settings', params=params, body=body)
-        return data

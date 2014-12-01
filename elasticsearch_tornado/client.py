@@ -136,7 +136,7 @@ class BaseClient(object):
             callback = cb
         )
 
-    def exists(self, index, doc_id, doc_type='_all', cb=None, **kwargs):
+    def exists(self, index, doc_id, doc_type='_all', params={}, cb=None, **kwargs):
         """
         Returns a boolean indicating whether or not given document exists in Elasticsearch.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-get.html>`_
@@ -288,6 +288,7 @@ class BaseClient(object):
             doc_id,
             body   = None,
             params = {},
+            query_params = {},
             cb     = None,
             **kwargs
         ):
@@ -314,7 +315,7 @@ class BaseClient(object):
         :arg version: Explicit version number for concurrency control
         :arg version_type: Explicit version number for concurrency control
         """
-        query_params('consistency', 'fields', 'lang', 'parent', 'refresh',
+        query_params = ('consistency', 'fields', 'lang', 'parent', 'refresh',
             'replication', 'retry_on_conflict', 'routing', 'script', 'timeout',
             'timestamp', 'ttl', 'version', 'version_type',
         )
@@ -437,7 +438,7 @@ class BaseClient(object):
             performed on (default: random)
         :arg routing: Specific routing value
         """
-        query_params('allow_no_indices', 'expand_wildcards',
+        query_params = ('allow_no_indices', 'expand_wildcards',
             'ignore_unavailable', 'local', 'preference', 'routing',
         )
         params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
@@ -597,7 +598,7 @@ class BaseClient(object):
         :arg version: Explicit version number for concurrency control
         :arg version_type: Specific version type
         """
-        query_params('consistency', 'parent', 'refresh', 'replication',
+        query_params = ('consistency', 'parent', 'refresh', 'replication',
             'routing', 'timeout', 'version', 'version_type',
         )
         params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
@@ -635,7 +636,7 @@ class BaseClient(object):
         :arg routing: Specific routing value
         :arg source: The URL-encoded query definition (instead of using the request body)
         """
-        query_params('allow_no_indices', 'expand_wildcards',
+        query_params = ('allow_no_indices', 'expand_wildcards',
             'ignore_unavailable', 'min_score', 'preference', 'q', 'routing',
             'source',
         )
@@ -671,7 +672,7 @@ class BaseClient(object):
         :arg replication: Explicitly set the replication type (default: sync)
         :arg timeout: Explicit operation timeout
         """
-        query_params(
+        query_params = (
             'consistency', 'refresh', 'routing', 'replication', 'timeout',
         )
         params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
@@ -745,7 +746,7 @@ class BaseClient(object):
             request body)
         :arg timeout: Explicit operation timeout
         """
-        query_params(
+        query_params = (
             'allow_no_indices', 'analyzer', 'consistency', 'default_operator',
             'df', 'expand_wildcards', 'ignore_unavailable', 'q', 'replication',
             'routing', 'source', 'timeout',
@@ -782,7 +783,7 @@ class BaseClient(object):
             'preference', 'routing', 'source',
         )
         params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
-        url = self.mk_url(*[index, doc_type, '_query'], **params)
+        url = self.mk_url(*[index, '_query'], **params)
         self.client.fetch(
             self.mk_req(url, method='POST', body=body, **kwargs),
             callback = cb
@@ -828,7 +829,7 @@ class BaseClient(object):
         :arg version: Explicit version number for concurrency control
         :arg version_type: Specific version type
         """
-        query_params(
+        query_params = (
             'allow_no_indices', 'expand_wildcards', 'ignore_unavailable',
             'percolate_format', 'percolate_index', 'percolate_type',
             'preference', 'routing', 'version', 'version_type',
@@ -883,6 +884,7 @@ class BaseClient(object):
             doc_id = None,
             body   = None,
             params = {},
+            cb     = None,
             **kwargs
         ):
         """
@@ -972,7 +974,7 @@ class BaseClient(object):
             against (default: the same type as the document)
         :arg stop_words: A list of stop words to be ignored
         """
-        query_params('boost_terms', 'include', 'max_doc_freq',
+        query_params = ('boost_terms', 'include', 'max_doc_freq',
             'max_query_terms', 'max_word_length', 'min_doc_freq',
             'min_term_freq', 'min_word_length', 'mlt_fields',
             'percent_terms_to_match', 'routing', 'search_from',
@@ -1080,7 +1082,7 @@ class BaseClient(object):
             unless otherwise specified in body "params" or "docs"., default
             False
         """
-        query_params(
+        query_params = (
             'field_statistics', 'fields', 'ids', 'offsets', 'parent',
             'payloads', 'positions', 'preference', 'routing', 'term_statistics',
         )
@@ -1090,7 +1092,6 @@ class BaseClient(object):
             self.mk_req(url, method='GET', body=body, **kwargs),
             callback = cb
         )
-
 
     def benchmark(self,
             index    = None,

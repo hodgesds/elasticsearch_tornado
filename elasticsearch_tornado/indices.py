@@ -300,7 +300,7 @@ class IndicesClient(BaseClient):
         :arg master_timeout: Specify timeout for connection to master
         :arg timeout: Explicit operation timeout
         """
-        query_params(
+        query_params = (
             'allow_no_indices', 'expand_wildcards', 'ignore_conflicts',
             'ignore_unavailable', 'master_timeout', 'timeout',
         )
@@ -688,7 +688,7 @@ class IndicesClient(BaseClient):
             to warm
         :arg master_timeout: Specify timeout for connection to master
         """
-        query_params(
+        query_params = (
             'allow_no_indices', 'expand_wildcards', 'ignore_unavailable',
             'master_timeout',
         )
@@ -921,7 +921,7 @@ class IndicesClient(BaseClient):
         :arg source: The URL-encoded query definition (instead of using the
             request body)
         """
-        query_params(
+        query_params = (
             'explain', 'allow_no_indices', 'expand_wildcards', 'ignore_indices',
             'ignore_unavailable', 'operation_threading', 'q', 'source',
         )
@@ -960,7 +960,7 @@ class IndicesClient(BaseClient):
         :arg index: A comma-separated list of index name to limit the operation
         :arg recycler: Clear the recycler cache
         """
-        query_params(
+        query_params = (
             'field_data', 'fielddata', 'fields', 'filter', 'filter_cache',
             'filter_keys', 'id', 'id_cache', 'allow_no_indices',
             'expand_wildcards', 'ignore_indices', 'ignore_unavailable', 'index',

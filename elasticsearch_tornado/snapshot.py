@@ -175,7 +175,9 @@ class SnapshotClient(BaseClient):
             repository,
             master_timeout = 10,
             timeout        = 10,
-            params         = None
+            params         = {},
+            cb             = None,
+            **kwargs
         ):
         """
         Returns a list of nodes where repository was successfully verified or
