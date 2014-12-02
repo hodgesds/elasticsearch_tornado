@@ -21,13 +21,14 @@ class BaseClient(object):
             ssl          = False,
             verify_certs = True,
             ca_certs     = '',
+            io_loop      = None,
             *args,
             **kwargs
     ):
         # TODO: curlclient in tornado for proxy requests
         self.base_url = "%s://%s:%s%s" % (method, host, port, prefix)
         self.certs    = ca_certs
-        self.client   = AsyncHTTPClient()
+        self.client   = AsyncHTTPClient(io_loop)
 
     def mk_req(self, url, **kwargs):
         req_url = self.base_url + url
@@ -36,7 +37,9 @@ class BaseClient(object):
     def mk_url(self, *args, **kwargs):
         params = urlencode(kwargs)
         url = '/' + '/'.join([x for x in args if x])
-        return url + '?' +  params
+        if params:
+            url += '?' + params
+        return url
 
     def ping(self, cb=None, **kwargs):
         self.client.fetch(
@@ -1120,7 +1123,7 @@ class BaseClient(object):
             callback = cb
         )
 
-    def abort_benchmark(self, name=None, params={}, cb=None, **kwargs):
+    def abort_benchmark(self, name=None, params={}, body='', cb=None, **kwargs):
         """
         Aborts a running benchmark.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html>`_
@@ -1128,7 +1131,7 @@ class BaseClient(object):
         """
         url = self.mk_url(*['_bench', 'abort', name])
         self.client.fetch(
-            self.mk_req(url, method='POST', **kwargs),
+            self.mk_req(url, method='POST', body=body, **kwargs),
             callback = cb
         )
 

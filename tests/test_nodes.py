@@ -1,6 +1,6 @@
 import tornado.ioloop
-from functools import partial
-from elasticsearch_tornado import NodesClient
+from   tornado.testing import AsyncTestCase
+from   elasticsearch_tornado import NodesClient
 try:
     # python 2.6
     from unittest2 import TestCase, SkipTest
@@ -8,52 +8,23 @@ except ImportError:
     from unittest import TestCase, SkipTest
 
 
-class NodesClientTest(TestCase):
+class NodesClientTest(AsyncTestCase):
+
+    def handle_cb(self, req):
+        self.assertEqual(200, req.code)
+        self.stop()
 
     def test_info(self):
         c = NodesClient()
-        io_loop = tornado.ioloop.IOLoop.current()
-        def test_cb(req):
-            self.assertEqual(200, req.code)
-            ioloop = tornado.ioloop.IOLoop.current()
-            ioloop.stop()
-        c.info(cb=test_cb)
-        def test_timeout(ioloop):
-            if not ioloop._stopped:
-                ioloop.stop()
-                raise error("Test timeout")
-        tpartial = partial(test_timeout, io_loop)
-        io_loop.add_timeout(io_loop.time()+1.5, tpartial)
-        io_loop.start()
+        c.info(cb=self.handle_cb)
+        self.wait()
 
     def test_stats(self):
         c = NodesClient()
-        io_loop = tornado.ioloop.IOLoop.current()
-        def test_cb(req):
-            self.assertEqual(200, req.code)
-            ioloop = tornado.ioloop.IOLoop.current()
-            ioloop.stop()
-        c.stats(cb=test_cb)
-        def test_timeout(ioloop):
-            if not ioloop._stopped:
-                ioloop.stop()
-                raise error("Test timeout")
-        tpartial = partial(test_timeout, io_loop)
-        io_loop.add_timeout(io_loop.time()+1.5, tpartial)
-        io_loop.start()
+        c.stats(cb=self.handle_cb)
+        self.wait()
 
     def test_hot_threads(self):
         c = NodesClient()
-        io_loop = tornado.ioloop.IOLoop.current()
-        def test_cb(req):
-            self.assertEqual(200, req.code)
-            ioloop = tornado.ioloop.IOLoop.current()
-            ioloop.stop()
-        c.hot_threads(cb=test_cb)
-        def test_timeout(ioloop):
-            if not ioloop._stopped:
-                ioloop.stop()
-                raise error("Test timeout")
-        tpartial = partial(test_timeout, io_loop)
-        io_loop.add_timeout(io_loop.time()+1.5, tpartial)
-        io_loop.start()
+        c.hot_threads(cb=self.handle_cb)
+        self.wait()

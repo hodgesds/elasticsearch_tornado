@@ -1,6 +1,6 @@
 import tornado.ioloop
-from functools import partial
-from elasticsearch_tornado import ClusterClient
+from   tornado.testing import AsyncTestCase
+from   elasticsearch_tornado import ClusterClient
 try:
     # python 2.6
     from unittest2 import TestCase, SkipTest
@@ -8,116 +8,46 @@ except ImportError:
     from unittest import TestCase, SkipTest
 
 
-class ClusterClientTest(TestCase):
+class ClusterClientTest(AsyncTestCase):
+
+    def handle_cb(self, req):
+        self.assertEqual(200, req.code)
+        self.stop()
 
     def test_health(self):
         c = ClusterClient()
-        io_loop = tornado.ioloop.IOLoop.current()
-        def test_cb(req):
-            self.assertEqual(200, req.code)
-            ioloop = tornado.ioloop.IOLoop.current()
-            ioloop.stop()
-        c.health(index='test', cb=test_cb)
-        def test_timeout(ioloop):
-            if not ioloop._stopped:
-                ioloop.stop()
-                raise error("Test timeout")
-        tpartial = partial(test_timeout, io_loop)
-        io_loop.add_timeout(io_loop.time()+1.5, tpartial)
-        io_loop.start()
+        c.health(cb=self.handle_cb)
+        self.wait()
 
     def test_pending_tasks(self):
         c = ClusterClient()
-        io_loop = tornado.ioloop.IOLoop.current()
-        def test_cb(req):
-            self.assertEqual(200, req.code)
-            ioloop = tornado.ioloop.IOLoop.current()
-            ioloop.stop()
-        c.pending_tasks(cb=test_cb)
-        def test_timeout(ioloop):
-            if not ioloop._stopped:
-                ioloop.stop()
-                raise error("Test timeout")
-        tpartial = partial(test_timeout, io_loop)
-        io_loop.add_timeout(io_loop.time()+1.5, tpartial)
-        io_loop.start()
+        c.pending_tasks(cb=self.handle_cb)
+        self.wait()
 
     def test_state(self):
         c = ClusterClient()
-        io_loop = tornado.ioloop.IOLoop.current()
-        def test_cb(req):
-            self.assertEqual(200, req.code)
-            ioloop = tornado.ioloop.IOLoop.current()
-            ioloop.stop()
-        c.state(cb=test_cb)
-        def test_timeout(ioloop):
-            if not ioloop._stopped:
-                ioloop.stop()
-                raise error("Test timeout")
-        tpartial = partial(test_timeout, io_loop)
-        io_loop.add_timeout(io_loop.time()+1.5, tpartial)
-        io_loop.start()
+        c.state(cb=self.handle_cb)
+        self.wait()
 
     def test_stats(self):
         c = ClusterClient()
-        io_loop = tornado.ioloop.IOLoop.current()
-        def test_cb(req):
-            self.assertEqual(200, req.code)
-            ioloop = tornado.ioloop.IOLoop.current()
-            ioloop.stop()
-        c.stats(cb=test_cb)
-        def test_timeout(ioloop):
-            if not ioloop._stopped:
-                ioloop.stop()
-                raise error("Test timeout")
-        tpartial = partial(test_timeout, io_loop)
-        io_loop.add_timeout(io_loop.time()+1.5, tpartial)
-        io_loop.start()
+        c.stats(cb=self.handle_cb)
+        self.wait()
 
     def test_reroute(self):
         c = ClusterClient()
-        io_loop = tornado.ioloop.IOLoop.current()
-        def test_cb(req):
-            self.assertEqual(200, req.code)
-            ioloop = tornado.ioloop.IOLoop.current()
-            ioloop.stop()
-        c.reroute(cb=test_cb)
-        def test_timeout(ioloop):
-            if not ioloop._stopped:
-                ioloop.stop()
-                raise error("Test timeout")
-        tpartial = partial(test_timeout, io_loop)
-        io_loop.add_timeout(io_loop.time()+1.5, tpartial)
-        io_loop.start()
+        c.reroute(
+            body = '{}\n',
+            cb=self.handle_cb
+        )
+        self.wait()
 
     def test_get_settings(self):
         c = ClusterClient()
-        io_loop = tornado.ioloop.IOLoop.current()
-        def test_cb(req):
-            self.assertEqual(200, req.code)
-            ioloop = tornado.ioloop.IOLoop.current()
-            ioloop.stop()
-        c.get_settings(cb=test_cb)
-        def test_timeout(ioloop):
-            if not ioloop._stopped:
-                ioloop.stop()
-                raise error("Test timeout")
-        tpartial = partial(test_timeout, io_loop)
-        io_loop.add_timeout(io_loop.time()+1.5, tpartial)
-        io_loop.start()
+        c.get_settings(cb=self.handle_cb)
+        self.wait()
 
     def test_put_settings(self):
         c = ClusterClient()
-        io_loop = tornado.ioloop.IOLoop.current()
-        def test_cb(req):
-            self.assertEqual(200, req.code)
-            ioloop = tornado.ioloop.IOLoop.current()
-            ioloop.stop()
-        c.put_settings('{}', cb=test_cb)
-        def test_timeout(ioloop):
-            if not ioloop._stopped:
-                ioloop.stop()
-                raise error("Test timeout")
-        tpartial = partial(test_timeout, io_loop)
-        io_loop.add_timeout(io_loop.time()+1.5, tpartial)
-        io_loop.start()
+        c.put_settings('{}\n', cb=self.handle_cb)
+        self.wait()
