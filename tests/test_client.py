@@ -23,7 +23,6 @@ class BaseClientTest(AsyncTestCase):
         self.assertEquals('/a/b/c?key=value', url)
 
     def handle_cb(self, req):
-        print req
         self.assertEqual(200, req.code)
         self.stop()
 

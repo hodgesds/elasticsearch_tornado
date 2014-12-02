@@ -8,7 +8,7 @@ except ImportError:
     from unittest import TestCase, SkipTest
 
 
-class IndicesClientTest(TestCase):
+class IndicesClientTest(AsyncTestCase):
 
     def handle_cb(self, req):
         self.assertEqual(200, req.code)
