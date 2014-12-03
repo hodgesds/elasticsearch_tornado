@@ -12,5 +12,7 @@ python:
 install:
   - pip install .
   - pip install -r requirements.txt
+before_script:
+  - python tests/start_es.py
 # command to run tests
 script: nosetests

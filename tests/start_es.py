@@ -1,17 +1,9 @@
-#!/usr/bin/env python
-from __future__ import print_function
-import sys
-import tempfile
+from os import environ, system, popen
+from os.path import dirname, join, pardir, abspath, exists
 import time
-from   os import environ, system, popen
-from   os.path import dirname, join, pardir, abspath, exists
-import subprocess
-
-import nose
 
 
-def fetch_es_repo():
-    # fetch new commits to be sure...
+def start_es():
     td = abspath(join(dirname(__file__), 'test_elasticsearch'))
     system('rm -rf %s' % td)
     system('mkdir -p %s' % td)
@@ -23,29 +15,5 @@ def fetch_es_repo():
     el_dir = f.replace('\n','')
     system('sh %s/%s/bin/elasticsearch &' % (td, el_dir,))
     time.sleep(6)
-    return td
 
-
-def run_all(argv=None):
-    sys.exitfunc = lambda: sys.stderr.write('Shutting down....\n')
-
-    # fetch elasticsearch 
-    td = fetch_es_repo()
-    print('running tests')
-    # always insert coverage when running tests
-    if argv is None:
-        argv = [
-            'nosetests', '--with-xunit',
-            '--with-xcoverage', '--cover-package=elasticsearch_tornado',
-            '--cover-erase', '--logging-filter=elasticsearch',
-            '--logging-level=DEBUG', '--verbose',
-        ]
-
-    nose.run_exit(
-        argv=argv,
-        defaultTest=abspath(dirname(__file__))
-    )
-
-if __name__ == '__main__':
-    run_all(sys.argv)
-
+start_es()
