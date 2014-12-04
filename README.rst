@@ -3,11 +3,21 @@ Tornado Elasticsearch Client
 
 Tornado http client for Elasticsearch. Its goal is to provide common
 ground for all Elasticsearch-related code in tornado and provide a
-similar api to the official elasticsearch python client.
-Compatibility
--------------
+similar api to the official elasticsearch python client (elasticsearch-py).
+However, this client only works for HTTP (no thrift or memcache) and doesn't
+support connection pooling at this time (one client per instance). This
+allows for you to design your own pooling/handling of callbacks.
+
+Elasticsearch Compatibility
+---------------------------
 
 The library is compatible with Elasticsearch 1.x
+
+Python Compatibility
+--------------------
+
+Tested with python:
+2.6, 2.7, 3.2, 3.3, 3.4 and pypy
 
 
 
@@ -38,12 +48,13 @@ Features
 
 The client's features include:
  * Non blocking requests with callbacks
-
+ * DYOS- Do You Own Serialization- (remember those trailing \n's)
+ * >95% Test coverage
 
 License
 -------
 
-Copyright 2013 Daniel Hodges
+Copyright 2014 Daniel Hodges
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
