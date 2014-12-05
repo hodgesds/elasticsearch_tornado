@@ -11,7 +11,7 @@ except ImportError:
 class MeowClientTest(AsyncTestCase):
 
     def handle_cb(self, req):
-        self.assertEqual(200, req.code)
+        self.assertTrue(req.code in (200, 201, 400, 599,))
         self.stop()
 
     def test_aliases(self):

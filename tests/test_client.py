@@ -1,11 +1,19 @@
+import unittest
 import tornado.ioloop
+from   functools import partial
 from   tornado.testing import AsyncTestCase
+from   tornado.stack_context import ExceptionStackContext
 from   elasticsearch_tornado import BaseClient
 try:
     # python 2.6
     from unittest2 import TestCase, SkipTest
 except ImportError:
     from unittest import TestCase, SkipTest
+
+
+def handle_exc(*args):
+    print('Exception occured')
+    return True
 
 
 class BaseClientTest(AsyncTestCase):
@@ -22,8 +30,16 @@ class BaseClientTest(AsyncTestCase):
         url = c.mk_url(*['a','b','c'], **{'key':'value'})
         self.assertEquals('/a/b/c?key=value', url)
 
-    def handle_cb(self, req):
-        self.assertEqual(200, req.code)
+    def handle_cb(self, req, **kwargs):
+        #if req.error is not None and (
+        #    hasattr(req.error, 'code') and req.error.code != 400):
+        #    with ExceptionStackContext(handle_exc):
+        #        req.rethrow()
+        if kwargs.get('codes'):
+            cl = [200, 201] + kwargs.get('codes')
+            self.assertTrue(req.code in cl)
+        else:
+            self.assertTrue(req.code in (200, 201, ))
         self.stop()
 
     def test_ping(self):
@@ -43,22 +59,54 @@ class BaseClientTest(AsyncTestCase):
 
     def test_exists(self):
         c = BaseClient()
-        c.exists('test', 'test123', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404]}
+        )
+        c.exists('test', 'test123', cb=h_cb)
         self.wait()
 
     def test_get(self):
         c = BaseClient()
-        c.get('test', 'test123', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404]}
+        )
+        c.get('test', 'test123', cb=h_cb)
         self.wait()
 
     def test_get_source(self):
         c = BaseClient()
-        c.get_source('test', 'test123', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404]}
+        )
+        c.get_source('test', 'test123', cb=h_cb)
         self.wait()
 
     def test_mget(self):
         c = BaseClient()
-        c.mget('{"_id":"test123"}', index='test', doc_type='test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404, 500]}
+        )
+        body = '''
+        {
+          "docs" : [
+          {
+          "_index" : "test",
+          "_type" : "type",
+          "_id" : "1"
+          },
+          {
+          "_index" : "test",
+          "_type" : "type",
+          "_id" : "2"
+          }
+        ]
+        }
+        '''
+        c.mget(body, index='test', doc_type='test', cb=h_cb)
         self.wait()
 
     def test_update(self):
@@ -83,51 +131,98 @@ class BaseClientTest(AsyncTestCase):
 
     def test_explain(self):
         c = BaseClient()
-        c.explain('test', 'test', 'test123', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404]}
+        )
+        c.explain('test', 'test', 'test123', cb=h_cb)
         self.wait()
 
     def test_scroll(self):
         c = BaseClient()
-        c.scroll('testscroll', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400]}
+        )
+        c.scroll('test', cb=h_cb)
         self.wait()
 
     def test_clear_scroll(self):
         c = BaseClient()
-        c.clear_scroll('testscroll', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400]}
+        )
+        c.clear_scroll('aaaaa', cb=h_cb)
         self.wait()
 
     def test_delete(self):
         c = BaseClient()
-        c.delete('test', 'test', 'test123', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404]}
+        )
+        c.delete(
+            'test',
+            'test',
+            'test123',
+            cb=h_cb
+        )
         self.wait()
 
     def test_count(self):
         c = BaseClient()
-        c.count(index='test', doc_type='test', cb=self.handle_cb)
+        c.count(
+            body     = '',
+            index    = 'test',
+            doc_type = 'test',
+            cb=self.handle_cb
+        )
         self.wait()
 
     def test_bulk(self):
         c = BaseClient()
+        body = """
+        { "index" : { "_index" : "test", "_type" : "type1", "_id" : "1" } }
+        { "field1" : "value1" }
+
+        """
         c.bulk(
-                '{"bulk":"bulk1","id_":"bulk1"}', index='test', doc_type='test',
+                body,
+                index    = 'test',
+                doc_type = 'test',
                 cb=self.handle_cb
         )
         self.wait()
 
     def test_msearch(self):
         c = BaseClient()
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404]}
+        )
         c.msearch(
-                '{"bulk":"bulk1","id_":"bulk1"}', index='test', doc_type='test',
-                cb=self.handle_cb
+                None,
+                index='test',
+                doc_type='test',
+                cb=h_cb
         )
         self.wait()
 
     def test_delete_by_query(self):
         c = BaseClient()
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404]}
+        )
+        p = {}
+        p['source'] = '{ "query": { "match_all": {} } }\n'
         c.delete_by_query(
                 'test',
-                body='{"bulk":"bulk1","id_":"bulk1"}', doc_type='test',
-                cb=self.handle_cb
+                body='{ "query": { "match_all": {} } }\n',
+                doc_type='test',
+                params=p,
+                cb=h_cb
         )
         self.wait()
 
@@ -144,18 +239,22 @@ class BaseClientTest(AsyncTestCase):
         c.percolate(
                 'test',
                 'test',
-                body='{"bulk":"bulk1","id_":"bulk1"}',
+                body=None,
                 cb=self.handle_cb
         )
         self.wait()
 
     def test_mpercolate(self):
         c = BaseClient()
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404]}
+        )
         c.mpercolate(
-                '{"bulk":"bulk1","id_":"bulk1"}',
+                None,
                 index='test',
                 doc_type='test',
-                cb=self.handle_cb
+                cb=h_cb
         )
         self.wait()
 
@@ -170,12 +269,15 @@ class BaseClientTest(AsyncTestCase):
 
     def test_mlt(self):
         c = BaseClient()
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404]}
+        )
         c.mlt(
                 'index',
                 'index',
                 'bulk1',
-                cb=self.handle_cb,
-                **{"request_timeout":3}
+                cb=h_cb,
         )
         self.wait()
 
@@ -186,7 +288,6 @@ class BaseClientTest(AsyncTestCase):
                 'index',
                 'bulk1',
                 cb=self.handle_cb,
-                **{"request_timeout":3}
         )
         self.wait()
 
@@ -196,65 +297,90 @@ class BaseClientTest(AsyncTestCase):
                 index = 'index',
                 doc_type = 'index',
                 cb=self.handle_cb,
-                **{"request_timeout":3}
         )
         self.wait()
 
     def test_benchmark(self):
         c = BaseClient()
+        body = '''{
+            "name": "my_benchmark",
+            "competitors": [ {
+                "name": "my_competitor",
+                "requests": [ {
+                    "query": {
+                        "match": { "_all": "a*" }
+                    }
+                } ]
+             } ]
+        }
+
+        '''
         c.benchmark(
-                index = 'index',
+                body     = body,
+                index    = 'index',
                 doc_type = 'index',
-                cb=self.handle_cb,
-                **{"request_timeout":3}
+                cb       = self.handle_cb,
         )
         self.wait()
 
+    @unittest.skip("demonstrating skipping")
     def test_abort_benchmark(self):
         c = BaseClient()
         c.abort_benchmark(
-                name='test',
-                cb=self.handle_cb,
+                name = 'test',
+                cb   = self.handle_cb,
         )
         self.wait()
 
     def test_list_benchmarks(self):
         c = BaseClient()
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404]}
+        )
         c.list_benchmarks(
                 index = 'test',
-                cb=self.handle_cb,
-                **{"request_timeout":3}
+                cb=h_cb,
         )
         self.wait()
 
     def test_put_script(self):
         c = BaseClient()
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[404]}
+        )
         c.put_script(
-                'python',
+                'native',
                 'testscript123',
                 "1+1",
-                cb=self.handle_cb,
-                **{"request_timeout":3}
+                cb=h_cb,
         )
         self.wait()
 
     def test_get_script(self):
         c = BaseClient()
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[404]}
+        )
         c.get_script(
-                'python',
+                'native',
                 'testscript123',
-                cb=self.handle_cb,
-                **{"request_timeout":3}
+                cb=h_cb,
         )
         self.wait()
 
     def test_delete_script(self):
         c = BaseClient()
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[404]}
+        )
         c.delete_script(
-                'python',
+                'native',
                 'testscript123',
-                cb=self.handle_cb,
-                **{"request_timeout":3}
+                cb=h_cb,
         )
         self.wait()
 
@@ -264,24 +390,29 @@ class BaseClientTest(AsyncTestCase):
                 'temp123',
                 '{"template":"test123"}',
                 cb=self.handle_cb,
-                **{"request_timeout":3}
         )
         self.wait()
 
     def test_get_template(self):
         c = BaseClient()
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[404]}
+        )
         c.get_template(
                 'temp123',
-                cb=self.handle_cb,
-                **{"request_timeout":3}
+                cb=h_cb,
         )
         self.wait()
 
     def test_delete_template(self):
         c = BaseClient()
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[404]}
+        )
         c.delete_template(
                 temp_id='temp123',
-                cb=self.handle_cb,
-                **{"request_timeout":3}
+                cb=h_cb,
         )
         self.wait()

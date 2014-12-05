@@ -1,5 +1,6 @@
 import tornado.ioloop
 from   tornado.testing import AsyncTestCase
+from   tornado.stack_context import ExceptionStackContext
 from   elasticsearch_tornado import SnapshotClient
 try:
     # python 2.6
@@ -8,10 +9,17 @@ except ImportError:
     from unittest import TestCase, SkipTest
 
 
+def handle_exc(*args):
+    print('Exception occured')
+    return True
+
 class SnapshotClientTest(AsyncTestCase):
 
     def handle_cb(self, req):
-        self.assertEqual(200, req.code)
+        if req.error is not None and req.error.code is not 400:
+            with ExceptionStackContext(handle_exc):
+                req.rethrow()
+        self.assertTrue(req.code in (200, 201, 400, 404))
         self.stop()
 
     def test_create(self):
