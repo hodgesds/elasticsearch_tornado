@@ -15,11 +15,12 @@ def handle_exc(*args):
 
 class SnapshotClientTest(AsyncTestCase):
 
-    def handle_cb(self, req):
-        if req.error is not None and req.error.code is not 400:
-            with ExceptionStackContext(handle_exc):
-                req.rethrow()
-        self.assertTrue(req.code in (200, 201, 400, 404))
+    def handle_cb(self, req, **kwargs):
+        if kwargs.get('codes'):
+            cl = [200, 201] + kwargs.get('codes')
+            self.assertTrue(req.code in cl)
+        else:
+            self.assertTrue(req.code in (200, 201, ))
         self.stop()
 
     def test_create(self):
