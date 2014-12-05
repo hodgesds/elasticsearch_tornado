@@ -13,7 +13,7 @@ long_description = f.read().strip()
 f.close()
 
 install_requires = [
-    'tornado>=3.2.2',
+    'tornado>=3.2',
 ]
 tests_require = [
     'nose',
