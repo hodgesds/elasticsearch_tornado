@@ -323,7 +323,7 @@ class BaseClientTest(AsyncTestCase):
         )
         self.wait()
 
-    @unittest.skip("demonstrating skipping")
+    @SkipTest("demonstrating skipping")
     def test_abort_benchmark(self):
         c = BaseClient()
         c.abort_benchmark(
