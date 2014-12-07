@@ -31,10 +31,6 @@ class BaseClientTest(AsyncTestCase):
         self.assertEquals('/a/b/c?key=value', url)
 
     def handle_cb(self, req, **kwargs):
-        #if req.error is not None and (
-        #    hasattr(req.error, 'code') and req.error.code != 400):
-        #    with ExceptionStackContext(handle_exc):
-        #        req.rethrow()
         if kwargs.get('codes'):
             cl = [200, 201] + kwargs.get('codes')
             self.assertTrue(req.code in cl)

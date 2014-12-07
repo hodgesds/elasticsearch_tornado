@@ -1,3 +1,4 @@
+from   functools import partial
 import tornado.ioloop
 from   tornado.testing import AsyncTestCase
 from   tornado.stack_context import ExceptionStackContext
@@ -25,46 +26,82 @@ class SnapshotClientTest(AsyncTestCase):
 
     def test_create(self):
         c = SnapshotClient()
-        c.create('test', 'test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404, 599]}
+        )
+        c.create('test', 'test', cb=h_cb)
         self.wait()
 
     def test_delete(self):
         c = SnapshotClient()
-        c.delete('test', 'test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404, 599]}
+        )
+        c.delete('test', 'test', cb=h_cb)
         self.wait()
 
     def test_get(self):
         c = SnapshotClient()
-        c.get('test', 'test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404, 599]}
+        )
+        c.get('test', 'test', cb=h_cb)
         self.wait()
 
     def test_delete_repository(self):
         c = SnapshotClient()
-        c.delete_repository('test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404, 599]}
+        )
+        c.delete_repository('test', cb=h_cb)
         self.wait()
 
     def test_get_repository(self):
         c = SnapshotClient()
-        c.get_repository(cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404, 599]}
+        )
+        c.get_repository(cb=h_cb)
         self.wait()
 
     def test_create_repository(self):
         c = SnapshotClient()
-        c.create_repository('test', '{}', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404, 599]}
+        )
+        c.create_repository('test', '{}', cb=h_cb)
         self.wait()
 
     def test_restore(self):
         c = SnapshotClient()
-        c.restore('test', 'test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404, 599]}
+        )
+        c.restore('test', 'test', cb=h_cb)
         self.wait()
 
     def test_status(self):
         c = SnapshotClient()
-        c.status(cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404, 599]}
+        )
+        c.status(cb=h_cb)
         self.wait()
 
     def test_verify_repository(self):
         c = SnapshotClient()
-        c.verify_repository('test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404, 599]}
+        )
+        c.verify_repository('test', cb=h_cb)
         self.wait()
 
