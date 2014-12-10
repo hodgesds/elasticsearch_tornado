@@ -31,10 +31,21 @@ class BaseClient(object):
         self.client   = AsyncHTTPClient(io_loop)
 
     def mk_req(self, url, **kwargs):
+        """
+        Helper function to create a tornado HTTPRequest object, kwargs get passed in to
+        create the HTTPRequest object. See:
+        http://tornado.readthedocs.org/en/latest/httpclient.html#request-objects
+        """
         req_url = self.base_url + url
         return HTTPRequest(req_url, ca_certs=self.certs, **kwargs)
 
     def mk_url(self, *args, **kwargs):
+        """
+        Args get parameterized into base url:
+            *(foo, bar, baz) -> /foo/bar/baz
+        Kwargs get encoded and appended to base url:
+            **{'hello':'world'} -> /foo/bar/baz?hello=world
+        """
         params = urlencode(kwargs)
         url = '/' + '/'.join([x for x in args if x])
         if params:
@@ -42,6 +53,9 @@ class BaseClient(object):
         return url
 
     def ping(self, cb=None, **kwargs):
+        """
+        Ping request to check status of elasticsearch host
+        """
         self.client.fetch(
             self.mk_req('', method='HEAD', **kwargs),
             callback = cb
