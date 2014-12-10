@@ -26,18 +26,28 @@ class SnapshotClientTest(AsyncTestCase):
 
     def test_create(self):
         c = SnapshotClient()
+        body = """
+        {
+            "type": "fs",
+            "settings": {
+                "location": "/tmp/test",
+                "compress": true
+            }
+        }
+
+        """
         h_cb = partial(
             self.handle_cb,
-            **{'codes':[400, 404, 599]}
+            **{'codes':[400, 404]}
         )
-        c.create('test', 'test', cb=h_cb)
+        c.create('test', 'test', body, cb=h_cb)
         self.wait()
 
     def test_delete(self):
         c = SnapshotClient()
         h_cb = partial(
             self.handle_cb,
-            **{'codes':[400, 404, 599]}
+            **{'codes':[400, 404]}
         )
         c.delete('test', 'test', cb=h_cb)
         self.wait()
@@ -46,7 +56,7 @@ class SnapshotClientTest(AsyncTestCase):
         c = SnapshotClient()
         h_cb = partial(
             self.handle_cb,
-            **{'codes':[400, 404, 599]}
+            **{'codes':[400, 404]}
         )
         c.get('test', 'test', cb=h_cb)
         self.wait()
@@ -55,7 +65,7 @@ class SnapshotClientTest(AsyncTestCase):
         c = SnapshotClient()
         h_cb = partial(
             self.handle_cb,
-            **{'codes':[400, 404, 599]}
+            **{'codes':[400, 404]}
         )
         c.delete_repository('test', cb=h_cb)
         self.wait()
@@ -64,34 +74,54 @@ class SnapshotClientTest(AsyncTestCase):
         c = SnapshotClient()
         h_cb = partial(
             self.handle_cb,
-            **{'codes':[400, 404, 599]}
+            **{'codes':[400, 404]}
         )
         c.get_repository(cb=h_cb)
         self.wait()
 
     def test_create_repository(self):
         c = SnapshotClient()
+        body = """
+        {
+            "type": "fs",
+            "settings": {
+                "location": "/tmp/test",
+                "compress": true
+            }
+        }
+
+        """
         h_cb = partial(
             self.handle_cb,
-            **{'codes':[400, 404, 599]}
+            **{'codes':[400, 404]}
         )
-        c.create_repository('test', '{}', cb=h_cb)
+        c.create_repository('test', body, cb=h_cb)
         self.wait()
 
     def test_restore(self):
         c = SnapshotClient()
+        body = """
+        '{
+           "indices": "index_1,index_2",
+           "ignore_unavailable": "true",
+           "include_global_state": false,
+           "rename_pattern": "index_(.+)",
+           "rename_replacement": "restored_index_$1"
+        }
+
+        """
         h_cb = partial(
             self.handle_cb,
-            **{'codes':[400, 404, 599]}
+            **{'codes':[400, 404]}
         )
-        c.restore('test', 'test', cb=h_cb)
+        c.restore('test', 'test', body, cb=h_cb)
         self.wait()
 
     def test_status(self):
         c = SnapshotClient()
         h_cb = partial(
             self.handle_cb,
-            **{'codes':[400, 404, 599]}
+            **{'codes':[400, 404]}
         )
         c.status(cb=h_cb)
         self.wait()
@@ -100,7 +130,7 @@ class SnapshotClientTest(AsyncTestCase):
         c = SnapshotClient()
         h_cb = partial(
             self.handle_cb,
-            **{'codes':[400, 404, 599]}
+            **{'codes':[400, 404]}
         )
         c.verify_repository('test', cb=h_cb)
         self.wait()

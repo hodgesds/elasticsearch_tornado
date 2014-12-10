@@ -41,7 +41,7 @@ class IndicesClient(BaseClient):
             callback = cb
         )
 
-    def refresh(self, index=None, params={}, cb=None, **kwargs):
+    def refresh(self, body='', index=None, params={}, cb=None, **kwargs):
         """
         Explicitly refresh one or more index, making all operations performed
         since the last refresh available for search.
@@ -67,11 +67,11 @@ class IndicesClient(BaseClient):
         params = dict((k,v) for k, v in params.items() if k in query_params and v)
         url = self.mk_url(*[index, '_refresh'], **params)
         self.client.fetch(
-            self.mk_req(url, method='POST', **kwargs),
+            self.mk_req(url, body=body, method='POST', **kwargs),
             callback = cb
         )
 
-    def flush(self, index=None, params={}, cb=None, **kwargs):
+    def flush(self, index=None, body='', params={}, cb=None, **kwargs):
         """
         Explicitly flush one or more indices.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-flush.html>`_
@@ -99,11 +99,11 @@ class IndicesClient(BaseClient):
         params = dict((k,v) for k, v in params.items() if k in query_params and v)
         url = self.mk_url(*[index, '_flush'], **params)
         self.client.fetch(
-            self.mk_req(url, method='POST', **kwargs),
+            self.mk_req(url, body=body, method='POST', **kwargs),
             callback = cb
         )
 
-    def create(self, index, body=None, params={}, cb=None, **kwargs):
+    def create(self, index, body, params={}, cb=None, **kwargs):
         """
         Create an index in Elasticsearch.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-create-index.html>`_
@@ -117,7 +117,7 @@ class IndicesClient(BaseClient):
         params = dict((k,v) for k, v in params.items() if k in query_params and v)
         url = self.mk_url(*[index], **params)
         self.client.fetch(
-            self.mk_req(url, method='PUT', **kwargs),
+            self.mk_req(url, body=body, method='PUT', **kwargs),
             callback = cb
         )
 
@@ -146,7 +146,7 @@ class IndicesClient(BaseClient):
             callback = cb
         )
 
-    def open(self, index, params={}, cb=None, **kwargs):
+    def open(self, index, body='', params={}, cb=None, **kwargs):
         """
         Open a closed index to make it available for search.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-open-close.html>`_
@@ -169,11 +169,11 @@ class IndicesClient(BaseClient):
         params = dict((k,v) for k, v in params.items() if k in query_params and v)
         url = self.mk_url(*[index, '_open'], **params)
         self.client.fetch(
-            self.mk_req(url, method='POST', **kwargs),
+            self.mk_req(url, body=body, method='POST', **kwargs),
             callback = cb
         )
 
-    def close(self, index, params={}, cb=None, **kwargs):
+    def close(self, index, body='', params={}, cb=None, **kwargs):
         """
         Close an index to remove it's overhead from the cluster. Closed index
         is blocked for read/write operations.
@@ -198,7 +198,7 @@ class IndicesClient(BaseClient):
         params = dict((k,v) for k, v in params.items() if k in query_params and v)
         url = self.mk_url(*[index, '_close'], **params)
         self.client.fetch(
-            self.mk_req(url, method='POST', **kwargs),
+            self.mk_req(url, body=body, method='POST', **kwargs),
             callback = cb
         )
 
@@ -307,7 +307,7 @@ class IndicesClient(BaseClient):
         params = dict((k,v) for k, v in params.items() if k in query_params and v)
         url = self.mk_url(*[index, '_mapping', doc_type], **params)
         self.client.fetch(
-            self.mk_req(url, method='PUT', **kwargs),
+            self.mk_req(url, body=body, method='PUT', **kwargs),
             callback = cb
         )
 
@@ -391,7 +391,7 @@ class IndicesClient(BaseClient):
             callback = cb
         )
 
-    def put_alias(self, name, index, body=None, params={}, cb=None, **kwargs):
+    def put_alias(self, name, index, body, params={}, cb=None, **kwargs):
         """
         Create an alias for a specific index/indices.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-aliases.html>`_
@@ -408,7 +408,7 @@ class IndicesClient(BaseClient):
         params = dict((k,v) for k, v in params.items() if k in query_params and v)
         url = self.mk_url(*[index, '_alias', name], **params)
         self.client.fetch(
-            self.mk_req(url, method='PUT', **kwargs),
+            self.mk_req(url, body=body, method='PUT', **kwargs),
             callback = cb
         )
 
@@ -503,7 +503,7 @@ class IndicesClient(BaseClient):
         params = dict((k,v) for k, v in params.items() if k in query_params and v)
         url = self.mk_url(*['_aliases'], **params)
         self.client.fetch(
-            self.mk_req(url, method='Post', **kwargs),
+            self.mk_req(url, body=body, method='POST', **kwargs),
             callback = cb
         )
 
@@ -549,7 +549,7 @@ class IndicesClient(BaseClient):
         params = dict((k,v) for k, v in params.items() if k in query_params and v)
         url = self.mk_url(*['_template', name], **params)
         self.client.fetch(
-            self.mk_req(url, method='PUT', **kwargs),
+            self.mk_req(url, body=body, method='PUT', **kwargs),
             callback = cb
         )
 
@@ -659,7 +659,7 @@ class IndicesClient(BaseClient):
         params = dict((k,v) for k, v in params.items() if k in query_params and v)
         url = self.mk_url(*[index, '_settings'], **params)
         self.client.fetch(
-            self.mk_req(url, method='PUT', **kwargs),
+            self.mk_req(url, body=body, method='PUT', **kwargs),
             callback = cb
         )
 
@@ -695,7 +695,7 @@ class IndicesClient(BaseClient):
         params = dict((k,v) for k, v in params.items() if k in query_params and v)
         url = self.mk_url(*[index, doc_type, '_warmer', name], **params)
         self.client.fetch(
-            self.mk_req(url, method='PUT', **kwargs),
+            self.mk_req(url, body=body, method='PUT', **kwargs),
             callback = cb
         )
 
@@ -858,7 +858,7 @@ class IndicesClient(BaseClient):
             callback = cb
         )
 
-    def optimize(self, index=None, params={}, cb=None, **kwargs):
+    def optimize(self, index=None, body='', params={}, cb=None, **kwargs):
         """
         Explicitly optimize one or more indices through an API.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-optimize.html>`_
@@ -892,7 +892,7 @@ class IndicesClient(BaseClient):
         params = dict((k,v) for k, v in params.items() if k in query_params and v)
         url = self.mk_url(*[index, '_optimize'], **params)
         self.client.fetch(
-            self.mk_req(url, method='POST', **kwargs),
+            self.mk_req(url, body=body, method='POST', **kwargs),
             callback = cb
         )
 
@@ -932,7 +932,7 @@ class IndicesClient(BaseClient):
             callback = cb
         )
 
-    def clear_cache(self, index=None, params={}, cb=None, **kwargs):
+    def clear_cache(self, index=None, body='', params={}, cb=None, **kwargs):
         """
         Clear either all caches or specific cached associated with one ore more indices.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-clearcache.html>`_
@@ -969,7 +969,7 @@ class IndicesClient(BaseClient):
         params = dict((k,v) for k, v in params.items() if k in query_params and v)
         url = self.mk_url(*[index, '_cache', 'clear'], **params)
         self.client.fetch(
-            self.mk_req(url, method='POST', **kwargs),
+            self.mk_req(url, body=body, method='POST', **kwargs),
             callback = cb
         )
 
@@ -998,7 +998,7 @@ class IndicesClient(BaseClient):
             callback = cb
         )
 
-    def snapshot_index(self, index=None, params={}, cb=None, **kwargs):
+    def snapshot_index(self, index=None, body='', params={}, cb=None, **kwargs):
         """
         Explicitly perform a snapshot through the gateway of one or more indices (backup them).
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-gateway-snapshot.html>`_
@@ -1022,6 +1022,6 @@ class IndicesClient(BaseClient):
         params = dict((k,v) for k, v in params.items() if k in query_params and v)
         url = self.mk_url(*[index, '_gateway', 'snapshot'], **params)
         self.client.fetch(
-            self.mk_req(url, method='POST', **kwargs),
+            self.mk_req(url, body=body, method='POST', **kwargs),
             callback = cb
         )

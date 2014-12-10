@@ -289,7 +289,7 @@ class BaseClient(object):
             index,
             doc_type,
             doc_id,
-            body   = None,
+            body   = '',
             params = {},
             query_params = {},
             cb     = None,
@@ -333,7 +333,7 @@ class BaseClient(object):
     def search(self,
             index    = None,
             doc_type = None,
-            body     = None,
+            body     = '',
             params   = {},
             cb       = None,
             **kwargs
@@ -454,7 +454,7 @@ class BaseClient(object):
     def search_template(self,
             index    = None,
             doc_type = None,
-            body     = None,
+            body     = '',
             params   = {},
             cb       = None,
             **kwargs
@@ -497,7 +497,7 @@ class BaseClient(object):
             index,
             doc_type,
             doc_id,
-            body   = None,
+            body   = '',
             params = {},
             cb     = None,
             **kwargs
@@ -566,7 +566,7 @@ class BaseClient(object):
 
     def clear_scroll(self,
             scroll_id = None,
-            body      = None,
+            body      = '',
             params    = {},
             cb        = None,
             **kwargs
@@ -614,7 +614,7 @@ class BaseClient(object):
     def count(self,
             index    = None,
             doc_type = None,
-            body     = None,
+            body     = '',
             params   = {},
             cb       = None,
             **kwargs
@@ -716,7 +716,7 @@ class BaseClient(object):
     def delete_by_query(self,
             index,
             doc_type = None,
-            body     = None,
+            body     = '',
             params   = {},
             cb       = None,
             **kwargs
@@ -796,7 +796,7 @@ class BaseClient(object):
             index,
             doc_type,
             doc_id = None,
-            body   = None,
+            body   = '',
             params = {},
             cb     = None,
             **kwargs
@@ -885,7 +885,7 @@ class BaseClient(object):
             index,
             doc_type,
             doc_id = None,
-            body   = None,
+            body   = '',
             params = {},
             cb     = None,
             **kwargs
@@ -936,7 +936,7 @@ class BaseClient(object):
             index,
             doc_type,
             doc_id,
-            body   = None,
+            body   = '',
             params = {},
             cb     = None,
             **kwargs
@@ -996,7 +996,7 @@ class BaseClient(object):
             index,
             doc_type,
             doc_id,
-            body   = None,
+            body   = '',
             params = {},
             cb     = None,
             **kwargs
@@ -1041,7 +1041,7 @@ class BaseClient(object):
     def mtermvectors(self,
             index    = None,
             doc_type = None,
-            body     = None,
+            body     = '',
             params   = {},
             cb       = None,
             **kwargs
@@ -1099,7 +1099,7 @@ class BaseClient(object):
     def benchmark(self,
             index    = None,
             doc_type = None,
-            body     = None,
+            body     = '',
             params   = {},
             cb       = None,
             **kwargs
@@ -1221,7 +1221,7 @@ class BaseClient(object):
             callback = cb
         )
 
-    def get_template(self, temp_id, body=None, params={}, cb=None, **kwargs):
+    def get_template(self, temp_id, body='', params={}, cb=None, **kwargs):
         """
         Retrieve a search template.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-template.html>`_

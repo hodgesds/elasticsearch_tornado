@@ -35,7 +35,18 @@ class IndicesClientTest(AsyncTestCase):
 
     def test_create(self):
         c = IndicesClient()
-        c.create('test', cb=self.handle_cb)
+        body = """
+        {
+            "settings" : {
+                "index" : {
+                    "number_of_shards" : 3,
+                    "number_of_replicas" : 2
+                }
+            }
+        }
+
+        """
+        c.create('test', body, cb=self.handle_cb)
         self.wait()
 
     def test_get(self):
@@ -70,7 +81,17 @@ class IndicesClientTest(AsyncTestCase):
 
     def test_put_mapping(self):
         c = IndicesClient()
-        c.put_mapping('test', '{}', cb=self.handle_cb)
+        body = """
+        {
+            "tweet" : {
+                "properties" : {
+                    "message" : {"type" : "string", "store" : true }
+                }
+            }
+        }
+
+        """
+        c.put_mapping('test', body, cb=self.handle_cb)
         self.wait()
 
     def test_get_mapping(self):
@@ -90,7 +111,15 @@ class IndicesClientTest(AsyncTestCase):
 
     def test_put_alias(self):
         c = IndicesClient()
-        c.put_alias('test', 'test', cb=self.handle_cb)
+        body = """
+        {
+            "actions" : [
+                { "add" : { "index" : "test1", "alias" : "alias1" } }
+            ]
+        }
+
+        """
+        c.put_alias('test', 'test', body, cb=self.handle_cb)
         self.wait()
 
     def test_exists_alias(self):
@@ -110,7 +139,16 @@ class IndicesClientTest(AsyncTestCase):
 
     def test_update_aliases(self):
         c = IndicesClient()
-        c.update_aliases('{}', cb=self.handle_cb)
+        body = """
+        {
+            "actions" : [
+                { "add" : { "index" : "test1", "alias" : "alias1" } },
+                { "add" : { "index" : "test2", "alias" : "alias1" } }
+            ]
+        }
+
+        """
+        c.update_aliases(body, cb=self.handle_cb)
         self.wait()
 
     def test_delete_alias(self):
@@ -120,6 +158,20 @@ class IndicesClientTest(AsyncTestCase):
 
     def test_put_template(self):
         c = IndicesClient()
+        body = """
+        {
+            "template" : "te*",
+            "settings" : {
+                "number_of_shards" : 1
+            },
+            "mappings" : {
+                "type1" : {
+                    "_source" : { "enabled" : false }
+                }
+            }
+        }
+
+        """
         c.put_template('test', '{}', cb=self.handle_cb)
         self.wait()
 
@@ -145,12 +197,35 @@ class IndicesClientTest(AsyncTestCase):
 
     def test_put_settings(self):
         c = IndicesClient()
-        c.put_settings("", cb=self.handle_cb)
+        body = """
+        {
+            "index" : {
+                "number_of_replicas" : 1
+            }
+        }
+
+        """
+        c.put_settings(body, cb=self.handle_cb)
         self.wait()
 
     def test_put_warmer(self):
         c = IndicesClient()
-        c.put_warmer("test", "", cb=self.handle_cb)
+        body = """
+        {
+            "query" : {
+                "match_all" : {}
+            },
+            "aggs" : {
+                "aggs_1" : {
+                    "terms" : {
+                        "field" : "field"
+                    }
+                }
+            }
+        }
+
+        """
+        c.put_warmer("test", body, cb=self.handle_cb)
         self.wait()
 
     def test_get_warmer(self):

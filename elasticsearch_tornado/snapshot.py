@@ -9,7 +9,7 @@ class SnapshotClient(BaseClient):
         super(SnapshotClient, self).__init__(*args, **kwargs)
 
 
-    def create(self, repository, snapshot, body=None, params={}, cb=None, **kwargs):
+    def create(self, repository, snapshot, body, params={}, cb=None, **kwargs):
         """
         Create a snapshot in repository
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html>`_
@@ -26,7 +26,7 @@ class SnapshotClient(BaseClient):
         params = dict((k,v) for k, v in params.items() if k in query_params and v)
         url = self.mk_url(*['_snapshot', repository, snapshot], **params)
         self.client.fetch(
-            self.mk_req(url, method='PUT', **kwargs),
+            self.mk_req(url, body=body, method='PUT', **kwargs),
             callback = cb
         )
 
@@ -118,11 +118,11 @@ class SnapshotClient(BaseClient):
         params = dict((k,v) for k, v in params.items() if k in query_params and v)
         url = self.mk_url(*['_snapshot', repository], **params)
         self.client.fetch(
-            self.mk_req(url, method='PUT', **kwargs),
+            self.mk_req(url, body=body, method='PUT', **kwargs),
             callback = cb
         )
 
-    def restore(self, repository, snapshot, body=None, params={}, cb=None, **kwargs):
+    def restore(self, repository, snapshot, body, params={}, cb=None, **kwargs):
         """
         Restore a snapshot.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html>`_
@@ -143,7 +143,7 @@ class SnapshotClient(BaseClient):
             **params
         )
         self.client.fetch(
-            self.mk_req(url, method='POST', **kwargs),
+            self.mk_req(url, body=body, method='POST', **kwargs),
             callback = cb
         )
 
@@ -175,6 +175,7 @@ class SnapshotClient(BaseClient):
             repository,
             master_timeout = 10,
             timeout        = 10,
+            body           = '',
             params         = {},
             cb             = None,
             **kwargs
@@ -193,6 +194,6 @@ class SnapshotClient(BaseClient):
         params = dict((k,v) for k, v in params.items() if k in query_params and v)
         url = self.mk_url(*['_snapshot', repository, '_verify'], **params)
         self.client.fetch(
-            self.mk_req(url, method='POST', **kwargs),
+            self.mk_req(url, body=body, method='POST', **kwargs),
             callback = cb
         )

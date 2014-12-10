@@ -40,10 +40,25 @@ class ClusterClientTest(AsyncTestCase):
 
     def test_reroute(self):
         c = ClusterClient()
-        c.reroute(
-            body = '{}\n',
-            cb=self.handle_cb
-        )
+        body = """
+        {
+            "commands" : [ {
+                "move" :
+                    {
+                        "index" : "test", "shard" : 0,
+                        "from_node" : "node1", "to_node" : "node2"
+                    }
+                },
+                {
+                    "allocate" : {
+                        "index" : "test", "shard" : 1, "node" : "node3"
+                    }
+                }
+                ]
+        }
+
+        """
+        c.reroute(body, cb=self.handle_cb)
         self.wait()
 
     def test_get_settings(self):
@@ -53,5 +68,13 @@ class ClusterClientTest(AsyncTestCase):
 
     def test_put_settings(self):
         c = ClusterClient()
-        c.put_settings('{}\n', cb=self.handle_cb)
+        body = """
+        {
+            "persistent" : {
+                "discovery.zen.minimum_master_nodes" : 1
+            }
+        }
+
+        """
+        c.put_settings(body, cb=self.handle_cb)
         self.wait()

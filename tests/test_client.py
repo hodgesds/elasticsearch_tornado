@@ -31,6 +31,9 @@ class BaseClientTest(AsyncTestCase):
         self.assertEquals('/a/b/c?key=value', url)
 
     def handle_cb(self, req, **kwargs):
+        if req.code == 599:
+            import pdb
+            pdb.set_trace()
         if kwargs.get('codes'):
             cl = [200, 201] + kwargs.get('codes')
             self.assertTrue(req.code in cl)

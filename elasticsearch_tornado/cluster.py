@@ -105,7 +105,7 @@ class ClusterClient(BaseClient):
             callback = cb
         )
 
-    def reroute(self, body='', params={}, cb=None, **kwargs):
+    def reroute(self, body, params={}, cb=None, **kwargs):
         """
         Explicitly execute a cluster reroute allocation command including specific commands.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-reroute.html>`_
@@ -125,7 +125,7 @@ class ClusterClient(BaseClient):
         params = dict((k,v) for k, v in params.items() if k in query_params and v)
         url = self.mk_url(*['_cluster', 'reroute'], **params)
         self.client.fetch(
-            self.mk_req(url, method='POST', **kwargs),
+            self.mk_req(url, body=body, method='POST', **kwargs),
             body     = body,
             callback = cb
         )
@@ -160,7 +160,7 @@ class ClusterClient(BaseClient):
         params = dict((k,v) for k, v in params.items() if k in query_params and v)
         url = self.mk_url(*['_cluster', 'settings'], **params)
         self.client.fetch(
-            self.mk_req(url, method='PUT', **kwargs),
+            self.mk_req(url, body=body, method='PUT', **kwargs),
             body     = body,
             callback = cb
         )
