@@ -32,7 +32,15 @@ class BaseClient(object):
 
     def mk_req(self, url, **kwargs):
         req_url = self.base_url + url
-        return HTTPRequest(req_url, ca_certs=self.certs, **kwargs)
+        req_kwargs = kwargs
+        req_kwargs['ca_certs'] = req_kwargs.get('ca_certs', self.certs)
+        # have to do this because tornado's HTTP client doesn't 
+        # play nice with elasticsearch
+        req_kwargs['allow_nonstandard_methods'] = req_kwargs.get(
+            'allow_nonstandard_methods',
+            True
+        )
+        return HTTPRequest(req_url, **req_kwargs)
 
     def mk_url(self, *args, **kwargs):
         params = urlencode(kwargs)
