@@ -1,4 +1,5 @@
 import tornado.ioloop
+from   functools import partial
 from   tornado.testing import AsyncTestCase
 from   elasticsearch_tornado import ClusterClient
 try:
@@ -40,6 +41,10 @@ class ClusterClientTest(AsyncTestCase):
 
     def test_reroute(self):
         c = ClusterClient()
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404]}
+        )
         body = """
         {
             "commands" : [ {
@@ -58,7 +63,7 @@ class ClusterClientTest(AsyncTestCase):
         }
 
         """
-        c.reroute(body, cb=self.handle_cb)
+        c.reroute(body, cb=h_cb)
         self.wait()
 
     def test_get_settings(self):

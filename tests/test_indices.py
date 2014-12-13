@@ -1,4 +1,5 @@
 import tornado.ioloop
+from   functools import partial
 from   tornado.testing import AsyncTestCase
 from   elasticsearch_tornado import IndicesClient
 try:
@@ -20,7 +21,11 @@ class IndicesClientTest(AsyncTestCase):
 
     def test_analyze(self):
         c = IndicesClient()
-        c.analyze(index='test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404]}
+        )
+        c.analyze(index='test', cb=h_cb)
         self.wait()
 
     def test_refresh(self):
@@ -35,6 +40,10 @@ class IndicesClientTest(AsyncTestCase):
 
     def test_create(self):
         c = IndicesClient()
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404]}
+        )
         body = """
         {
             "settings" : {

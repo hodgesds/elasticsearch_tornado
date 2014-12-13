@@ -31,9 +31,6 @@ class BaseClientTest(AsyncTestCase):
         self.assertEquals('/a/b/c?key=value', url)
 
     def handle_cb(self, req, **kwargs):
-        if req.code == 599:
-            import pdb
-            pdb.set_trace()
         if kwargs.get('codes'):
             cl = [200, 201] + kwargs.get('codes')
             self.assertTrue(req.code in cl)
@@ -110,7 +107,20 @@ class BaseClientTest(AsyncTestCase):
 
     def test_update(self):
         c = BaseClient()
-        c.update('test', 'test', 'test123', body='{"script":"ctx._source.tags += tag", "params":{"tag":"blue"}}', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404, 500,]}
+        )
+        body = """
+        {
+            "script" : "ctx._source.counter += count",
+            "params" : {
+                "count" : 4
+            }
+        }
+
+        """
+        c.update('test', 'test', 'test123', body=body, cb=h_cb)
         self.wait()
 
     def test_search(self):
@@ -130,11 +140,19 @@ class BaseClientTest(AsyncTestCase):
 
     def test_explain(self):
         c = BaseClient()
+        body = """
+        {
+            "query" : {
+                "term" : { "message" : "search" }
+            }
+        }
+
+        """
         h_cb = partial(
             self.handle_cb,
-            **{'codes':[400, 404]}
+            **{'codes':[400, 404, 401,]}
         )
-        c.explain('test', 'test', 'test123', cb=h_cb)
+        c.explain('test', 'test', 'test123', body=body, cb=h_cb)
         self.wait()
 
     def test_scroll(self):
@@ -171,26 +189,34 @@ class BaseClientTest(AsyncTestCase):
 
     def test_count(self):
         c = BaseClient()
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[403, 404]}
+        )
         c.count(
             body     = '',
             index    = 'test',
             doc_type = 'test',
-            cb=self.handle_cb
+            cb=h_cb
         )
         self.wait()
 
     def test_bulk(self):
         c = BaseClient()
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404]}
+        )
         body = """
         { "index" : { "_index" : "test", "_type" : "type1", "_id" : "1" } }
         { "field1" : "value1" }
 
         """
         c.bulk(
-                body,
-                index    = 'test',
-                doc_type = 'test',
-                cb=self.handle_cb
+            body,
+            index    = 'test',
+            doc_type = 'test',
+            cb=h_cb
         )
         self.wait()
 
@@ -201,10 +227,10 @@ class BaseClientTest(AsyncTestCase):
             **{'codes':[400, 404]}
         )
         c.msearch(
-                None,
-                index='test',
-                doc_type='test',
-                cb=h_cb
+            None,
+            index='test',
+            doc_type='test',
+            cb=h_cb
         )
         self.wait()
 
@@ -227,9 +253,25 @@ class BaseClientTest(AsyncTestCase):
 
     def test_suggest(self):
         c = BaseClient()
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404]}
+        )
+        body = """
+        {
+            "my-suggestion" : {
+                "text" : "the amsterdma meetpu",
+                "term" : {
+                    "field" : "body"
+                }
+            }
+        }
+
+        """
         c.suggest(
-                '{"bulk":"bulk1","id_":"bulk1"}', index='test',
-                cb=self.handle_cb
+            body,
+            index = 'test',
+            cb    = h_cb
         )
         self.wait()
 
@@ -259,10 +301,14 @@ class BaseClientTest(AsyncTestCase):
 
     def test_count_percolate(self):
         c = BaseClient()
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[403, 404]}
+        )
         c.count_percolate(
                 'test',
                 'test',
-                cb=self.handle_cb
+                cb=h_cb
         )
         self.wait()
 
@@ -282,19 +328,56 @@ class BaseClientTest(AsyncTestCase):
 
     def test_termvector(self):
         c = BaseClient()
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[500, 404]}
+        )
+        body = """
+        {
+            "fields" : ["text", "some_field_without_term_vectors"],
+                "offsets" : true,
+                "positions" : true,
+                "term_statistics" : true,
+                "field_statistics" : true
+        }
+
+        """
         c.termvector(
                 'index',
-                'index',
-                'bulk1',
-                cb=self.handle_cb,
+                'test',
+                'test123',
+                body=body,
+                cb=h_cb,
         )
         self.wait()
 
     def test_mtermvector(self):
         c = BaseClient()
+        body = """
+        {
+            "docs": [
+                {
+                    "_index": "testidx",
+                    "_type": "test",
+                    "_id": "2",
+                    "term_statistics": true
+                },
+                {
+                   "_index": "testidx",
+                   "_type": "test",
+                   "_id": "1",
+                   "fields": [
+                       "text"
+                   ]
+                }
+            ]
+        }
+        
+        """
         c.mtermvectors(
                 index = 'index',
                 doc_type = 'index',
+                body = body,
                 cb=self.handle_cb,
         )
         self.wait()
@@ -322,7 +405,7 @@ class BaseClientTest(AsyncTestCase):
         )
         self.wait()
 
-    @SkipTest("demonstrating skipping")
+    @SkipTest
     def test_abort_benchmark(self):
         c = BaseClient()
         c.abort_benchmark(
@@ -345,15 +428,39 @@ class BaseClientTest(AsyncTestCase):
 
     def test_put_script(self):
         c = BaseClient()
+        body = """
+        {
+            "query": {
+                "function_score": {
+                    "query": {
+                        "match": {
+                             "body": "foo"
+                        }
+                     },
+                    "functions": [
+                    {
+                        "script_score": {
+                            "script": "calculate-score",
+                            "params": {
+                                "my_modifier": 8
+                            }
+                        }
+                    }
+                    ]
+                }
+            }
+        }
+
+        """
         h_cb = partial(
             self.handle_cb,
-            **{'codes':[404]}
+            **{'codes':[400, 404]}
         )
         c.put_script(
                 'native',
                 'testscript123',
-                "1+1",
-                cb=h_cb,
+                body,
+                cb   = h_cb,
         )
         self.wait()
 
