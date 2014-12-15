@@ -1,6 +1,8 @@
 import sys
 from   abc import ABCMeta, abstractmethod
 from   tornado.httpclient import AsyncHTTPClient, HTTPRequest
+from   .patched_curlclient import PatchedCurlClient
+
 
 PY2 = sys.version_info[0] == 2
 if PY2:
@@ -19,16 +21,19 @@ class BaseClient(object):
             prefix       = '',
             method       = 'http',
             ssl          = False,
+            curl         = False,
             verify_certs = True,
             ca_certs     = '',
             io_loop      = None,
             *args,
             **kwargs
     ):
-        # TODO: curlclient in tornado for proxy requests
         self.base_url = "%s://%s:%s%s" % (method, host, port, prefix)
         self.certs    = ca_certs
-        self.client   = AsyncHTTPClient(io_loop)
+        if not curl:
+            self.client = AsyncHTTPClient(io_loop)
+        else:
+            self.client = PatchedCurlClient(io_loop)
 
     def mk_req(self, url, **kwargs):
         """
