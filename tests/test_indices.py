@@ -30,19 +30,27 @@ class IndicesClientTest(AsyncTestCase):
 
     def test_refresh(self):
         c = IndicesClient()
-        c.refresh(index='test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 403, 404]}
+        )
+        c.refresh(index='test', cb=h_cb)
         self.wait()
 
     def test_flush(self):
         c = IndicesClient()
-        c.flush(index='test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 403, 404]}
+        )
+        c.flush(index='test', cb=h_cb)
         self.wait()
 
     def test_create(self):
         c = IndicesClient()
         h_cb = partial(
             self.handle_cb,
-            **{'codes':[400, 404]}
+            **{'codes':[400, 403, 404]}
         )
         body = """
         {
@@ -55,41 +63,69 @@ class IndicesClientTest(AsyncTestCase):
         }
 
         """
-        c.create('test', body, cb=self.handle_cb)
+        c.create('test', body, cb=h_cb)
         self.wait()
 
     def test_get(self):
         c = IndicesClient()
-        c.get('test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 403, 404]}
+        )
+        c.get('test', cb=h_cb)
         self.wait()
 
     def test_open(self):
         c = IndicesClient()
-        c.open('test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 403, 404]}
+        )
+        c.open('test', cb=h_cb)
         self.wait()
 
     def test_close(self):
         c = IndicesClient()
-        c.close('test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 403, 404]}
+        )
+        c.close('test', cb=h_cb)
         self.wait()
 
     def test_delete(self):
         c = IndicesClient()
-        c.delete('test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 403, 404]}
+        )
+        c.delete('test', cb=h_cb)
         self.wait()
 
     def test_exists(self):
         c = IndicesClient()
-        c.exists('test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 403, 404]}
+        )
+        c.exists('test', cb=h_cb)
         self.wait()
 
     def test_exists_type(self):
         c = IndicesClient()
-        c.exists_type('test', 'type', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 403, 404]}
+        )
+        c.exists_type('test', 'type', cb=h_cb)
         self.wait()
 
     def test_put_mapping(self):
         c = IndicesClient()
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 403, 404]}
+        )
         body = """
         {
             "tweet" : {
@@ -100,26 +136,42 @@ class IndicesClientTest(AsyncTestCase):
         }
 
         """
-        c.put_mapping('test', body, cb=self.handle_cb)
+        c.put_mapping('test', body, cb=h_cb)
         self.wait()
 
     def test_get_mapping(self):
         c = IndicesClient()
-        c.get_mapping(index='test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 403, 404]}
+        )
+        c.get_mapping(index='test', cb=h_cb)
         self.wait()
 
     def test_get_field_mapping(self):
         c = IndicesClient()
-        c.get_field_mapping('test', index='test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 403, 404]}
+        )
+        c.get_field_mapping('test', index='test', cb=h_cb)
         self.wait()
 
     def test_delete_mapping(self):
         c = IndicesClient()
-        c.delete_mapping('test', 'test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 403, 404]}
+        )
+        c.delete_mapping('test', 'test', cb=h_cb)
         self.wait()
 
     def test_put_alias(self):
         c = IndicesClient()
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 403, 404]}
+        )
         body = """
         {
             "actions" : [
@@ -128,26 +180,42 @@ class IndicesClientTest(AsyncTestCase):
         }
 
         """
-        c.put_alias('test', 'test', body, cb=self.handle_cb)
+        c.put_alias('test', 'test', body, cb=h_cb)
         self.wait()
 
     def test_exists_alias(self):
         c = IndicesClient()
-        c.exists_alias('test', index='test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 403, 404]}
+        )
+        c.exists_alias('test', index='test', cb=h_cb)
         self.wait()
 
     def test_get_alias(self):
         c = IndicesClient()
-        c.get_alias(index='test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 403, 404]}
+        )
+        c.get_alias(index='test', cb=h_cb)
         self.wait()
 
     def test_get_aliases(self):
         c = IndicesClient()
-        c.get_aliases(index='test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 403, 404]}
+        )
+        c.get_aliases(index='test', cb=h_cb)
         self.wait()
 
     def test_update_aliases(self):
         c = IndicesClient()
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 403, 404]}
+        )
         body = """
         {
             "actions" : [
@@ -157,12 +225,16 @@ class IndicesClientTest(AsyncTestCase):
         }
 
         """
-        c.update_aliases(body, cb=self.handle_cb)
+        c.update_aliases(body, cb=h_cb)
         self.wait()
 
     def test_delete_alias(self):
         c = IndicesClient()
-        c.delete_alias('test', 'test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 403, 404]}
+        )
+        c.delete_alias('test', 'test', cb=h_cb)
         self.wait()
 
     def test_put_template(self):
@@ -181,22 +253,34 @@ class IndicesClientTest(AsyncTestCase):
         }
 
         """
-        c.put_template('test', '{}', cb=self.handle_cb)
+        c.put_template('test', body, cb=self.handle_cb)
         self.wait()
 
     def test_exists_template(self):
         c = IndicesClient()
-        c.exists_template('test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 403, 404]}
+        )
+        c.exists_template('test', cb=h_cb)
         self.wait()
 
     def test_get_template(self):
         c = IndicesClient()
-        c.get_template(name='test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 403, 404]}
+        )
+        c.get_template(name='test', cb=h_cb)
         self.wait()
 
     def test_delete_template(self):
         c = IndicesClient()
-        c.delete_template('test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 403, 404]}
+        )
+        c.delete_template('test', cb=h_cb)
         self.wait()
 
     def test_get_settings(self):
@@ -244,7 +328,11 @@ class IndicesClientTest(AsyncTestCase):
 
     def test_delete_warmer(self):
         c = IndicesClient()
-        c.delete_warmer('test', 'test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 403, 404]}
+        )
+        c.delete_warmer('test', 'test', cb=h_cb)
         self.wait()
 
     def test_status(self):
@@ -284,6 +372,10 @@ class IndicesClientTest(AsyncTestCase):
 
     def test_snapshot_index(self):
         c = IndicesClient()
-        c.snapshot_index(cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 403, 404]}
+        )
+        c.snapshot_index(cb=h_cb)
         self.wait()
 

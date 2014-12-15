@@ -50,14 +50,18 @@ class BaseClientTest(AsyncTestCase):
 
     def test_index(self):
         c = BaseClient()
-        c.index('test', 'test', '{"test":"123"}', doc_id='test123', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 403, 404]}
+        )
+        c.index('test', 'test', '{"test":"123"}', doc_id='test123', cb=h_cb)
         self.wait()
 
     def test_exists(self):
         c = BaseClient()
         h_cb = partial(
             self.handle_cb,
-            **{'codes':[400, 404]}
+            **{'codes':[400, 403, 404]}
         )
         c.exists('test', 'test123', cb=h_cb)
         self.wait()
@@ -66,7 +70,7 @@ class BaseClientTest(AsyncTestCase):
         c = BaseClient()
         h_cb = partial(
             self.handle_cb,
-            **{'codes':[400, 404]}
+            **{'codes':[400, 403, 404]}
         )
         c.get('test', 'test123', cb=h_cb)
         self.wait()
@@ -75,7 +79,7 @@ class BaseClientTest(AsyncTestCase):
         c = BaseClient()
         h_cb = partial(
             self.handle_cb,
-            **{'codes':[400, 404]}
+            **{'codes':[400, 403, 404]}
         )
         c.get_source('test', 'test123', cb=h_cb)
         self.wait()
@@ -109,7 +113,7 @@ class BaseClientTest(AsyncTestCase):
         c = BaseClient()
         h_cb = partial(
             self.handle_cb,
-            **{'codes':[400, 404, 500,]}
+            **{'codes':[400, 404, 403,]}
         )
         body = """
         {
@@ -125,17 +129,29 @@ class BaseClientTest(AsyncTestCase):
 
     def test_search(self):
         c = BaseClient()
-        c.search(index='test', doc_type='test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404, 403,]}
+        )
+        c.search(index='test', doc_type='test', cb=h_cb)
         self.wait()
 
     def test_search_shards(self):
         c = BaseClient()
-        c.search_shards(index='test', doc_type='test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404, 403,]}
+        )
+        c.search_shards(index='test', doc_type='test', cb=h_cb)
         self.wait()
 
     def test_search_template(self):
         c = BaseClient()
-        c.search_template(index='test', doc_type='test', cb=self.handle_cb)
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 404, 403,]}
+        )
+        c.search_template(index='test', doc_type='test', cb=h_cb)
         self.wait()
 
     def test_explain(self):
@@ -150,7 +166,7 @@ class BaseClientTest(AsyncTestCase):
         """
         h_cb = partial(
             self.handle_cb,
-            **{'codes':[400, 404, 401,]}
+            **{'codes':[400, 401, 403, 404]}
         )
         c.explain('test', 'test', 'test123', body=body, cb=h_cb)
         self.wait()
@@ -159,7 +175,7 @@ class BaseClientTest(AsyncTestCase):
         c = BaseClient()
         h_cb = partial(
             self.handle_cb,
-            **{'codes':[400]}
+            **{'codes':[400, 403, 404]}
         )
         c.scroll('test', cb=h_cb)
         self.wait()
@@ -168,7 +184,7 @@ class BaseClientTest(AsyncTestCase):
         c = BaseClient()
         h_cb = partial(
             self.handle_cb,
-            **{'codes':[400]}
+            **{'codes':[400, 403, 404]}
         )
         c.clear_scroll('aaaaa', cb=h_cb)
         self.wait()
@@ -177,7 +193,7 @@ class BaseClientTest(AsyncTestCase):
         c = BaseClient()
         h_cb = partial(
             self.handle_cb,
-            **{'codes':[400, 404]}
+            **{'codes':[400, 403, 404]}
         )
         c.delete(
             'test',
@@ -238,7 +254,7 @@ class BaseClientTest(AsyncTestCase):
         c = BaseClient()
         h_cb = partial(
             self.handle_cb,
-            **{'codes':[400, 404]}
+            **{'codes':[400, 403, 404]}
         )
         p = {}
         p['source'] = '{ "query": { "match_all": {} } }\n'
@@ -255,7 +271,7 @@ class BaseClientTest(AsyncTestCase):
         c = BaseClient()
         h_cb = partial(
             self.handle_cb,
-            **{'codes':[400, 404]}
+            **{'codes':[400, 403, 404]}
         )
         body = """
         {
@@ -277,11 +293,15 @@ class BaseClientTest(AsyncTestCase):
 
     def test_percolate(self):
         c = BaseClient()
+        h_cb = partial(
+            self.handle_cb,
+            **{'codes':[400, 403, 404]}
+        )
         c.percolate(
-                'test',
-                'test',
-                body=None,
-                cb=self.handle_cb
+            'test',
+            'test',
+            body=None,
+            cb=h_cb
         )
         self.wait()
 
@@ -289,7 +309,7 @@ class BaseClientTest(AsyncTestCase):
         c = BaseClient()
         h_cb = partial(
             self.handle_cb,
-            **{'codes':[400, 404]}
+            **{'codes':[400, 403, 404]}
         )
         c.mpercolate(
                 None,
