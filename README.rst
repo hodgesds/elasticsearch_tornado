@@ -68,6 +68,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
+Documentation
+-------------
+http://elasticsearch-tornado.readthedocs.org/en/latest/
+
+
 Requirements
 ------------
 .. image:: https://requires.io/github/hodgesds/elasticsearch_tornado/requirements.svg?branch=master
