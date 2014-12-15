@@ -1,0 +1,1331 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>elasticsearch_tornado.client &mdash; elasticsearch_tornado  documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="elasticsearch_tornado  documentation" href="../../index.html" />
+    <link rel="up" title="elasticsearch_tornado" href="../elasticsearch_tornado.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">elasticsearch_tornado  documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../elasticsearch_tornado.html" accesskey="U">elasticsearch_tornado</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for elasticsearch_tornado.client</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">urllib</span> <span class="kn">import</span> <span class="n">urlencode</span>
+<span class="kn">from</span> <span class="nn">tornado.httpclient</span> <span class="kn">import</span> <span class="n">AsyncHTTPClient</span><span class="p">,</span> <span class="n">HTTPRequest</span>
+
+
+<div class="viewcode-block" id="BaseClient"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient">[docs]</a><span class="k">class</span> <span class="nc">BaseClient</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">host</span>         <span class="o">=</span> <span class="s">&#39;localhost&#39;</span><span class="p">,</span>
+            <span class="n">port</span>         <span class="o">=</span> <span class="mi">9200</span><span class="p">,</span>
+            <span class="n">prefix</span>       <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="p">,</span>
+            <span class="n">method</span>       <span class="o">=</span> <span class="s">&#39;http&#39;</span><span class="p">,</span>
+            <span class="n">ssl</span>          <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+            <span class="n">verify_certs</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+            <span class="n">ca_certs</span>     <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="p">,</span>
+            <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">):</span>
+        <span class="c"># TODO: curlclient in tornado for proxy requests</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">://</span><span class="si">%s</span><span class="s">:</span><span class="si">%s%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">prefix</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">certs</span>    <span class="o">=</span> <span class="n">ca_certs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span>   <span class="o">=</span> <span class="n">AsyncHTTPClient</span><span class="p">()</span>
+
+<div class="viewcode-block" id="BaseClient.mk_req"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.mk_req">[docs]</a>    <span class="k">def</span> <span class="nf">mk_req</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">req_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">url</span>
+        <span class="k">return</span> <span class="n">HTTPRequest</span><span class="p">(</span><span class="n">req_url</span><span class="p">,</span> <span class="n">ca_certs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">certs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.mk_url"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.mk_url">[docs]</a>    <span class="k">def</span> <span class="nf">mk_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">urlencode</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">args</span> <span class="k">if</span> <span class="n">x</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">url</span> <span class="o">+</span> <span class="n">params</span>
+</div>
+<div class="viewcode-block" id="BaseClient.ping"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.ping">[docs]</a>    <span class="k">def</span> <span class="nf">ping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;HEAD&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.info"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the basic info from the current cluster.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.create"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">index</span><span class="p">,</span>
+            <span class="n">doc_type</span><span class="p">,</span>
+            <span class="n">body</span><span class="p">,</span>
+            <span class="n">doc_id</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="p">{},</span>
+            <span class="n">cb</span>     <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds a typed JSON document in a specific index, making it searchable.</span>
+<span class="sd">        Behind the scenes this method calls index(..., op_type=&#39;create&#39;)</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-index_.html&gt;`_</span>
+<span class="sd">        :arg index: The name of the index</span>
+<span class="sd">        :arg doc_type: The type of the document</span>
+<span class="sd">        :arg doc_id: Document ID</span>
+<span class="sd">        :arg body: The document</span>
+<span class="sd">        :arg consistency: Explicit write consistency setting for the operation</span>
+<span class="sd">        :arg id: Specific document ID (when the POST method is used)</span>
+<span class="sd">        :arg parent: ID of the parent document</span>
+<span class="sd">        :arg percolate: Percolator queries to execute while indexing the document</span>
+<span class="sd">        :arg refresh: Refresh the index after performing the operation</span>
+<span class="sd">        :arg replication: Specific replication type (default: sync)</span>
+<span class="sd">        :arg routing: Specific routing value</span>
+<span class="sd">        :arg timeout: Explicit operation timeout</span>
+<span class="sd">        :arg timestamp: Explicit timestamp for the document</span>
+<span class="sd">        :arg ttl: Expiration time for the document</span>
+<span class="sd">        :arg version: Explicit version number for concurrency control</span>
+<span class="sd">        :arg version_type: Specific version type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">method</span> <span class="o">=</span> <span class="s">&#39;PUT&#39;</span> <span class="k">if</span> <span class="n">doc_id</span> <span class="k">else</span> <span class="s">&#39;POST&#39;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;consistency&#39;</span><span class="p">,</span> <span class="s">&#39;op_type&#39;</span><span class="p">,</span> <span class="s">&#39;parent&#39;</span><span class="p">,</span> <span class="s">&#39;refresh&#39;</span><span class="p">,</span>
+            <span class="s">&#39;replication&#39;</span><span class="p">,</span> <span class="s">&#39;routing&#39;</span><span class="p">,</span> <span class="s">&#39;timeout&#39;</span><span class="p">,</span> <span class="s">&#39;timestamp&#39;</span><span class="p">,</span> <span class="s">&#39;ttl&#39;</span><span class="p">,</span> <span class="s">&#39;version&#39;</span><span class="p">,</span>
+            <span class="s">&#39;version_type&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="n">doc_id</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="BaseClient.index"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.index">[docs]</a>    <span class="k">def</span> <span class="nf">index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">index</span><span class="p">,</span>
+            <span class="n">doc_type</span><span class="p">,</span>
+            <span class="n">body</span><span class="p">,</span>
+            <span class="n">doc_id</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="p">{},</span>
+            <span class="n">cb</span>     <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds or updates a typed JSON document in a specific index, making it searchable.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-index_.html&gt;`_</span>
+<span class="sd">        :arg index: The name of the index</span>
+<span class="sd">        :arg doc_type: The type of the document</span>
+<span class="sd">        :arg body: The document</span>
+<span class="sd">        :arg doc_id: Document ID</span>
+<span class="sd">        :arg consistency: Explicit write consistency setting for the operation</span>
+<span class="sd">        :arg op_type: Explicit operation type (default: index)</span>
+<span class="sd">        :arg parent: ID of the parent document</span>
+<span class="sd">        :arg refresh: Refresh the index after performing the operation</span>
+<span class="sd">        :arg replication: Specific replication type (default: sync)</span>
+<span class="sd">        :arg routing: Specific routing value</span>
+<span class="sd">        :arg timeout: Explicit operation timeout</span>
+<span class="sd">        :arg timestamp: Explicit timestamp for the document</span>
+<span class="sd">        :arg ttl: Expiration time for the document</span>
+<span class="sd">        :arg version: Explicit version number for concurrency control</span>
+<span class="sd">        :arg version_type: Specific version type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">method</span> <span class="o">=</span> <span class="s">&#39;PUT&#39;</span> <span class="k">if</span> <span class="n">doc_id</span> <span class="k">else</span> <span class="s">&#39;POST&#39;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;consistency&#39;</span><span class="p">,</span> <span class="s">&#39;op_type&#39;</span><span class="p">,</span> <span class="s">&#39;parent&#39;</span><span class="p">,</span> <span class="s">&#39;refresh&#39;</span><span class="p">,</span>
+            <span class="s">&#39;replication&#39;</span><span class="p">,</span> <span class="s">&#39;routing&#39;</span><span class="p">,</span> <span class="s">&#39;timeout&#39;</span><span class="p">,</span> <span class="s">&#39;timestamp&#39;</span><span class="p">,</span> <span class="s">&#39;ttl&#39;</span><span class="p">,</span> <span class="s">&#39;version&#39;</span><span class="p">,</span>
+            <span class="s">&#39;version_type&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="n">doc_id</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.exists"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.exists">[docs]</a>    <span class="k">def</span> <span class="nf">exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">doc_id</span><span class="p">,</span> <span class="n">doc_type</span><span class="o">=</span><span class="s">&#39;_all&#39;</span><span class="p">,</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a boolean indicating whether or not given document exists in Elasticsearch.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-get.html&gt;`_</span>
+<span class="sd">        :arg index: The name of the index</span>
+<span class="sd">        :arg doc_id: The document ID</span>
+<span class="sd">        :arg doc_type: The type of the document (uses `_all` by default to</span>
+<span class="sd">            fetch the first document matching the ID across all types)</span>
+<span class="sd">        :arg parent: The ID of the parent document</span>
+<span class="sd">        :arg preference: Specify the node or shard the operation should be</span>
+<span class="sd">            performed on (default: random)</span>
+<span class="sd">        :arg realtime: Specify whether to perform the operation in realtime or</span>
+<span class="sd">            search mode</span>
+<span class="sd">        :arg refresh: Refresh the shard containing the document before</span>
+<span class="sd">            performing the operation</span>
+<span class="sd">        :arg routing: Specific routing value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;parent&#39;</span><span class="p">,</span> <span class="s">&#39;preference&#39;</span><span class="p">,</span> <span class="s">&#39;realtime&#39;</span><span class="p">,</span> <span class="s">&#39;refresh&#39;</span><span class="p">,</span> <span class="s">&#39;routing&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="n">doc_id</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;HEAD&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.get"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">doc_id</span><span class="p">,</span> <span class="n">doc_type</span><span class="o">=</span><span class="s">&#39;_all&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a typed JSON document from the index based on its id.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-get.html&gt;`_</span>
+<span class="sd">        :arg index: The name of the index</span>
+<span class="sd">        :arg doc_id: The document ID</span>
+<span class="sd">        :arg doc_type: The type of the document (uses `_all` by default to</span>
+<span class="sd">            fetch the first document matching the ID across all types)</span>
+<span class="sd">        :arg _source: True or false to return the _source field or not, or a</span>
+<span class="sd">            list of fields to return</span>
+<span class="sd">        :arg _source_exclude: A list of fields to exclude from the returned</span>
+<span class="sd">            _source field</span>
+<span class="sd">        :arg _source_include: A list of fields to extract and return from the</span>
+<span class="sd">            _source field</span>
+<span class="sd">        :arg fields: A comma-separated list of fields to return in the response</span>
+<span class="sd">        :arg parent: The ID of the parent document</span>
+<span class="sd">        :arg preference: Specify the node or shard the operation should be</span>
+<span class="sd">            performed on (default: random)</span>
+<span class="sd">        :arg realtime: Specify whether to perform the operation in realtime or</span>
+<span class="sd">            search mode</span>
+<span class="sd">        :arg refresh: Refresh the shard containing the document before</span>
+<span class="sd">            performing the operation</span>
+<span class="sd">        :arg routing: Specific routing value</span>
+<span class="sd">        :arg version: Explicit version number for concurrency control</span>
+<span class="sd">        :arg version_type: Explicit version number for concurrency control</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;_source&#39;</span><span class="p">,</span> <span class="s">&#39;_source_exclude&#39;</span><span class="p">,</span> <span class="s">&#39;_source_include&#39;</span><span class="p">,</span>
+            <span class="s">&#39;fields&#39;</span><span class="p">,</span> <span class="s">&#39;parent&#39;</span><span class="p">,</span> <span class="s">&#39;preference&#39;</span><span class="p">,</span> <span class="s">&#39;realtime&#39;</span><span class="p">,</span> <span class="s">&#39;refresh&#39;</span><span class="p">,</span> <span class="s">&#39;routing&#39;</span><span class="p">,</span>
+            <span class="s">&#39;version&#39;</span><span class="p">,</span> <span class="s">&#39;version_type&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="n">doc_id</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.get_source"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.get_source">[docs]</a>    <span class="k">def</span> <span class="nf">get_source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">index</span><span class="p">,</span>
+            <span class="n">doc_id</span><span class="p">,</span>
+            <span class="n">doc_type</span> <span class="o">=</span> <span class="s">&#39;_all&#39;</span><span class="p">,</span>
+            <span class="n">params</span>   <span class="o">=</span> <span class="p">{},</span>
+            <span class="n">cb</span>       <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the source of a document by it&#39;s index, type and id.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-get.html&gt;`_</span>
+<span class="sd">        :arg index: The name of the index</span>
+<span class="sd">        :arg doc_type: The type of the document (uses `_all` by default to</span>
+<span class="sd">            fetch the first document matching the ID across all types)</span>
+<span class="sd">        :arg doc_id: The document ID</span>
+<span class="sd">        :arg _source: True or false to return the _source field or not, or a</span>
+<span class="sd">            list of fields to return</span>
+<span class="sd">        :arg _source_exclude: A list of fields to exclude from the returned</span>
+<span class="sd">            _source field</span>
+<span class="sd">        :arg _source_include: A list of fields to extract and return from the</span>
+<span class="sd">            _source field</span>
+<span class="sd">        :arg parent: The ID of the parent document</span>
+<span class="sd">        :arg preference: Specify the node or shard the operation should be</span>
+<span class="sd">            performed on (default: random)</span>
+<span class="sd">        :arg realtime: Specify whether to perform the operation in realtime or search mode</span>
+<span class="sd">        :arg refresh: Refresh the shard containing the document before</span>
+<span class="sd">            performing the operation</span>
+<span class="sd">        :arg routing: Specific routing value</span>
+<span class="sd">        :arg version: Explicit version number for concurrency control</span>
+<span class="sd">        :arg version_type: Explicit version number for concurrency control</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;_source&#39;</span><span class="p">,</span> <span class="s">&#39;_source_exclude&#39;</span><span class="p">,</span> <span class="s">&#39;_source_include&#39;</span><span class="p">,</span>
+            <span class="s">&#39;parent&#39;</span><span class="p">,</span> <span class="s">&#39;preference&#39;</span><span class="p">,</span> <span class="s">&#39;realtime&#39;</span><span class="p">,</span> <span class="s">&#39;refresh&#39;</span><span class="p">,</span> <span class="s">&#39;routing&#39;</span><span class="p">,</span> <span class="s">&#39;version&#39;</span><span class="p">,</span>
+            <span class="s">&#39;version_type&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="n">doc_id</span><span class="p">,</span> <span class="s">&#39;_source&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.mget"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.mget">[docs]</a>    <span class="k">def</span> <span class="nf">mget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">body</span><span class="p">,</span>
+            <span class="n">index</span>    <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">doc_type</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">params</span>   <span class="o">=</span> <span class="p">{},</span>
+            <span class="n">cb</span>       <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get multiple documents based on an index, type (optional) and ids.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-multi-get.html&gt;`_</span>
+<span class="sd">        :arg body: Document identifiers; can be either `docs` (containing full</span>
+<span class="sd">            document information) or `ids` (when index and type is provided in the URL.</span>
+<span class="sd">        :arg index: The name of the index</span>
+<span class="sd">        :arg doc_type: The type of the document</span>
+<span class="sd">        :arg _source: True or false to return the _source field or not, or a</span>
+<span class="sd">            list of fields to return</span>
+<span class="sd">        :arg _source_exclude: A list of fields to exclude from the returned</span>
+<span class="sd">            _source field</span>
+<span class="sd">        :arg _source_include: A list of fields to extract and return from the</span>
+<span class="sd">            _source field</span>
+<span class="sd">        :arg fields: A comma-separated list of fields to return in the response</span>
+<span class="sd">        :arg parent: The ID of the parent document</span>
+<span class="sd">        :arg preference: Specify the node or shard the operation should be</span>
+<span class="sd">            performed on (default: random)</span>
+<span class="sd">        :arg realtime: Specify whether to perform the operation in realtime or search mode</span>
+<span class="sd">        :arg refresh: Refresh the shard containing the document before</span>
+<span class="sd">            performing the operation</span>
+<span class="sd">        :arg routing: Specific routing value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;_source&#39;</span><span class="p">,</span> <span class="s">&#39;_source_exclude&#39;</span><span class="p">,</span> <span class="s">&#39;_source_include&#39;</span><span class="p">,</span>
+            <span class="s">&#39;fields&#39;</span><span class="p">,</span> <span class="s">&#39;parent&#39;</span><span class="p">,</span> <span class="s">&#39;preference&#39;</span><span class="p">,</span> <span class="s">&#39;realtime&#39;</span><span class="p">,</span> <span class="s">&#39;refresh&#39;</span><span class="p">,</span> <span class="s">&#39;routing&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="s">&#39;_mget&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.update"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">index</span><span class="p">,</span>
+            <span class="n">doc_type</span><span class="p">,</span>
+            <span class="n">doc_id</span><span class="p">,</span>
+            <span class="n">body</span>   <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="p">{},</span>
+            <span class="n">cb</span>     <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update a document based on a script or partial data provided.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-update.html&gt;`_</span>
+<span class="sd">        :arg index: The name of the index</span>
+<span class="sd">        :arg doc_type: The type of the document</span>
+<span class="sd">        :arg doc_id: Document ID</span>
+<span class="sd">        :arg body: The request definition using either `script` or partial `doc`</span>
+<span class="sd">        :arg consistency: Explicit write consistency setting for the operation</span>
+<span class="sd">        :arg fields: A comma-separated list of fields to return in the response</span>
+<span class="sd">        :arg lang: The script language (default: mvel)</span>
+<span class="sd">        :arg parent: ID of the parent document</span>
+<span class="sd">        :arg refresh: Refresh the index after performing the operation</span>
+<span class="sd">        :arg replication: Specific replication type (default: sync)</span>
+<span class="sd">        :arg retry_on_conflict: Specify how many times should the operation be</span>
+<span class="sd">            retried when a conflict occurs (default: 0)</span>
+<span class="sd">        :arg routing: Specific routing value</span>
+<span class="sd">        :arg script: The URL-encoded script definition (instead of using request body)</span>
+<span class="sd">        :arg timeout: Explicit operation timeout</span>
+<span class="sd">        :arg timestamp: Explicit timestamp for the document</span>
+<span class="sd">        :arg ttl: Expiration time for the document</span>
+<span class="sd">        :arg version: Explicit version number for concurrency control</span>
+<span class="sd">        :arg version_type: Explicit version number for concurrency control</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span><span class="p">(</span><span class="s">&#39;consistency&#39;</span><span class="p">,</span> <span class="s">&#39;fields&#39;</span><span class="p">,</span> <span class="s">&#39;lang&#39;</span><span class="p">,</span> <span class="s">&#39;parent&#39;</span><span class="p">,</span> <span class="s">&#39;refresh&#39;</span><span class="p">,</span>
+            <span class="s">&#39;replication&#39;</span><span class="p">,</span> <span class="s">&#39;retry_on_conflict&#39;</span><span class="p">,</span> <span class="s">&#39;routing&#39;</span><span class="p">,</span> <span class="s">&#39;script&#39;</span><span class="p">,</span> <span class="s">&#39;timeout&#39;</span><span class="p">,</span>
+            <span class="s">&#39;timestamp&#39;</span><span class="p">,</span> <span class="s">&#39;ttl&#39;</span><span class="p">,</span> <span class="s">&#39;version&#39;</span><span class="p">,</span> <span class="s">&#39;version_type&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="n">doc_id</span><span class="p">,</span> <span class="s">&#39;_update&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;POST&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="BaseClient.search"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.search">[docs]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">index</span>    <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">doc_type</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">body</span>     <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">params</span>   <span class="o">=</span> <span class="p">{},</span>
+            <span class="n">cb</span>       <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Execute a search query and get back search hits that match the query.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-search.html&gt;`_</span>
+<span class="sd">        :arg index: A comma-separated list of index names to search; use `_all`</span>
+<span class="sd">            or empty string to perform the operation on all indices</span>
+<span class="sd">        :arg doc_type: A comma-separated list of document types to search;</span>
+<span class="sd">            leave empty to perform the operation on all types</span>
+<span class="sd">        :arg body: The search definition using the Query DSL</span>
+<span class="sd">        :arg _source: True or false to return the _source field or not, or a</span>
+<span class="sd">            list of fields to return</span>
+<span class="sd">        :arg _source_exclude: A list of fields to exclude from the returned</span>
+<span class="sd">            _source field</span>
+<span class="sd">        :arg _source_include: A list of fields to extract and return from the</span>
+<span class="sd">            _source field</span>
+<span class="sd">        :arg analyze_wildcard: Specify whether wildcard and prefix queries</span>
+<span class="sd">            should be analyzed (default: false)</span>
+<span class="sd">        :arg analyzer: The analyzer to use for the query string</span>
+<span class="sd">        :arg default_operator: The default operator for query string query (AND</span>
+<span class="sd">            or OR) (default: OR)</span>
+<span class="sd">        :arg df: The field to use as default where no field prefix is given in</span>
+<span class="sd">            the query string</span>
+<span class="sd">        :arg explain: Specify whether to return detailed information about</span>
+<span class="sd">            score computation as part of a hit</span>
+<span class="sd">        :arg fields: A comma-separated list of fields to return as part of a hit</span>
+<span class="sd">        :arg indices_boost: Comma-separated list of index boosts</span>
+<span class="sd">        :arg lenient: Specify whether format-based query failures (such as</span>
+<span class="sd">            providing text to a numeric field) should be ignored</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all`</span>
+<span class="sd">            string or when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete</span>
+<span class="sd">            indices that are open, closed or both., default &#39;open&#39;</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be</span>
+<span class="sd">            ignored when unavailable (missing or closed)</span>
+<span class="sd">        :arg lowercase_expanded_terms: Specify whether query terms should be lowercased</span>
+<span class="sd">        :arg from\_: Starting offset (default: 0)</span>
+<span class="sd">        :arg preference: Specify the node or shard the operation should be</span>
+<span class="sd">            performed on (default: random)</span>
+<span class="sd">        :arg q: Query in the Lucene query string syntax</span>
+<span class="sd">        :arg routing: A comma-separated list of specific routing values</span>
+<span class="sd">        :arg scroll: Specify how long a consistent view of the index should be</span>
+<span class="sd">            maintained for scrolled search</span>
+<span class="sd">        :arg search_type: Search operation type</span>
+<span class="sd">        :arg size: Number of hits to return (default: 10)</span>
+<span class="sd">        :arg sort: A comma-separated list of &lt;field&gt;:&lt;direction&gt; pairs</span>
+<span class="sd">        :arg source: The URL-encoded request definition using the Query DSL</span>
+<span class="sd">            (instead of using request body)</span>
+<span class="sd">        :arg stats: Specific &#39;tag&#39; of the request for logging and statistical purposes</span>
+<span class="sd">        :arg suggest_field: Specify which field to use for suggestions</span>
+<span class="sd">        :arg suggest_mode: Specify suggest mode (default: missing)</span>
+<span class="sd">        :arg suggest_size: How many suggestions to return in response</span>
+<span class="sd">        :arg suggest_text: The source text for which the suggestions should be returned</span>
+<span class="sd">        :arg timeout: Explicit operation timeout</span>
+<span class="sd">        :arg version: Specify whether to return document version as part of a hit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;_source&#39;</span><span class="p">,</span> <span class="s">&#39;_source_exclude&#39;</span><span class="p">,</span> <span class="s">&#39;_source_include&#39;</span><span class="p">,</span>
+            <span class="s">&#39;analyze_wildcard&#39;</span><span class="p">,</span> <span class="s">&#39;analyzer&#39;</span><span class="p">,</span> <span class="s">&#39;default_operator&#39;</span><span class="p">,</span> <span class="s">&#39;df&#39;</span><span class="p">,</span> <span class="s">&#39;explain&#39;</span><span class="p">,</span>
+            <span class="s">&#39;fields&#39;</span><span class="p">,</span> <span class="s">&#39;indices_boost&#39;</span><span class="p">,</span> <span class="s">&#39;lenient&#39;</span><span class="p">,</span> <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span>
+            <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span>
+            <span class="s">&#39;lowercase_expanded_terms&#39;</span><span class="p">,</span> <span class="s">&#39;from_&#39;</span><span class="p">,</span> <span class="s">&#39;preference&#39;</span><span class="p">,</span> <span class="s">&#39;q&#39;</span><span class="p">,</span> <span class="s">&#39;routing&#39;</span><span class="p">,</span>
+            <span class="s">&#39;scroll&#39;</span><span class="p">,</span> <span class="s">&#39;search_type&#39;</span><span class="p">,</span> <span class="s">&#39;size&#39;</span><span class="p">,</span> <span class="s">&#39;sort&#39;</span><span class="p">,</span> <span class="s">&#39;source&#39;</span><span class="p">,</span> <span class="s">&#39;stats&#39;</span><span class="p">,</span>
+            <span class="s">&#39;suggest_field&#39;</span><span class="p">,</span> <span class="s">&#39;suggest_mode&#39;</span><span class="p">,</span> <span class="s">&#39;suggest_size&#39;</span><span class="p">,</span> <span class="s">&#39;suggest_text&#39;</span><span class="p">,</span>
+            <span class="s">&#39;timeout&#39;</span><span class="p">,</span> <span class="s">&#39;version&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="s">&#39;from_&#39;</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;from&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;from_&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">doc_type</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">index</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="s">&#39;_all&#39;</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="s">&#39;_search&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.search_shards"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.search_shards">[docs]</a>    <span class="k">def</span> <span class="nf">search_shards</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">index</span>    <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">doc_type</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">params</span>   <span class="o">=</span> <span class="p">{},</span>
+            <span class="n">cb</span>       <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The search shards api returns the indices and shards that a search</span>
+<span class="sd">        request would be executed against. This can give useful feedback for working</span>
+<span class="sd">        out issues or planning optimizations with routing and shard preferences.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-shards.html&gt;`_</span>
+<span class="sd">        :arg index: The name of the index</span>
+<span class="sd">        :arg doc_type: The type of the document</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all`</span>
+<span class="sd">            string or when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete</span>
+<span class="sd">            indices that are open, closed or both. (default: &#39;&quot;open&quot;&#39;)</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be</span>
+<span class="sd">            ignored when unavailable (missing or closed)</span>
+<span class="sd">        :arg local: Return local information, do not retrieve the state from</span>
+<span class="sd">            master node (default: false)</span>
+<span class="sd">        :arg preference: Specify the node or shard the operation should be</span>
+<span class="sd">            performed on (default: random)</span>
+<span class="sd">        :arg routing: Specific routing value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span><span class="p">(</span><span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span>
+            <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span> <span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="s">&#39;preference&#39;</span><span class="p">,</span> <span class="s">&#39;routing&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="s">&#39;_search_shards&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.search_template"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.search_template">[docs]</a>    <span class="k">def</span> <span class="nf">search_template</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">index</span>    <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">doc_type</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">body</span>     <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">params</span>   <span class="o">=</span> <span class="p">{},</span>
+            <span class="n">cb</span>       <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A query that accepts a query template and a map of key/value pairs to</span>
+<span class="sd">        fill in template parameters.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/query-dsl-template-query.html&gt;`_</span>
+<span class="sd">        :arg index: A comma-separated list of index names to search; use `_all`</span>
+<span class="sd">            or empty string to perform the operation on all indices</span>
+<span class="sd">        :arg doc_type: A comma-separated list of document types to search; leave</span>
+<span class="sd">            empty to perform the operation on all types</span>
+<span class="sd">        :arg body: The search definition template and its params</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all`</span>
+<span class="sd">            string or when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete</span>
+<span class="sd">            indices that are open, closed or both., default &#39;open&#39;</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be</span>
+<span class="sd">            ignored when unavailable (missing or closed)</span>
+<span class="sd">        :arg preference: Specify the node or shard the operation should be</span>
+<span class="sd">            performed on (default: random)</span>
+<span class="sd">        :arg routing: A comma-separated list of specific routing values</span>
+<span class="sd">        :arg scroll: Specify how long a consistent view of the index should be</span>
+<span class="sd">            maintained for scrolled search</span>
+<span class="sd">        :arg search_type: Search operation type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span>
+            <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span> <span class="s">&#39;preference&#39;</span><span class="p">,</span> <span class="s">&#39;routing&#39;</span><span class="p">,</span> <span class="s">&#39;scroll&#39;</span><span class="p">,</span>
+            <span class="s">&#39;search_type&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="s">&#39;_search&#39;</span><span class="p">,</span> <span class="s">&#39;template&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.explain"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.explain">[docs]</a>    <span class="k">def</span> <span class="nf">explain</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">index</span><span class="p">,</span>
+            <span class="n">doc_type</span><span class="p">,</span>
+            <span class="n">doc_id</span><span class="p">,</span>
+            <span class="n">body</span>   <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="p">{},</span>
+            <span class="n">cb</span>     <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The explain api computes a score explanation for a query and a specific</span>
+<span class="sd">        document. This can give useful feedback whether a document matches or</span>
+<span class="sd">        didn&#39;t match a specific query.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-explain.html&gt;`_</span>
+<span class="sd">        :arg index: The name of the index</span>
+<span class="sd">        :arg doc_type: The type of the document</span>
+<span class="sd">        :arg doc_id: The document ID</span>
+<span class="sd">        :arg body: The query definition using the Query DSL</span>
+<span class="sd">        :arg _source: True or false to return the _source field or not, or a</span>
+<span class="sd">            list of fields to return</span>
+<span class="sd">        :arg _source_exclude: A list of fields to exclude from the returned</span>
+<span class="sd">            _source field</span>
+<span class="sd">        :arg _source_include: A list of fields to extract and return from the</span>
+<span class="sd">            _source field</span>
+<span class="sd">        :arg analyze_wildcard: Specify whether wildcards and prefix queries in</span>
+<span class="sd">            the query string query should be analyzed (default: false)</span>
+<span class="sd">        :arg analyzer: The analyzer for the query string query</span>
+<span class="sd">        :arg default_operator: The default operator for query string query (AND</span>
+<span class="sd">            or OR), (default: OR)</span>
+<span class="sd">        :arg df: The default field for query string query (default: _all)</span>
+<span class="sd">        :arg fields: A comma-separated list of fields to return in the response</span>
+<span class="sd">        :arg lenient: Specify whether format-based query failures (such as</span>
+<span class="sd">            providing text to a numeric field) should be ignored</span>
+<span class="sd">        :arg lowercase_expanded_terms: Specify whether query terms should be lowercased</span>
+<span class="sd">        :arg parent: The ID of the parent document</span>
+<span class="sd">        :arg preference: Specify the node or shard the operation should be</span>
+<span class="sd">            performed on (default: random)</span>
+<span class="sd">        :arg q: Query in the Lucene query string syntax</span>
+<span class="sd">        :arg routing: Specific routing value</span>
+<span class="sd">        :arg source: The URL-encoded query definition (instead of using the</span>
+<span class="sd">            request body)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;_source&#39;</span><span class="p">,</span> <span class="s">&#39;_source_exclude&#39;</span><span class="p">,</span> <span class="s">&#39;_source_include&#39;</span><span class="p">,</span>
+            <span class="s">&#39;analyze_wildcard&#39;</span><span class="p">,</span> <span class="s">&#39;analyzer&#39;</span><span class="p">,</span> <span class="s">&#39;default_operator&#39;</span><span class="p">,</span> <span class="s">&#39;df&#39;</span><span class="p">,</span> <span class="s">&#39;fields&#39;</span><span class="p">,</span>
+            <span class="s">&#39;lenient&#39;</span><span class="p">,</span> <span class="s">&#39;lowercase_expanded_terms&#39;</span><span class="p">,</span> <span class="s">&#39;parent&#39;</span><span class="p">,</span> <span class="s">&#39;preference&#39;</span><span class="p">,</span> <span class="s">&#39;q&#39;</span><span class="p">,</span>
+            <span class="s">&#39;routing&#39;</span><span class="p">,</span> <span class="s">&#39;source&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="n">doc_id</span><span class="p">,</span> <span class="s">&#39;_explain&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="BaseClient.scroll"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.scroll">[docs]</a>    <span class="k">def</span> <span class="nf">scroll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scroll_id</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Scroll a search request created by specifying the scroll parameter.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-scroll.html&gt;`_</span>
+<span class="sd">        :arg scroll_id: The scroll ID</span>
+<span class="sd">        :arg scroll: Specify how long a consistent view of the index should be</span>
+<span class="sd">            maintained for scrolled search</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;scroll&#39;</span><span class="p">,)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;/_search/scroll&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">scroll_id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.clear_scroll"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.clear_scroll">[docs]</a>    <span class="k">def</span> <span class="nf">clear_scroll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">scroll_id</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">body</span>      <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">params</span>    <span class="o">=</span> <span class="p">{},</span>
+            <span class="n">cb</span>        <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clear the scroll request created by specifying the scroll parameter to</span>
+<span class="sd">        search.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-scroll.html&gt;`_</span>
+<span class="sd">        :arg scroll_id: The scroll ID or a list of scroll IDs</span>
+<span class="sd">        :arg body: A comma-separated list of scroll IDs to clear if none was</span>
+<span class="sd">            specified via the scroll_id parameter</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_search&#39;</span><span class="p">,</span> <span class="s">&#39;scroll&#39;</span><span class="p">,</span> <span class="n">scroll_id</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;DELETE&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.delete"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="n">doc_id</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete a typed JSON document from a specific index based on its id.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-delete.html&gt;`_</span>
+<span class="sd">        :arg index: The name of the index</span>
+<span class="sd">        :arg doc_type: The type of the document</span>
+<span class="sd">        :arg doc_id: The document ID</span>
+<span class="sd">        :arg consistency: Specific write consistency setting for the operation</span>
+<span class="sd">        :arg parent: ID of parent document</span>
+<span class="sd">        :arg refresh: Refresh the index after performing the operation</span>
+<span class="sd">        :arg replication: Specific replication type (default: sync)</span>
+<span class="sd">        :arg routing: Specific routing value</span>
+<span class="sd">        :arg timeout: Explicit operation timeout</span>
+<span class="sd">        :arg version: Explicit version number for concurrency control</span>
+<span class="sd">        :arg version_type: Specific version type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span><span class="p">(</span><span class="s">&#39;consistency&#39;</span><span class="p">,</span> <span class="s">&#39;parent&#39;</span><span class="p">,</span> <span class="s">&#39;refresh&#39;</span><span class="p">,</span> <span class="s">&#39;replication&#39;</span><span class="p">,</span>
+            <span class="s">&#39;routing&#39;</span><span class="p">,</span> <span class="s">&#39;timeout&#39;</span><span class="p">,</span> <span class="s">&#39;version&#39;</span><span class="p">,</span> <span class="s">&#39;version_type&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="n">doc_id</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;DELETE&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.count"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.count">[docs]</a>    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">index</span>    <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">doc_type</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">body</span>     <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">params</span>   <span class="o">=</span> <span class="p">{},</span>
+            <span class="n">cb</span>       <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Execute a query and get the number of matches for that query.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-count.html&gt;`_</span>
+<span class="sd">        :arg index: A comma-separated list of indices to restrict the results</span>
+<span class="sd">        :arg doc_type: A comma-separated list of types to restrict the results</span>
+<span class="sd">        :arg body: A query to restrict the results (optional)</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all`</span>
+<span class="sd">            string or when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete</span>
+<span class="sd">            indices that are open, closed or both., default &#39;open&#39;</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be</span>
+<span class="sd">            ignored when unavailable (missing or closed)</span>
+<span class="sd">        :arg min_score: Include only documents with a specific `_score` value in the result</span>
+<span class="sd">        :arg preference: Specify the node or shard the operation should be</span>
+<span class="sd">            performed on (default: random)</span>
+<span class="sd">        :arg q: Query in the Lucene query string syntax</span>
+<span class="sd">        :arg routing: Specific routing value</span>
+<span class="sd">        :arg source: The URL-encoded query definition (instead of using the request body)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span><span class="p">(</span><span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span>
+            <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span> <span class="s">&#39;min_score&#39;</span><span class="p">,</span> <span class="s">&#39;preference&#39;</span><span class="p">,</span> <span class="s">&#39;q&#39;</span><span class="p">,</span> <span class="s">&#39;routing&#39;</span><span class="p">,</span>
+            <span class="s">&#39;source&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="s">&#39;_count&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;POST&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="BaseClient.bulk"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.bulk">[docs]</a>    <span class="k">def</span> <span class="nf">bulk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">body</span><span class="p">,</span>
+            <span class="n">index</span>    <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">doc_type</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">params</span>   <span class="o">=</span> <span class="p">{},</span>
+            <span class="n">cb</span>       <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform many index/delete operations in a single API call.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-bulk.html&gt;`_</span>
+<span class="sd">        See the :func:`~elasticsearch.helpers.bulk` helper function for a more</span>
+<span class="sd">        friendly API.</span>
+<span class="sd">        :arg body: The operation definition and data (action-data pairs), as</span>
+<span class="sd">            either a newline separated string, or a sequence of dicts to</span>
+<span class="sd">            serialize (one per row).</span>
+<span class="sd">        :arg index: Default index for items which don&#39;t provide one</span>
+<span class="sd">        :arg doc_type: Default document type for items which don&#39;t provide one</span>
+<span class="sd">        :arg consistency: Explicit write consistency setting for the operation</span>
+<span class="sd">        :arg refresh: Refresh the index after performing the operation</span>
+<span class="sd">        :arg routing: Specific routing value</span>
+<span class="sd">        :arg replication: Explicitly set the replication type (default: sync)</span>
+<span class="sd">        :arg timeout: Explicit operation timeout</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span><span class="p">(</span>
+            <span class="s">&#39;consistency&#39;</span><span class="p">,</span> <span class="s">&#39;refresh&#39;</span><span class="p">,</span> <span class="s">&#39;routing&#39;</span><span class="p">,</span> <span class="s">&#39;replication&#39;</span><span class="p">,</span> <span class="s">&#39;timeout&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="s">&#39;_bulk&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;POST&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="BaseClient.msearch"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.msearch">[docs]</a>    <span class="k">def</span> <span class="nf">msearch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">body</span><span class="p">,</span>
+            <span class="n">index</span>    <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">doc_type</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">params</span>   <span class="o">=</span> <span class="p">{},</span>
+            <span class="n">cb</span>       <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Execute several search requests within the same API.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-multi-search.html&gt;`_</span>
+<span class="sd">        :arg body: The request definitions (metadata-search request definition</span>
+<span class="sd">            pairs), as either a newline separated string, or a sequence of</span>
+<span class="sd">            dicts to serialize (one per row).</span>
+<span class="sd">        :arg index: A comma-separated list of index names to use as default</span>
+<span class="sd">        :arg doc_type: A comma-separated list of document types to use as default</span>
+<span class="sd">        :arg search_type: Search operation type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;search_type&#39;</span><span class="p">,)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="s">&#39;_msearch&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="BaseClient.delete_by_query"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.delete_by_query">[docs]</a>    <span class="k">def</span> <span class="nf">delete_by_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">index</span><span class="p">,</span>
+            <span class="n">doc_type</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">body</span>     <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">params</span>   <span class="o">=</span> <span class="p">{},</span>
+            <span class="n">cb</span>       <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete documents from one or more indices and one or more types based on a query.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-delete-by-query.html&gt;`_</span>
+<span class="sd">        :arg index: A comma-separated list of indices to restrict the operation;</span>
+<span class="sd">            use `_all` to perform the operation on all indices</span>
+<span class="sd">        :arg doc_type: A comma-separated list of types to restrict the operation</span>
+<span class="sd">        :arg body: A query to restrict the operation specified with the Query</span>
+<span class="sd">            DSL</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all`</span>
+<span class="sd">            string or when no indices have been specified)</span>
+<span class="sd">        :arg analyzer: The analyzer to use for the query string</span>
+<span class="sd">        :arg consistency: Specific write consistency setting for the operation</span>
+<span class="sd">        :arg default_operator: The default operator for query string query (AND</span>
+<span class="sd">            or OR), default u&#39;OR&#39;</span>
+<span class="sd">        :arg df: The field to use as default where no field prefix is given in</span>
+<span class="sd">            the query string</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete</span>
+<span class="sd">            indices that are open, closed or both., default u&#39;open&#39;</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be</span>
+<span class="sd">            ignored when unavailable (missing or closed)</span>
+<span class="sd">        :arg q: Query in the Lucene query string syntax</span>
+<span class="sd">        :arg replication: Specific replication type, default u&#39;sync&#39;</span>
+<span class="sd">        :arg routing: Specific routing value</span>
+<span class="sd">        :arg source: The URL-encoded query definition (instead of using the</span>
+<span class="sd">            request body)</span>
+<span class="sd">        :arg timeout: Explicit operation timeout</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span><span class="p">(</span>
+            <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;analyzer&#39;</span><span class="p">,</span> <span class="s">&#39;consistency&#39;</span><span class="p">,</span> <span class="s">&#39;default_operator&#39;</span><span class="p">,</span>
+            <span class="s">&#39;df&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span> <span class="s">&#39;q&#39;</span><span class="p">,</span> <span class="s">&#39;replication&#39;</span><span class="p">,</span>
+            <span class="s">&#39;routing&#39;</span><span class="p">,</span> <span class="s">&#39;source&#39;</span><span class="p">,</span> <span class="s">&#39;timeout&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="s">&#39;_query&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;DELETE&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.suggest"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.suggest">[docs]</a>    <span class="k">def</span> <span class="nf">suggest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The suggest feature suggests similar looking terms based on a provided</span>
+<span class="sd">        text by using a suggester.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-search.html&gt;`_</span>
+<span class="sd">        :arg index: A comma-separated list of index names to restrict the operation;</span>
+<span class="sd">            use `_all` or empty string to perform the operation on all indices</span>
+<span class="sd">        :arg body: The request definition</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all`</span>
+<span class="sd">            string or when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete</span>
+<span class="sd">            indices that are open, closed or both., default &#39;open&#39;</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be</span>
+<span class="sd">            ignored when unavailable (missing or closed)</span>
+<span class="sd">        :arg preference: Specify the node or shard the operation should be</span>
+<span class="sd">            performed on (default: random)</span>
+<span class="sd">        :arg routing: Specific routing value</span>
+<span class="sd">        :arg source: The URL-encoded request definition (instead of using request body)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span>
+            <span class="s">&#39;preference&#39;</span><span class="p">,</span> <span class="s">&#39;routing&#39;</span><span class="p">,</span> <span class="s">&#39;source&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="s">&#39;_query&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;POST&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.percolate"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.percolate">[docs]</a>    <span class="k">def</span> <span class="nf">percolate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">index</span><span class="p">,</span>
+            <span class="n">doc_type</span><span class="p">,</span>
+            <span class="n">doc_id</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">body</span>   <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="p">{},</span>
+            <span class="n">cb</span>     <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The percolator allows to register queries against an index, and then</span>
+<span class="sd">        send percolate requests which include a doc, and getting back the</span>
+<span class="sd">        queries that match on that doc out of the set of registered queries.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-percolate.html&gt;`_</span>
+<span class="sd">        :arg index: The index of the document being percolated.</span>
+<span class="sd">        :arg doc_type: The type of the document being percolated.</span>
+<span class="sd">        :arg doc_id: Substitute the document in the request body with a document</span>
+<span class="sd">            that is known by the specified id. On top of the id, the index and</span>
+<span class="sd">            type parameter will be used to retrieve the document from within the</span>
+<span class="sd">            cluster.</span>
+<span class="sd">        :arg body: The percolator request definition using the percolate DSL</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all`</span>
+<span class="sd">            string or when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete</span>
+<span class="sd">            indices that are open, closed or both., default &#39;open&#39;</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be</span>
+<span class="sd">            ignored when unavailable (missing or closed)</span>
+<span class="sd">        :arg percolate_format: Return an array of matching query IDs instead of</span>
+<span class="sd">            objects</span>
+<span class="sd">        :arg percolate_index: The index to percolate the document into. Defaults</span>
+<span class="sd">            to index.</span>
+<span class="sd">        :arg percolate_type: The type to percolate document into. Defaults to</span>
+<span class="sd">            type.</span>
+<span class="sd">        :arg preference: Specify the node or shard the operation should be</span>
+<span class="sd">            performed on (default: random)</span>
+<span class="sd">        :arg routing: A comma-separated list of specific routing values</span>
+<span class="sd">        :arg version: Explicit version number for concurrency control</span>
+<span class="sd">        :arg version_type: Specific version type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span><span class="p">(</span>
+            <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span>
+            <span class="s">&#39;percolate_format&#39;</span><span class="p">,</span> <span class="s">&#39;percolate_index&#39;</span><span class="p">,</span> <span class="s">&#39;percolate_type&#39;</span><span class="p">,</span>
+            <span class="s">&#39;preference&#39;</span><span class="p">,</span> <span class="s">&#39;routing&#39;</span><span class="p">,</span> <span class="s">&#39;version&#39;</span><span class="p">,</span> <span class="s">&#39;version_type&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="n">doc_id</span><span class="p">,</span> <span class="s">&#39;_percolate&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.mpercolate"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.mpercolate">[docs]</a>    <span class="k">def</span> <span class="nf">mpercolate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">body</span><span class="p">,</span>
+            <span class="n">index</span>    <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">doc_type</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">params</span>   <span class="o">=</span> <span class="p">{},</span>
+            <span class="n">cb</span>       <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The percolator allows to register queries against an index, and then</span>
+<span class="sd">        send percolate requests which include a doc, and getting back the</span>
+<span class="sd">        queries that match on that doc out of the set of registered queries.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-percolate.html&gt;`_</span>
+<span class="sd">        :arg index: The index of the document being count percolated to use as</span>
+<span class="sd">            default</span>
+<span class="sd">        :arg doc_type: The type of the document being percolated to use as</span>
+<span class="sd">            default.</span>
+<span class="sd">        :arg body: The percolate request definitions (header &amp; body pair),</span>
+<span class="sd">            separated by newlines</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all`</span>
+<span class="sd">            string or when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete</span>
+<span class="sd">            indices that are open, closed or both., default &#39;open&#39;</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be</span>
+<span class="sd">            ignored when unavailable (missing or closed)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="s">&#39;_mpercolate&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.count_percolate"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.count_percolate">[docs]</a>    <span class="k">def</span> <span class="nf">count_percolate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">index</span><span class="p">,</span>
+            <span class="n">doc_type</span><span class="p">,</span>
+            <span class="n">doc_id</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">body</span>   <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="p">{},</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The percolator allows to register queries against an index, and then</span>
+<span class="sd">        send percolate requests which include a doc, and getting back the</span>
+<span class="sd">        queries that match on that doc out of the set of registered queries.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-percolate.html&gt;`_</span>
+<span class="sd">        :arg index: The index of the document being count percolated.</span>
+<span class="sd">        :arg doc_type: The type of the document being count percolated.</span>
+<span class="sd">        :arg doc_id: Substitute the document in the request body with a document</span>
+<span class="sd">            that is known by the specified id. On top of the id, the index and</span>
+<span class="sd">            type parameter will be used to retrieve the document from within the</span>
+<span class="sd">            cluster.</span>
+<span class="sd">        :arg body: The count percolator request definition using the percolate</span>
+<span class="sd">            DSL</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all`</span>
+<span class="sd">            string or when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete</span>
+<span class="sd">            indices that are open, closed or both., default &#39;open&#39;</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be</span>
+<span class="sd">            ignored when unavailable (missing or closed)</span>
+<span class="sd">        :arg percolate_index: The index to count percolate the document into.</span>
+<span class="sd">            Defaults to index.</span>
+<span class="sd">        :arg percolate_type: The type to count percolate document into. Defaults</span>
+<span class="sd">            to type.</span>
+<span class="sd">        :arg preference: Specify the node or shard the operation should be</span>
+<span class="sd">            performed on (default: random)</span>
+<span class="sd">        :arg routing: A comma-separated list of specific routing values</span>
+<span class="sd">        :arg version: Explicit version number for concurrency control</span>
+<span class="sd">        :arg version_type: Specific version type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span>
+            <span class="s">&#39;percolate_index&#39;</span><span class="p">,</span> <span class="s">&#39;percolate_type&#39;</span><span class="p">,</span> <span class="s">&#39;preference&#39;</span><span class="p">,</span> <span class="s">&#39;routing&#39;</span><span class="p">,</span>
+            <span class="s">&#39;version&#39;</span><span class="p">,</span> <span class="s">&#39;version_type&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="n">doc_id</span><span class="p">,</span> <span class="s">&#39;_percolate&#39;</span><span class="p">,</span> <span class="s">&#39;count&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.mlt"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.mlt">[docs]</a>    <span class="k">def</span> <span class="nf">mlt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">index</span><span class="p">,</span>
+            <span class="n">doc_type</span><span class="p">,</span>
+            <span class="n">doc_id</span><span class="p">,</span>
+            <span class="n">body</span>   <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="p">{},</span>
+            <span class="n">cb</span>     <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get documents that are &quot;like&quot; a specified document.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-more-like-this.html&gt;`_</span>
+<span class="sd">        :arg index: The name of the index</span>
+<span class="sd">        :arg doc_type: The type of the document (use `_all` to fetch the first</span>
+<span class="sd">            document matching the ID across all types)</span>
+<span class="sd">        :arg id: The document ID</span>
+<span class="sd">        :arg body: A specific search request definition</span>
+<span class="sd">        :arg boost_terms: The boost factor</span>
+<span class="sd">        :arg include: Whether to include the queried document from the response</span>
+<span class="sd">        :arg max_doc_freq: The word occurrence frequency as count: words with</span>
+<span class="sd">            higher occurrence in the corpus will be ignored</span>
+<span class="sd">        :arg max_query_terms: The maximum query terms to be included in the generated query</span>
+<span class="sd">        :arg max_word_length: The minimum length of the word: longer words will be ignored</span>
+<span class="sd">        :arg min_doc_freq: The word occurrence frequency as count: words with</span>
+<span class="sd">            lower occurrence in the corpus will be ignored</span>
+<span class="sd">        :arg min_term_freq: The term frequency as percent: terms with lower</span>
+<span class="sd">            occurence in the source document will be ignored</span>
+<span class="sd">        :arg min_word_length: The minimum length of the word: shorter words will be ignored</span>
+<span class="sd">        :arg mlt_fields: Specific fields to perform the query against</span>
+<span class="sd">        :arg percent_terms_to_match: How many terms have to match in order to</span>
+<span class="sd">            consider the document a match (default: 0.3)</span>
+<span class="sd">        :arg routing: Specific routing value</span>
+<span class="sd">        :arg search_from: The offset from which to return results</span>
+<span class="sd">        :arg search_indices: A comma-separated list of indices to perform the</span>
+<span class="sd">            query against (default: the index containing the document)</span>
+<span class="sd">        :arg search_query_hint: The search query hint</span>
+<span class="sd">        :arg search_scroll: A scroll search request definition</span>
+<span class="sd">        :arg search_size: The number of documents to return (default: 10)</span>
+<span class="sd">        :arg search_source: A specific search request definition (instead of</span>
+<span class="sd">            using the request body)</span>
+<span class="sd">        :arg search_type: Specific search type (eg. `dfs_then_fetch`, `count`, etc)</span>
+<span class="sd">        :arg search_types: A comma-separated list of types to perform the query</span>
+<span class="sd">            against (default: the same type as the document)</span>
+<span class="sd">        :arg stop_words: A list of stop words to be ignored</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span><span class="p">(</span><span class="s">&#39;boost_terms&#39;</span><span class="p">,</span> <span class="s">&#39;include&#39;</span><span class="p">,</span> <span class="s">&#39;max_doc_freq&#39;</span><span class="p">,</span>
+            <span class="s">&#39;max_query_terms&#39;</span><span class="p">,</span> <span class="s">&#39;max_word_length&#39;</span><span class="p">,</span> <span class="s">&#39;min_doc_freq&#39;</span><span class="p">,</span>
+            <span class="s">&#39;min_term_freq&#39;</span><span class="p">,</span> <span class="s">&#39;min_word_length&#39;</span><span class="p">,</span> <span class="s">&#39;mlt_fields&#39;</span><span class="p">,</span>
+            <span class="s">&#39;percent_terms_to_match&#39;</span><span class="p">,</span> <span class="s">&#39;routing&#39;</span><span class="p">,</span> <span class="s">&#39;search_from&#39;</span><span class="p">,</span>
+            <span class="s">&#39;search_indices&#39;</span><span class="p">,</span> <span class="s">&#39;search_query_hint&#39;</span><span class="p">,</span> <span class="s">&#39;search_scroll&#39;</span><span class="p">,</span>
+            <span class="s">&#39;search_size&#39;</span><span class="p">,</span> <span class="s">&#39;search_source&#39;</span><span class="p">,</span> <span class="s">&#39;search_type&#39;</span><span class="p">,</span> <span class="s">&#39;search_types&#39;</span><span class="p">,</span>
+            <span class="s">&#39;stop_words&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="n">doc_id</span><span class="p">,</span> <span class="s">&#39;_mlt&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.termvector"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.termvector">[docs]</a>    <span class="k">def</span> <span class="nf">termvector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">index</span><span class="p">,</span>
+            <span class="n">doc_type</span><span class="p">,</span>
+            <span class="n">doc_id</span><span class="p">,</span>
+            <span class="n">body</span>   <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="p">{},</span>
+            <span class="n">cb</span>     <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Added in 1.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-termvectors.html&gt;`_</span>
+<span class="sd">        :arg index: The index in which the document resides.</span>
+<span class="sd">        :arg doc_type: The type of the document.</span>
+<span class="sd">        :arg id: The id of the document.</span>
+<span class="sd">        :arg body: Define parameters. See documentation.</span>
+<span class="sd">        :arg field_statistics: Specifies if document count, sum of document</span>
+<span class="sd">            frequencies and sum of total term frequencies should be returned.,</span>
+<span class="sd">            default True</span>
+<span class="sd">        :arg fields: A comma-separated list of fields to return.</span>
+<span class="sd">        :arg offsets: Specifies if term offsets should be returned., default</span>
+<span class="sd">            True</span>
+<span class="sd">        :arg parent: Parent id of documents.</span>
+<span class="sd">        :arg payloads: Specifies if term payloads should be returned., default</span>
+<span class="sd">            True</span>
+<span class="sd">        :arg positions: Specifies if term positions should be returned., default</span>
+<span class="sd">            True</span>
+<span class="sd">        :arg preference: Specify the node or shard the operation should be</span>
+<span class="sd">            performed on (default: random).</span>
+<span class="sd">        :arg realtime: Specifies if request is real-time as opposed to near-</span>
+<span class="sd">            real-time (default: true).</span>
+<span class="sd">        :arg routing: Specific routing value.</span>
+<span class="sd">        :arg term_statistics: Specifies if total term frequency and document</span>
+<span class="sd">            frequency should be returned., default False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;field_statistics&#39;</span><span class="p">,</span> <span class="s">&#39;fields&#39;</span><span class="p">,</span> <span class="s">&#39;offsets&#39;</span><span class="p">,</span> <span class="s">&#39;parent&#39;</span><span class="p">,</span> <span class="s">&#39;payloads&#39;</span><span class="p">,</span>
+            <span class="s">&#39;positions&#39;</span><span class="p">,</span> <span class="s">&#39;preference&#39;</span><span class="p">,</span> <span class="s">&#39;realtime&#39;</span><span class="p">,</span> <span class="s">&#39;routing&#39;</span><span class="p">,</span> <span class="s">&#39;term_statistics&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="n">doc_id</span><span class="p">,</span> <span class="s">&#39;_termvector&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.mtermvectors"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.mtermvectors">[docs]</a>    <span class="k">def</span> <span class="nf">mtermvectors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">index</span>    <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">doc_type</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">body</span>     <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">params</span>   <span class="o">=</span> <span class="p">{},</span>
+            <span class="n">cb</span>       <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Multi termvectors API allows to get multiple termvectors based on an</span>
+<span class="sd">        index, type and id.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html&gt;`_</span>
+<span class="sd">        :arg index: The index in which the document resides.</span>
+<span class="sd">        :arg doc_type: The type of the document.</span>
+<span class="sd">        :arg body: Define ids, parameters or a list of parameters per document</span>
+<span class="sd">            here. You must at least provide a list of document ids. See</span>
+<span class="sd">            documentation.</span>
+<span class="sd">        :arg field_statistics: Specifies if document count, sum of document</span>
+<span class="sd">            frequencies and sum of total term frequencies should be returned.</span>
+<span class="sd">            Applies to all returned documents unless otherwise specified in body</span>
+<span class="sd">            &quot;params&quot; or &quot;docs&quot;., default True</span>
+<span class="sd">        :arg fields: A comma-separated list of fields to return. Applies to all</span>
+<span class="sd">            returned documents unless otherwise specified in body &quot;params&quot; or</span>
+<span class="sd">            &quot;docs&quot;.</span>
+<span class="sd">        :arg ids: A comma-separated list of documents ids. You must define ids</span>
+<span class="sd">            as parameter or set &quot;ids&quot; or &quot;docs&quot; in the request body</span>
+<span class="sd">        :arg offsets: Specifies if term offsets should be returned. Applies to</span>
+<span class="sd">            all returned documents unless otherwise specified in body &quot;params&quot;</span>
+<span class="sd">            or &quot;docs&quot;., default True</span>
+<span class="sd">        :arg parent: Parent id of documents. Applies to all returned documents</span>
+<span class="sd">            unless otherwise specified in body &quot;params&quot; or &quot;docs&quot;.</span>
+<span class="sd">        :arg payloads: Specifies if term payloads should be returned. Applies to</span>
+<span class="sd">            all returned documents unless otherwise specified in body &quot;params&quot;</span>
+<span class="sd">            or &quot;docs&quot;., default True</span>
+<span class="sd">        :arg positions: Specifies if term positions should be returned. Applies</span>
+<span class="sd">            to all returned documents unless otherwise specified in body</span>
+<span class="sd">            &quot;params&quot; or &quot;docs&quot;., default True</span>
+<span class="sd">        :arg preference: Specify the node or shard the operation should be</span>
+<span class="sd">            performed on (default: random) .Applies to all returned documents</span>
+<span class="sd">            unless otherwise specified in body &quot;params&quot; or &quot;docs&quot;.</span>
+<span class="sd">        :arg routing: Specific routing value. Applies to all returned documents</span>
+<span class="sd">            unless otherwise specified in body &quot;params&quot; or &quot;docs&quot;.</span>
+<span class="sd">        :arg term_statistics: Specifies if total term frequency and document</span>
+<span class="sd">            frequency should be returned. Applies to all returned documents</span>
+<span class="sd">            unless otherwise specified in body &quot;params&quot; or &quot;docs&quot;., default</span>
+<span class="sd">            False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span><span class="p">(</span>
+            <span class="s">&#39;field_statistics&#39;</span><span class="p">,</span> <span class="s">&#39;fields&#39;</span><span class="p">,</span> <span class="s">&#39;ids&#39;</span><span class="p">,</span> <span class="s">&#39;offsets&#39;</span><span class="p">,</span> <span class="s">&#39;parent&#39;</span><span class="p">,</span>
+            <span class="s">&#39;payloads&#39;</span><span class="p">,</span> <span class="s">&#39;positions&#39;</span><span class="p">,</span> <span class="s">&#39;preference&#39;</span><span class="p">,</span> <span class="s">&#39;routing&#39;</span><span class="p">,</span> <span class="s">&#39;term_statistics&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="s">&#39;_mtermvectors&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="BaseClient.benchmark"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.benchmark">[docs]</a>    <span class="k">def</span> <span class="nf">benchmark</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">index</span>    <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">doc_type</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">body</span>     <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">params</span>   <span class="o">=</span> <span class="p">{},</span>
+            <span class="n">cb</span>       <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The benchmark API provides a standard mechanism for submitting queries</span>
+<span class="sd">        and measuring their performance relative to one another.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html&gt;`_</span>
+<span class="sd">        :arg index: A comma-separated list of index names; use `_all` or empty</span>
+<span class="sd">            string to perform the operation on all indices</span>
+<span class="sd">        :arg doc_type: The name of the document type</span>
+<span class="sd">        :arg body: The search definition using the Query DSL</span>
+<span class="sd">        :arg verbose: Specify whether to return verbose statistics about each</span>
+<span class="sd">            iteration (default: false)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;verbose&#39;</span><span class="p">,)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="s">&#39;_bench&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;PUT&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.abort_benchmark"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.abort_benchmark">[docs]</a>    <span class="k">def</span> <span class="nf">abort_benchmark</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Aborts a running benchmark.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html&gt;`_</span>
+<span class="sd">        :arg name: A benchmark name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_bench&#39;</span><span class="p">,</span> <span class="s">&#39;abort&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;POST&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.list_benchmarks"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.list_benchmarks">[docs]</a>    <span class="k">def</span> <span class="nf">list_benchmarks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">index</span>    <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">doc_type</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="n">params</span>   <span class="o">=</span> <span class="p">{},</span>
+            <span class="n">cb</span>       <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        View the progress of long-running benchmarks.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html&gt;`_</span>
+<span class="sd">        :arg index: A comma-separated list of index names; use `_all` or empty</span>
+<span class="sd">            string to perform the operation on all indices</span>
+<span class="sd">        :arg doc_type: The name of the document type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="s">&#39;_bench&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.put_script"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.put_script">[docs]</a>    <span class="k">def</span> <span class="nf">put_script</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lang</span><span class="p">,</span> <span class="n">script_id</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a script in given language with specified ID.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-scripting.html&gt;`_</span>
+<span class="sd">        :arg lang: Script language</span>
+<span class="sd">        :arg script_id: Script ID</span>
+<span class="sd">        :arg body: The document</span>
+<span class="sd">        :arg op_type: Explicit operation type, default u&#39;index&#39;</span>
+<span class="sd">        :arg version: Explicit version number for concurrency control</span>
+<span class="sd">        :arg version_type: Specific version type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;op_type&#39;</span><span class="p">,</span> <span class="s">&#39;version&#39;</span><span class="p">,</span> <span class="s">&#39;version_type&#39;</span><span class="p">,)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_scripts&#39;</span><span class="p">,</span> <span class="n">lang</span><span class="p">,</span> <span class="n">script_id</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;PUT&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.get_script"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.get_script">[docs]</a>    <span class="k">def</span> <span class="nf">get_script</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lang</span><span class="p">,</span> <span class="n">script_id</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve a script from the API.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-scripting.html&gt;`_</span>
+<span class="sd">        :arg lang: Script language</span>
+<span class="sd">        :arg script_id: Script ID</span>
+<span class="sd">        :arg version: Explicit version number for concurrency control</span>
+<span class="sd">        :arg version_type: Specific version type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;version&#39;</span><span class="p">,</span> <span class="s">&#39;version_type&#39;</span><span class="p">,)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_scripts&#39;</span><span class="p">,</span> <span class="n">lang</span><span class="p">,</span> <span class="n">script_id</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.delete_script"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.delete_script">[docs]</a>    <span class="k">def</span> <span class="nf">delete_script</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lang</span><span class="p">,</span> <span class="n">script_id</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove a stored script from elasticsearch.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-scripting.html&gt;`_</span>
+<span class="sd">        :arg lang: Script language</span>
+<span class="sd">        :arg script_id: Script ID</span>
+<span class="sd">        :arg version: Explicit version number for concurrency control</span>
+<span class="sd">        :arg version_type: Specific version type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;version&#39;</span><span class="p">,</span> <span class="s">&#39;version_type&#39;</span><span class="p">,)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_scripts&#39;</span><span class="p">,</span> <span class="n">lang</span><span class="p">,</span> <span class="n">script_id</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;DELETE&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.put_template"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.put_template">[docs]</a>    <span class="k">def</span> <span class="nf">put_template</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp_id</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a search template.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-template.html&gt;`_</span>
+<span class="sd">        :arg temp_id: Template ID</span>
+<span class="sd">        :arg body: The document</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_search&#39;</span><span class="p">,</span> <span class="s">&#39;template&#39;</span><span class="p">,</span> <span class="n">temp_id</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;PUT&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.get_template"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.get_template">[docs]</a>    <span class="k">def</span> <span class="nf">get_template</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp_id</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve a search template.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-template.html&gt;`_</span>
+<span class="sd">        :arg temp_id: Template ID</span>
+<span class="sd">        :arg body: The document</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_search&#39;</span><span class="p">,</span> <span class="s">&#39;template&#39;</span><span class="p">,</span> <span class="n">temp_id</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BaseClient.delete_template"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.client.BaseClient.delete_template">[docs]</a>    <span class="k">def</span> <span class="nf">delete_template</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete a search template.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-template.html&gt;`_</span>
+<span class="sd">        :arg temp_id: Template ID</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_search&#39;</span><span class="p">,</span> <span class="s">&#39;template&#39;</span><span class="p">,</span> <span class="n">temp_id</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;DELETE&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">elasticsearch_tornado  documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../elasticsearch_tornado.html" >elasticsearch_tornado</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3b2.
+    </div>
+  </body>
+</html>

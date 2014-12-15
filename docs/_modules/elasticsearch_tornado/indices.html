@@ -1,0 +1,1121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>elasticsearch_tornado.indices &mdash; elasticsearch_tornado  documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="elasticsearch_tornado  documentation" href="../../index.html" />
+    <link rel="up" title="elasticsearch_tornado" href="../elasticsearch_tornado.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">elasticsearch_tornado  documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../elasticsearch_tornado.html" accesskey="U">elasticsearch_tornado</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for elasticsearch_tornado.indices</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">client</span> <span class="kn">import</span> <span class="n">BaseClient</span>
+
+
+<div class="viewcode-block" id="IndicesClient"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient">[docs]</a><span class="k">class</span> <span class="nc">IndicesClient</span><span class="p">(</span><span class="n">BaseClient</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">IndicesClient</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="IndicesClient.analyze"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.analyze">[docs]</a>    <span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform the analysis process on a text and return the tokens breakdown of the text.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-analyze.html&gt;`_</span>
+
+<span class="sd">        :arg index: The name of the index to scope the operation</span>
+<span class="sd">        :arg body: The text on which the analysis should be performed</span>
+<span class="sd">        :arg analyzer: The name of the analyzer to use</span>
+<span class="sd">        :arg char_filters: A comma-separated list of character filters to use</span>
+<span class="sd">            for the analysis</span>
+<span class="sd">        :arg field: Use the analyzer configured for this field (instead of</span>
+<span class="sd">            passing the analyzer name)</span>
+<span class="sd">        :arg filters: A comma-separated list of filters to use for the analysis</span>
+<span class="sd">        :arg format: Format of the output, default u&#39;detailed&#39;</span>
+<span class="sd">        :arg index: The name of the index to scope the operation</span>
+<span class="sd">        :arg prefer_local: With `true`, specify that a local shard should be</span>
+<span class="sd">            used if available, with `false`, use a random shard (default: true)</span>
+<span class="sd">        :arg text: The text on which the analysis should be performed (when</span>
+<span class="sd">            request body is not used)</span>
+<span class="sd">        :arg tokenizer: The name of the tokenizer to use for the analysis</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;analyzer&#39;</span><span class="p">,</span> <span class="s">&#39;char_filters&#39;</span><span class="p">,</span> <span class="s">&#39;field&#39;</span><span class="p">,</span> <span class="s">&#39;filters&#39;</span><span class="p">,</span> <span class="s">&#39;format&#39;</span><span class="p">,</span> <span class="s">&#39;index&#39;</span><span class="p">,</span>
+            <span class="s">&#39;prefer_local&#39;</span><span class="p">,</span> <span class="s">&#39;text&#39;</span><span class="p">,</span> <span class="s">&#39;tokenizer&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s">&#39;_analyze&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.refresh"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.refresh">[docs]</a>    <span class="k">def</span> <span class="nf">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Explicitly refresh one or more index, making all operations performed</span>
+<span class="sd">        since the last refresh available for search.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-refresh.html&gt;`_</span>
+
+<span class="sd">        :arg index: A comma-separated list of index names; use `_all` or empty</span>
+<span class="sd">            string to perform the operation on all indices</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all` string or</span>
+<span class="sd">            when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete indices</span>
+<span class="sd">            that are open, closed or both.</span>
+<span class="sd">        :arg ignore_indices: When performed on multiple indices, allows to</span>
+<span class="sd">            ignore `missing` ones, default u&#39;none&#39;</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be ignored</span>
+<span class="sd">            when unavailable (missing or closed)</span>
+<span class="sd">        :arg force: Force a refresh even if not required</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_indices&#39;</span><span class="p">,</span>
+            <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span> <span class="s">&#39;force&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s">&#39;_refresh&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;POST&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.flush"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.flush">[docs]</a>    <span class="k">def</span> <span class="nf">flush</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Explicitly flush one or more indices.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-flush.html&gt;`_</span>
+
+<span class="sd">        :arg index: A comma-separated list of index names; use `_all` or empty</span>
+<span class="sd">            string for all indices</span>
+<span class="sd">        :arg force: Whether a flush should be forced even if it is not</span>
+<span class="sd">            necessarily needed ie. if no changes will be committed to the index.</span>
+<span class="sd">        :arg full: If set to true a new index writer is created and settings</span>
+<span class="sd">            that have been changed related to the index writer will be refreshed.</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all` string or</span>
+<span class="sd">            when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete indices</span>
+<span class="sd">            that are open, closed or both.</span>
+<span class="sd">        :arg ignore_indices: When performed on multiple indices, allows to</span>
+<span class="sd">            ignore `missing` ones (default: none)</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be ignored</span>
+<span class="sd">            when unavailable (missing or closed)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;force&#39;</span><span class="p">,</span> <span class="s">&#39;full&#39;</span><span class="p">,</span> <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span>
+            <span class="s">&#39;ignore_indices&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s">&#39;_flush&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;POST&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.create"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create an index in Elasticsearch.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-create-index.html&gt;`_</span>
+
+<span class="sd">        :arg index: The name of the index</span>
+<span class="sd">        :arg body: The configuration for the index (`settings` and `mappings`)</span>
+<span class="sd">        :arg master_timeout: Specify timeout for connection to master</span>
+<span class="sd">        :arg timeout: Explicit operation timeout</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;timeout&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;PUT&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.get"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">feature</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-get.html&gt;`_</span>
+
+<span class="sd">        :arg index: A comma-separated list of index names</span>
+<span class="sd">        :arg feature: A comma-separated list of features</span>
+<span class="sd">        :arg allow_no_indices: Ignore if a wildcard expression resolves to no</span>
+<span class="sd">            concrete indices (default: false)</span>
+<span class="sd">        :arg expand_wildcards: Whether wildcard expressions should get expanded</span>
+<span class="sd">            to open or closed indices (default: open)</span>
+<span class="sd">        :arg ignore_unavailable: Ignore unavailable indexes (default: false)</span>
+<span class="sd">        :arg local: Return local information, do not retrieve the state from</span>
+<span class="sd">            master node (default: false)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span>
+            <span class="s">&#39;local&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">feature</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.open"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.open">[docs]</a>    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Open a closed index to make it available for search.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-open-close.html&gt;`_</span>
+
+<span class="sd">        :arg index: The name of the index</span>
+<span class="sd">        :arg master_timeout: Specify timeout for connection to master</span>
+<span class="sd">        :arg timeout: Explicit operation timeout</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all` string or</span>
+<span class="sd">            when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete indices</span>
+<span class="sd">            that are open, closed or both.</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be ignored</span>
+<span class="sd">            when unavailable (missing or closed)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;timeout&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span> <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span>
+            <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s">&#39;_open&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;POST&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.close"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Close an index to remove it&#39;s overhead from the cluster. Closed index</span>
+<span class="sd">        is blocked for read/write operations.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-open-close.html&gt;`_</span>
+
+<span class="sd">        :arg index: A comma-separated list of indices to close; use `_all` or</span>
+<span class="sd">            &#39;*&#39; to close all indices</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all`</span>
+<span class="sd">            string or when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete</span>
+<span class="sd">            indices that are open, closed or both., default u&#39;open&#39;</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be</span>
+<span class="sd">            ignored when unavailable (missing or closed)</span>
+<span class="sd">        :arg master_timeout: Specify timeout for connection to master</span>
+<span class="sd">        :arg timeout: Explicit operation timeout</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span>
+            <span class="s">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s">&#39;timeout&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s">&#39;_close&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;POST&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.delete"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete an index in Elasticsearch</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-delete-index.html&gt;`_</span>
+
+<span class="sd">        :arg index: A comma-separated list of indices to delete; use `_all` or</span>
+<span class="sd">            &#39;*&#39; to delete all indices</span>
+<span class="sd">        :arg master_timeout: Specify timeout for connection to master</span>
+<span class="sd">        :arg timeout: Explicit operation timeout</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;timeout&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;DELETE&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.exists"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.exists">[docs]</a>    <span class="k">def</span> <span class="nf">exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a boolean indicating whether given index exists.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-indices-exists.html&gt;`_</span>
+
+<span class="sd">        :arg index: A list of indices to check</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all`</span>
+<span class="sd">            string or when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete</span>
+<span class="sd">            indices that are open, closed or both., default u&#39;open&#39;</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be</span>
+<span class="sd">            ignored when unavailable (missing or closed)</span>
+<span class="sd">        :arg local: Return local information, do not retrieve the state from</span>
+<span class="sd">            master node (default: false)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span>
+            <span class="s">&#39;local&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;HEAD&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.exists_type"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.exists_type">[docs]</a>    <span class="k">def</span> <span class="nf">exists_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if a type/types exists in an index/indices.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-types-exists.html&gt;`_</span>
+
+<span class="sd">        :arg index: A comma-separated list of index names; use `_all` to check</span>
+<span class="sd">            the types across all indices</span>
+<span class="sd">        :arg doc_type: A comma-separated list of document types to check</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all` string or</span>
+<span class="sd">            when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete indices</span>
+<span class="sd">            that are open, closed or both.</span>
+<span class="sd">        :arg ignore_indices: When performed on multiple indices, allows to</span>
+<span class="sd">            ignore `missing` ones (default: none)</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be ignored</span>
+<span class="sd">            when unavailable (missing or closed)</span>
+<span class="sd">        :arg local: Return local information, do not retrieve the state from</span>
+<span class="sd">            master node (default: false)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_indices&#39;</span><span class="p">,</span>
+            <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span> <span class="s">&#39;local&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;HEAD&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.put_mapping"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.put_mapping">[docs]</a>    <span class="k">def</span> <span class="nf">put_mapping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Register specific mapping definition for a specific type.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-put-mapping.html&gt;`_</span>
+
+<span class="sd">        :arg index: A comma-separated list of index names the alias should</span>
+<span class="sd">            point to (supports wildcards); use `_all` or omit to perform the</span>
+<span class="sd">            operation on all indices.</span>
+<span class="sd">        :arg doc_type: The name of the document type</span>
+<span class="sd">        :arg body: The mapping definition</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all`</span>
+<span class="sd">            string or when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete</span>
+<span class="sd">            indices that are open, closed or both., default u&#39;open&#39;</span>
+<span class="sd">        :arg ignore_conflicts: Specify whether to ignore conflicts while</span>
+<span class="sd">            updating the mapping (default: false)</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be</span>
+<span class="sd">            ignored when unavailable (missing or closed)</span>
+<span class="sd">        :arg master_timeout: Specify timeout for connection to master</span>
+<span class="sd">        :arg timeout: Explicit operation timeout</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span><span class="p">(</span>
+            <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_conflicts&#39;</span><span class="p">,</span>
+            <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s">&#39;timeout&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s">&#39;_mapping&#39;</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;PUT&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.get_mapping"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.get_mapping">[docs]</a>    <span class="k">def</span> <span class="nf">get_mapping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">doc_type</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve mapping definition of index or index/type.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-get-mapping.html&gt;`_</span>
+
+<span class="sd">        :arg index: A comma-separated list of index names; use `_all` or empty</span>
+<span class="sd">            string for all indices</span>
+<span class="sd">        :arg doc_type: A comma-separated list of document types</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all` string or</span>
+<span class="sd">            when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete indices</span>
+<span class="sd">            that are open, closed or both.</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be ignored</span>
+<span class="sd">            when unavailable (missing or closed)</span>
+<span class="sd">        :arg local: Return local information, do not retrieve the state from</span>
+<span class="sd">            master node (default: false)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span> <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span>
+            <span class="s">&#39;local&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s">&#39;_mapping&#39;</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.get_field_mapping"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.get_field_mapping">[docs]</a>    <span class="k">def</span> <span class="nf">get_field_mapping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">doc_type</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve mapping definition of a specific field.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-get-field-mapping.html&gt;`_</span>
+
+<span class="sd">        :arg index: A comma-separated list of index names; use `_all` or empty</span>
+<span class="sd">            string for all indices</span>
+<span class="sd">        :arg doc_type: A comma-separated list of document types</span>
+<span class="sd">        :arg field: A comma-separated list of fields to retrieve the mapping for</span>
+<span class="sd">        :arg include_defaults: A boolean indicating whether to return default values</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all` string or</span>
+<span class="sd">            when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete indices</span>
+<span class="sd">            that are open, closed or both.</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be ignored</span>
+<span class="sd">            when unavailable (missing or closed)</span>
+<span class="sd">        :arg local: Return local information, do not retrieve the state from</span>
+<span class="sd">            master node (default: false)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;include_defaults&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span> <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span>
+            <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span> <span class="s">&#39;local&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s">&#39;_mapping&#39;</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="s">&#39;field&#39;</span><span class="p">,</span> <span class="n">field</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.delete_mapping"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.delete_mapping">[docs]</a>    <span class="k">def</span> <span class="nf">delete_mapping</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete a mapping (type) along with its data.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-delete-mapping.html&gt;`_</span>
+
+<span class="sd">        :arg index: A comma-separated list of index names (supports wildcard);</span>
+<span class="sd">            use `_all` for all indices</span>
+<span class="sd">        :arg doc_type: A comma-separated list of document types to delete</span>
+<span class="sd">            (supports wildcards); use `_all` to delete all document types in the</span>
+<span class="sd">            specified indices.</span>
+<span class="sd">        :arg master_timeout: Specify timeout for connection to master</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;master_timeout&#39;</span><span class="p">,)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s">&#39;_mapping&#39;</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;DELETE&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.put_alias"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.put_alias">[docs]</a>    <span class="k">def</span> <span class="nf">put_alias</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create an alias for a specific index/indices.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-aliases.html&gt;`_</span>
+
+<span class="sd">        :arg index: A comma-separated list of index names the alias should</span>
+<span class="sd">            point to (supports wildcards); use `_all` or omit to perform the</span>
+<span class="sd">            operation on all indices.</span>
+<span class="sd">        :arg name: The name of the alias to be created or updated</span>
+<span class="sd">        :arg body: The settings for the alias, such as `routing` or `filter`</span>
+<span class="sd">        :arg master_timeout: Specify timeout for connection to master</span>
+<span class="sd">        :arg timeout: Explicit timestamp for the document</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;timeout&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s">&#39;_alias&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;PUT&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.exists_alias"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.exists_alias">[docs]</a>    <span class="k">def</span> <span class="nf">exists_alias</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a boolean indicating whether given alias exists.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-aliases.html&gt;`_</span>
+
+<span class="sd">        :arg name: A comma-separated list of alias names to return</span>
+<span class="sd">        :arg index: A comma-separated list of index names to filter aliases</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all` string or</span>
+<span class="sd">            when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete indices</span>
+<span class="sd">            that are open, closed or both.</span>
+<span class="sd">        :arg ignore_indices: When performed on multiple indices, allows to</span>
+<span class="sd">            ignore `missing` ones (default: none)</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be ignored</span>
+<span class="sd">            when unavailable (missing or closed)</span>
+<span class="sd">        :arg local: Return local information, do not retrieve the state from</span>
+<span class="sd">            master node (default: false)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_indices&#39;</span><span class="p">,</span>
+            <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span> <span class="s">&#39;local&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s">&#39;_alias&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;HEAD&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.get_alias"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.get_alias">[docs]</a>    <span class="k">def</span> <span class="nf">get_alias</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve a specified alias.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-aliases.html&gt;`_</span>
+
+<span class="sd">        :arg name: A comma-separated list of alias names to return</span>
+<span class="sd">        :arg index: A comma-separated list of index names to filter aliases</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all` string or</span>
+<span class="sd">            when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete indices</span>
+<span class="sd">            that are open, closed or both.</span>
+<span class="sd">        :arg ignore_indices: When performed on multiple indices, allows to</span>
+<span class="sd">            ignore `missing` ones, default u&#39;none&#39;</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be ignored</span>
+<span class="sd">            when unavailable (missing or closed)</span>
+<span class="sd">        :arg local: Return local information, do not retrieve the state from</span>
+<span class="sd">            master node (default: false)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_indices&#39;</span><span class="p">,</span>
+            <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span> <span class="s">&#39;local&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s">&#39;_alias&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.get_aliases"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.get_aliases">[docs]</a>    <span class="k">def</span> <span class="nf">get_aliases</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve specified aliases</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-aliases.html&gt;`_</span>
+<span class="sd">        :arg index: A comma-separated list of index names to filter aliases</span>
+<span class="sd">        :arg name: A comma-separated list of alias names to filter</span>
+<span class="sd">        :arg local: Return local information, do not retrieve the state from</span>
+<span class="sd">            master node (default: false)</span>
+<span class="sd">        :arg timeout: Explicit operation timeout</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="s">&#39;timeout&#39;</span><span class="p">,)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s">&#39;_aliases&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.update_aliases"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.update_aliases">[docs]</a>    <span class="k">def</span> <span class="nf">update_aliases</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update specified aliases.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-aliases.html&gt;`_</span>
+
+<span class="sd">        :arg body: The definition of `actions` to perform</span>
+<span class="sd">        :arg master_timeout: Specify timeout for connection to master</span>
+<span class="sd">        :arg timeout: Request timeout</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;timeout&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_aliases&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;Post&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.delete_alias"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.delete_alias">[docs]</a>    <span class="k">def</span> <span class="nf">delete_alias</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete specific alias.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-aliases.html&gt;`_</span>
+
+<span class="sd">        :arg index: A comma-separated list of index names (supports wildcards);</span>
+<span class="sd">            use `_all` for all indices</span>
+<span class="sd">        :arg name: A comma-separated list of aliases to delete (supports</span>
+<span class="sd">            wildcards); use `_all` to delete all aliases for the specified indices.</span>
+<span class="sd">        :arg master_timeout: Specify timeout for connection to master</span>
+<span class="sd">        :arg timeout: Explicit timestamp for the document</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;timeout&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s">&#39;_alias&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;DELETE&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.put_template"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.put_template">[docs]</a>    <span class="k">def</span> <span class="nf">put_template</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create an index template that will automatically be applied to new</span>
+<span class="sd">        indices created.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-templates.html&gt;`_</span>
+
+<span class="sd">        :arg name: The name of the template</span>
+<span class="sd">        :arg body: The template definition</span>
+<span class="sd">        :arg create: Whether the index template should only be added if new or</span>
+<span class="sd">            can also replace an existing one</span>
+<span class="sd">        :arg order: The order for this template when merging multiple matching</span>
+<span class="sd">            ones (higher numbers are merged later, overriding the lower numbers)</span>
+<span class="sd">        :arg master_timeout: Specify timeout for connection to master</span>
+<span class="sd">        :arg timeout: Explicit operation timeout</span>
+<span class="sd">        :arg flat_settings: Return settings in flat format (default: false)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;create&#39;</span><span class="p">,</span> <span class="s">&#39;order&#39;</span><span class="p">,</span> <span class="s">&#39;timeout&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s">&#39;flat_settings&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_template&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;PUT&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.exists_template"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.exists_template">[docs]</a>    <span class="k">def</span> <span class="nf">exists_template</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a boolean indicating whether given template exists.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-templates.html&gt;`_</span>
+
+<span class="sd">        :arg name: The name of the template</span>
+<span class="sd">        :arg local: Return local information, do not retrieve the state from</span>
+<span class="sd">            master node (default: false)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;local&#39;</span><span class="p">,)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_template&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;HEAD&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.get_template"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.get_template">[docs]</a>    <span class="k">def</span> <span class="nf">get_template</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve an index template by its name.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-templates.html&gt;`_</span>
+
+<span class="sd">        :arg name: The name of the template</span>
+<span class="sd">        :arg flat_settings: Return settings in flat format (default: false)</span>
+<span class="sd">        :arg local: Return local information, do not retrieve the state from</span>
+<span class="sd">            master node (default: false)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;flat_settings&#39;</span><span class="p">,</span> <span class="s">&#39;local&#39;</span><span class="p">,)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_template&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.delete_template"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.delete_template">[docs]</a>    <span class="k">def</span> <span class="nf">delete_template</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete an index template by its name.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-templates.html&gt;`_</span>
+
+<span class="sd">        :arg name: The name of the template</span>
+<span class="sd">        :arg master_timeout: Specify timeout for connection to master</span>
+<span class="sd">        :arg timeout: Explicit operation timeout</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;timeout&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_template&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;DELETE&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.get_settings"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.get_settings">[docs]</a>    <span class="k">def</span> <span class="nf">get_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve settings for one or more (or all) indices.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-get-settings.html&gt;`_</span>
+
+<span class="sd">        :arg index: A comma-separated list of index names; use `_all` or empty</span>
+<span class="sd">            string to perform the operation on all indices</span>
+<span class="sd">        :arg name: The name of the settings that should be included</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete indices</span>
+<span class="sd">            that are open, closed or both.</span>
+<span class="sd">        :arg ignore_indices: When performed on multiple indices, allows to</span>
+<span class="sd">            ignore `missing` ones, default u&#39;none&#39;</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be ignored</span>
+<span class="sd">            when unavailable (missing or closed)</span>
+<span class="sd">        :arg flat_settings: Return settings in flat format (default: false)</span>
+<span class="sd">        :arg local: Return local information, do not retrieve the state from</span>
+<span class="sd">            master node (default: false)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_indices&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span>
+            <span class="s">&#39;flat_settings&#39;</span><span class="p">,</span> <span class="s">&#39;local&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s">&#39;_settings&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.put_settings"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.put_settings">[docs]</a>    <span class="k">def</span> <span class="nf">put_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Change specific index level settings in real time.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-update-settings.html&gt;`_</span>
+
+<span class="sd">        :arg body: The index settings to be updated</span>
+<span class="sd">        :arg index: A comma-separated list of index names; use `_all` or empty</span>
+<span class="sd">            string to perform the operation on all indices</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all`</span>
+<span class="sd">            string or when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete</span>
+<span class="sd">            indices that are open, closed or both., default u&#39;open&#39;</span>
+<span class="sd">        :arg flat_settings: Return settings in flat format (default: false)</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be</span>
+<span class="sd">            ignored when unavailable (missing or closed)</span>
+<span class="sd">        :arg master_timeout: Specify timeout for connection to master</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span> <span class="s">&#39;flat_settings&#39;</span><span class="p">,</span>
+            <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s">&#39;_settings&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;PUT&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.put_warmer"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.put_warmer">[docs]</a>    <span class="k">def</span> <span class="nf">put_warmer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">doc_type</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create an index warmer to run registered search requests to warm up the</span>
+<span class="sd">        index before it is available for search.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-warmers.html&gt;`_</span>
+
+<span class="sd">        :arg name: The name of the warmer</span>
+<span class="sd">        :arg body: The search request definition for the warmer (query, filters,</span>
+<span class="sd">            facets, sorting, etc)</span>
+<span class="sd">        :arg index: A comma-separated list of index names to register the warmer</span>
+<span class="sd">            for; use `_all` or omit to perform the operation on all indices</span>
+<span class="sd">        :arg doc_type: A comma-separated list of document types to register the</span>
+<span class="sd">            warmer for; leave empty to perform the operation on all types</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices in the search request</span>
+<span class="sd">            to warm. (This includes `_all` string or when no indices have been</span>
+<span class="sd">            specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete</span>
+<span class="sd">            indices that are open, closed or both, in the search request to</span>
+<span class="sd">            warm., default u&#39;open&#39;</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be</span>
+<span class="sd">            ignored when unavailable (missing or closed) in the search request</span>
+<span class="sd">            to warm</span>
+<span class="sd">        :arg master_timeout: Specify timeout for connection to master</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span><span class="p">(</span>
+            <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span>
+            <span class="s">&#39;master_timeout&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="s">&#39;_warmer&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;PUT&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.get_warmer"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.get_warmer">[docs]</a>    <span class="k">def</span> <span class="nf">get_warmer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">doc_type</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retreieve an index warmer.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-warmers.html&gt;`_</span>
+
+<span class="sd">        :arg index: A comma-separated list of index names to restrict the</span>
+<span class="sd">            operation; use `_all` to perform the operation on all indices</span>
+<span class="sd">        :arg doc_type: A comma-separated list of document types to restrict the</span>
+<span class="sd">            operation; leave empty to perform the operation on all types</span>
+<span class="sd">        :arg name: The name of the warmer (supports wildcards); leave empty to</span>
+<span class="sd">            get all warmers</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all`</span>
+<span class="sd">            string or when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete</span>
+<span class="sd">            indices that are open, closed or both., default u&#39;open&#39;</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be</span>
+<span class="sd">            ignored when unavailable (missing or closed)</span>
+<span class="sd">        :arg local: Return local information, do not retrieve the state from</span>
+<span class="sd">            master node (default: false)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span>
+            <span class="s">&#39;local&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="s">&#39;_warmer&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.delete_warmer"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.delete_warmer">[docs]</a>    <span class="k">def</span> <span class="nf">delete_warmer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete an index warmer.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-warmers.html&gt;`_</span>
+
+<span class="sd">        :arg index: A comma-separated list of index names to delete warmers from</span>
+<span class="sd">            (supports wildcards); use `_all` to perform the operation on all indices.</span>
+<span class="sd">        :arg name: A comma-separated list of warmer names to delete (supports</span>
+<span class="sd">            wildcards); use `_all` to delete all warmers in the specified indices.</span>
+<span class="sd">        :arg master_timeout: Specify timeout for connection to master</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;master_timeout&#39;</span><span class="p">,)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s">&#39;_warmer&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;DELETE&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.status"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.status">[docs]</a>    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a comprehensive status information of one or more indices.</span>
+<span class="sd">        `&lt;http://elasticsearch.org/guide/reference/api/admin-indices-_/&gt;`_</span>
+
+<span class="sd">        :arg index: A comma-separated list of index names; use `_all` or empty</span>
+<span class="sd">            string to perform the operation on all indices</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all` string or</span>
+<span class="sd">            when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete indices</span>
+<span class="sd">            that are open, closed or both.</span>
+<span class="sd">        :arg ignore_indices: When performed on multiple indices, allows to</span>
+<span class="sd">            ignore `missing` ones, default u&#39;none&#39;</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be ignored</span>
+<span class="sd">            when unavailable (missing or closed)</span>
+<span class="sd">        :arg operation_threading: TODO: ?</span>
+<span class="sd">        :arg recovery: Return information about shard recovery</span>
+<span class="sd">        :arg snapshot: TODO: ?</span>
+<span class="sd">        :arg human: Whether to return time and byte values in human-readable format.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_indices&#39;</span><span class="p">,</span>
+            <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span> <span class="s">&#39;operation_threading&#39;</span><span class="p">,</span> <span class="s">&#39;recovery&#39;</span><span class="p">,</span> <span class="s">&#39;snapshot&#39;</span><span class="p">,</span>
+            <span class="s">&#39;human&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s">&#39;_status&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.stats"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.stats">[docs]</a>    <span class="k">def</span> <span class="nf">stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieve statistics on different operations happening on an index.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-stats.html&gt;`_</span>
+
+<span class="sd">        :arg index: A comma-separated list of index names; use `_all` or empty</span>
+<span class="sd">            string to perform the operation on all indices</span>
+<span class="sd">        :arg metric: A comma-separated list of metrics to display. Possible</span>
+<span class="sd">            values: &quot;_all&quot;, &quot;completion&quot;, &quot;docs&quot;, &quot;fielddata&quot;, &quot;filter_cache&quot;,</span>
+<span class="sd">            &quot;flush&quot;, &quot;get&quot;, &quot;id_cache&quot;, &quot;indexing&quot;, &quot;merge&quot;, &quot;percolate&quot;,</span>
+<span class="sd">            &quot;refresh&quot;, &quot;search&quot;, &quot;segments&quot;, &quot;store&quot;, &quot;warmer&quot;</span>
+<span class="sd">        :arg completion_fields: A comma-separated list of fields for</span>
+<span class="sd">            `completion` metric (supports wildcards)</span>
+<span class="sd">        :arg fielddata_fields: A comma-separated list of fields for `fielddata`</span>
+<span class="sd">            metric (supports wildcards)</span>
+<span class="sd">        :arg fields: A comma-separated list of fields for `fielddata` and</span>
+<span class="sd">            `completion` metric (supports wildcards)</span>
+<span class="sd">        :arg groups: A comma-separated list of search groups for `search` statistics</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all` string or</span>
+<span class="sd">            when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete indices</span>
+<span class="sd">            that are open, closed or both.</span>
+<span class="sd">        :arg ignore_indices: When performed on multiple indices, allows to</span>
+<span class="sd">            ignore `missing` ones (default: none)</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be ignored</span>
+<span class="sd">            when unavailable (missing or closed)</span>
+<span class="sd">        :arg human: Whether to return time and byte values in human-readable format.</span>
+<span class="sd">        :arg level: Return stats aggregated at cluster, index or shard level.</span>
+<span class="sd">            (&quot;cluster&quot;, &quot;indices&quot; or &quot;shards&quot;, default: &quot;indices&quot;)</span>
+<span class="sd">        :arg types: A comma-separated list of document types for the `indexing`</span>
+<span class="sd">            index metric</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;completion_fields&#39;</span><span class="p">,</span> <span class="s">&#39;docs&#39;</span><span class="p">,</span> <span class="s">&#39;fielddata_fields&#39;</span><span class="p">,</span> <span class="s">&#39;fields&#39;</span><span class="p">,</span> <span class="s">&#39;groups&#39;</span><span class="p">,</span>
+            <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_indices&#39;</span><span class="p">,</span>
+            <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span> <span class="s">&#39;human&#39;</span><span class="p">,</span> <span class="s">&#39;level&#39;</span><span class="p">,</span> <span class="s">&#39;types&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s">&#39;_stats&#39;</span><span class="p">,</span> <span class="n">metric</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.segments"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.segments">[docs]</a>    <span class="k">def</span> <span class="nf">segments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Provide low level segments information that a Lucene index (shard level) is built with.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-segments.html&gt;`_</span>
+
+<span class="sd">        :arg index: A comma-separated list of index names; use `_all` or empty</span>
+<span class="sd">            string to perform the operation on all indices</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all` string or</span>
+<span class="sd">            when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete indices</span>
+<span class="sd">            that are open, closed or both.</span>
+<span class="sd">        :arg ignore_indices: When performed on multiple indices, allows to</span>
+<span class="sd">            ignore `missing` ones, default u&#39;none&#39;</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be ignored</span>
+<span class="sd">            when unavailable (missing or closed)</span>
+<span class="sd">        :arg human: Whether to return time and byte values in human-readable</span>
+<span class="sd">            format (default: false)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_indices&#39;</span><span class="p">,</span>
+            <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span> <span class="s">&#39;human&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s">&#39;_segments&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.optimize"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.optimize">[docs]</a>    <span class="k">def</span> <span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Explicitly optimize one or more indices through an API.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-optimize.html&gt;`_</span>
+
+<span class="sd">        :arg index: A comma-separated list of index names; use `_all` or empty</span>
+<span class="sd">            string to perform the operation on all indices</span>
+<span class="sd">        :arg flush: Specify whether the index should be flushed after</span>
+<span class="sd">            performing the operation (default: true)</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all` string or</span>
+<span class="sd">            when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete indices</span>
+<span class="sd">            that are open, closed or both.</span>
+<span class="sd">        :arg ignore_indices: When performed on multiple indices, allows to</span>
+<span class="sd">            ignore `missing` ones, default u&#39;none&#39;</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be ignored</span>
+<span class="sd">            when unavailable (missing or closed)</span>
+<span class="sd">        :arg max_num_segments: The number of segments the index should be</span>
+<span class="sd">            merged into (default: dynamic)</span>
+<span class="sd">        :arg only_expunge_deletes: Specify whether the operation should only</span>
+<span class="sd">            expunge deleted documents</span>
+<span class="sd">        :arg operation_threading: TODO: ?</span>
+<span class="sd">        :arg wait_for_merge: Specify whether the request should block until the</span>
+<span class="sd">            merge process is finished (default: true)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;flush&#39;</span><span class="p">,</span> <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_indices&#39;</span><span class="p">,</span>
+            <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span> <span class="s">&#39;max_num_segments&#39;</span><span class="p">,</span> <span class="s">&#39;only_expunge_deletes&#39;</span><span class="p">,</span>
+            <span class="s">&#39;operation_threading&#39;</span><span class="p">,</span> <span class="s">&#39;wait_for_merge&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s">&#39;_optimize&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;POST&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.validate_query"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.validate_query">[docs]</a>    <span class="k">def</span> <span class="nf">validate_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">doc_type</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Validate a potentially expensive query without executing it.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-validate.html&gt;`_</span>
+
+<span class="sd">        :arg index: A comma-separated list of index names to restrict the operation;</span>
+<span class="sd">            use `_all` or empty string to perform the operation on all indices</span>
+<span class="sd">        :arg doc_type: A comma-separated list of document types to restrict the</span>
+<span class="sd">            operation; leave empty to perform the operation on all types</span>
+<span class="sd">        :arg body: The query definition</span>
+<span class="sd">        :arg explain: Return detailed information about the error</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all` string or</span>
+<span class="sd">            when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete indices</span>
+<span class="sd">            that are open, closed or both.</span>
+<span class="sd">        :arg ignore_indices: When performed on multiple indices, allows to</span>
+<span class="sd">            ignore `missing` ones (default: none)</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be ignored</span>
+<span class="sd">            when unavailable (missing or closed)</span>
+<span class="sd">        :arg operation_threading: TODO: ?</span>
+<span class="sd">        :arg q: Query in the Lucene query string syntax</span>
+<span class="sd">        :arg source: The URL-encoded query definition (instead of using the</span>
+<span class="sd">            request body)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span><span class="p">(</span>
+            <span class="s">&#39;explain&#39;</span><span class="p">,</span> <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_indices&#39;</span><span class="p">,</span>
+            <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span> <span class="s">&#39;operation_threading&#39;</span><span class="p">,</span> <span class="s">&#39;q&#39;</span><span class="p">,</span> <span class="s">&#39;source&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="n">doc_type</span><span class="p">,</span> <span class="s">&#39;_validate&#39;</span><span class="p">,</span> <span class="s">&#39;query&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.clear_cache"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.clear_cache">[docs]</a>    <span class="k">def</span> <span class="nf">clear_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clear either all caches or specific cached associated with one ore more indices.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-clearcache.html&gt;`_</span>
+
+<span class="sd">        :arg index: A comma-separated list of index name to limit the operation</span>
+<span class="sd">        :arg field_data: Clear field data</span>
+<span class="sd">        :arg fielddata: Clear field data</span>
+<span class="sd">        :arg fields: A comma-separated list of fields to clear when using the</span>
+<span class="sd">            `field_data` parameter (default: all)</span>
+<span class="sd">        :arg filter: Clear filter caches</span>
+<span class="sd">        :arg filter_cache: Clear filter caches</span>
+<span class="sd">        :arg filter_keys: A comma-separated list of keys to clear when using</span>
+<span class="sd">            the `filter_cache` parameter (default: all)</span>
+<span class="sd">        :arg id: Clear ID caches for parent/child</span>
+<span class="sd">        :arg id_cache: Clear ID caches for parent/child</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all` string or</span>
+<span class="sd">            when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete indices</span>
+<span class="sd">            that are open, closed or both.</span>
+<span class="sd">        :arg ignore_indices: When performed on multiple indices, allows to</span>
+<span class="sd">            ignore `missing` ones (default: none)</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be ignored</span>
+<span class="sd">            when unavailable (missing or closed)</span>
+<span class="sd">        :arg index: A comma-separated list of index name to limit the operation</span>
+<span class="sd">        :arg recycler: Clear the recycler cache</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span><span class="p">(</span>
+            <span class="s">&#39;field_data&#39;</span><span class="p">,</span> <span class="s">&#39;fielddata&#39;</span><span class="p">,</span> <span class="s">&#39;fields&#39;</span><span class="p">,</span> <span class="s">&#39;filter&#39;</span><span class="p">,</span> <span class="s">&#39;filter_cache&#39;</span><span class="p">,</span>
+            <span class="s">&#39;filter_keys&#39;</span><span class="p">,</span> <span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;id_cache&#39;</span><span class="p">,</span> <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span>
+            <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_indices&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span> <span class="s">&#39;index&#39;</span><span class="p">,</span>
+            <span class="s">&#39;recycler&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s">&#39;_cache&#39;</span><span class="p">,</span> <span class="s">&#39;clear&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;POST&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.recovery"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.recovery">[docs]</a>    <span class="k">def</span> <span class="nf">recovery</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The indices recovery API provides insight into on-going shard</span>
+<span class="sd">        recoveries. Recovery status may be reported for specific indices, or</span>
+<span class="sd">        cluster-wide.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-recovery.html&gt;`_</span>
+
+<span class="sd">        :arg index: A comma-separated list of index names; use `_all` or empty</span>
+<span class="sd">            string to perform the operation on all indices</span>
+<span class="sd">        :arg active_only: Display only those recoveries that are currently on-</span>
+<span class="sd">            going (default: &#39;false&#39;)</span>
+<span class="sd">        :arg detailed: Whether to display detailed information about shard</span>
+<span class="sd">            recovery (default: &#39;false&#39;)</span>
+<span class="sd">        :arg human: Whether to return time and byte values in human-readable</span>
+<span class="sd">            format. (default: &#39;false&#39;)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;active_only&#39;</span><span class="p">,</span> <span class="s">&#39;detailed&#39;</span><span class="p">,</span> <span class="s">&#39;human&#39;</span><span class="p">,)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s">&#39;_recovery&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="IndicesClient.snapshot_index"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.indices.IndicesClient.snapshot_index">[docs]</a>    <span class="k">def</span> <span class="nf">snapshot_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Explicitly perform a snapshot through the gateway of one or more indices (backup them).</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-gateway-snapshot.html&gt;`_</span>
+
+<span class="sd">        :arg index: A comma-separated list of index names; use `_all` or empty</span>
+<span class="sd">            string for all indices</span>
+<span class="sd">        :arg allow_no_indices: Whether to ignore if a wildcard indices</span>
+<span class="sd">            expression resolves into no concrete indices. (This includes `_all` string or</span>
+<span class="sd">            when no indices have been specified)</span>
+<span class="sd">        :arg expand_wildcards: Whether to expand wildcard expression to concrete indices</span>
+<span class="sd">            that are open, closed or both.</span>
+<span class="sd">        :arg ignore_indices: When performed on multiple indices, allows to</span>
+<span class="sd">            ignore `missing` ones (default: none)</span>
+<span class="sd">        :arg ignore_unavailable: Whether specified concrete indices should be ignored</span>
+<span class="sd">            when unavailable (missing or closed)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;allow_no_indices&#39;</span><span class="p">,</span> <span class="s">&#39;expand_wildcards&#39;</span><span class="p">,</span> <span class="s">&#39;ignore_indices&#39;</span><span class="p">,</span>
+            <span class="s">&#39;ignore_unavailable&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s">&#39;_gateway&#39;</span><span class="p">,</span> <span class="s">&#39;snapshot&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;POST&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">elasticsearch_tornado  documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../elasticsearch_tornado.html" >elasticsearch_tornado</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3b2.
+    </div>
+  </body>
+</html>

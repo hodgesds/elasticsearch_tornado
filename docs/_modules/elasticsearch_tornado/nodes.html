@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>elasticsearch_tornado.nodes &mdash; elasticsearch_tornado  documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="elasticsearch_tornado  documentation" href="../../index.html" />
+    <link rel="up" title="elasticsearch_tornado" href="../elasticsearch_tornado.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">elasticsearch_tornado  documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../elasticsearch_tornado.html" accesskey="U">elasticsearch_tornado</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for elasticsearch_tornado.nodes</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">client</span> <span class="kn">import</span> <span class="n">BaseClient</span>
+
+
+<div class="viewcode-block" id="NodesClient"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.nodes.NodesClient">[docs]</a><span class="k">class</span> <span class="nc">NodesClient</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">NodesClient</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="NodesClient.info"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.nodes.NodesClient.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The cluster nodes info API allows to retrieve one or more (or all) of</span>
+<span class="sd">        the cluster nodes information.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-info.html&gt;`_</span>
+
+<span class="sd">        :arg node_id: A comma-separated list of node IDs or names to limit the</span>
+<span class="sd">            returned information; use `_local` to return information from the</span>
+<span class="sd">            node you&#39;re connecting to, leave empty to get information from all</span>
+<span class="sd">            nodes</span>
+<span class="sd">        :arg metric: A comma-separated list of metrics you wish returned. Leave</span>
+<span class="sd">            empty to return all. Choices are &quot;settings&quot;, &quot;os&quot;, &quot;process&quot;,</span>
+<span class="sd">            &quot;jvm&quot;, &quot;thread_pool&quot;, &quot;network&quot;, &quot;transport&quot;, &quot;http&quot;, &quot;plugin&quot;</span>
+<span class="sd">        :arg flat_settings: Return settings in flat format (default: false)</span>
+<span class="sd">        :arg human: Whether to return time and byte values in human-readable</span>
+<span class="sd">            format., default False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;flat_settings&#39;</span><span class="p">,</span> <span class="s">&#39;human&#39;</span><span class="p">,)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_nodes&#39;</span><span class="p">,</span> <span class="n">node_id</span><span class="p">,</span> <span class="n">metric</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="NodesClient.shutdown"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.nodes.NodesClient.shutdown">[docs]</a>    <span class="k">def</span> <span class="nf">shutdown</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The nodes shutdown API allows to shutdown one or more (or all) nodes in</span>
+<span class="sd">        the cluster.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-shutdown.html&gt;`_</span>
+
+<span class="sd">        :arg node_id: A comma-separated list of node IDs or names to perform the</span>
+<span class="sd">            operation on; use `_local` to perform the operation on the node</span>
+<span class="sd">            you&#39;re connected to, leave empty to perform the operation on all</span>
+<span class="sd">            nodes</span>
+<span class="sd">        :arg delay: Set the delay for the operation (default: 1s)</span>
+<span class="sd">        :arg exit: Exit the JVM as well (default: true)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;delay&#39;</span><span class="p">,</span> <span class="s">&#39;exit&#39;</span><span class="p">,)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_cluster&#39;</span><span class="p">,</span> <span class="s">&#39;nodes&#39;</span><span class="p">,</span> <span class="n">node_id</span><span class="p">,</span> <span class="s">&#39;_shutdown&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;POST&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="NodesClient.stats"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.nodes.NodesClient.stats">[docs]</a>    <span class="k">def</span> <span class="nf">stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">index_metric</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The cluster nodes stats API allows to retrieve one or more (or all) of</span>
+<span class="sd">        the cluster nodes statistics.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-stats.html&gt;`_</span>
+
+<span class="sd">        :arg node_id: A comma-separated list of node IDs or names to limit the</span>
+<span class="sd">            returned information; use `_local` to return information from the</span>
+<span class="sd">            node you&#39;re connecting to, leave empty to get information from all</span>
+<span class="sd">            nodes</span>
+<span class="sd">        :arg metric: Limit the information returned to the specified metrics.</span>
+<span class="sd">            Possible options are: &quot;_all&quot;, &quot;breaker&quot;, &quot;fs&quot;, &quot;http&quot;, &quot;indices&quot;,</span>
+<span class="sd">            &quot;jvm&quot;, &quot;network&quot;, &quot;os&quot;, &quot;process&quot;, &quot;thread_pool&quot;, &quot;transport&quot;</span>
+<span class="sd">        :arg index_metric: Limit the information returned for `indices` metric</span>
+<span class="sd">            to the specific index metrics. Isn&#39;t used if `indices` (or `all`)</span>
+<span class="sd">            metric isn&#39;t specified. Possible options are: &quot;_all&quot;, &quot;completion&quot;,</span>
+<span class="sd">            &quot;docs&quot;, &quot;fielddata&quot;, &quot;filter_cache&quot;, &quot;flush&quot;, &quot;get&quot;, &quot;id_cache&quot;,</span>
+<span class="sd">            &quot;indexing&quot;, &quot;merge&quot;, &quot;percolate&quot;, &quot;refresh&quot;, &quot;search&quot;, &quot;segments&quot;,</span>
+<span class="sd">            &quot;store&quot;, &quot;warmer&quot;</span>
+<span class="sd">        :arg completion_fields: A comma-separated list of fields for `fielddata`</span>
+<span class="sd">            and `suggest` index metric (supports wildcards)</span>
+<span class="sd">        :arg fielddata_fields: A comma-separated list of fields for `fielddata`</span>
+<span class="sd">            index metric (supports wildcards)</span>
+<span class="sd">        :arg fields: A comma-separated list of fields for `fielddata` and</span>
+<span class="sd">            `completion` index metric (supports wildcards)</span>
+<span class="sd">        :arg groups: A comma-separated list of search groups for `search` index</span>
+<span class="sd">            metric</span>
+<span class="sd">        :arg human: Whether to return time and byte values in human-readable</span>
+<span class="sd">            format., default False</span>
+<span class="sd">        :arg level: Return indices stats aggregated at node, index or shard</span>
+<span class="sd">            level, default &#39;node&#39;</span>
+<span class="sd">        :arg types: A comma-separated list of document types for the `indexing`</span>
+<span class="sd">            index metric</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s">&#39;completion_fields&#39;</span><span class="p">,</span> <span class="s">&#39;fielddata_fields&#39;</span><span class="p">,</span> <span class="s">&#39;fields&#39;</span><span class="p">,</span> <span class="s">&#39;groups&#39;</span><span class="p">,</span>
+            <span class="s">&#39;human&#39;</span><span class="p">,</span> <span class="s">&#39;level&#39;</span><span class="p">,</span> <span class="s">&#39;types&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span>
+                <span class="s">&#39;_nodes&#39;</span><span class="p">,</span> <span class="n">node_id</span><span class="p">,</span> <span class="s">&#39;stats&#39;</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="n">index_metric</span>
+            <span class="p">],</span>
+            <span class="o">**</span><span class="n">params</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span>
+</div>
+<div class="viewcode-block" id="NodesClient.hot_threads"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.nodes.NodesClient.hot_threads">[docs]</a>    <span class="k">def</span> <span class="nf">hot_threads</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        An API allowing to get the current hot threads on each node in the cluster.</span>
+<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-hot-threads.html&gt;`_</span>
+
+<span class="sd">        :arg node_id: A comma-separated list of node IDs or names to limit the</span>
+<span class="sd">            returned information; use `_local` to return information from the</span>
+<span class="sd">            node you&#39;re connecting to, leave empty to get information from all</span>
+<span class="sd">            nodes</span>
+<span class="sd">        :arg type_: The type to sample (default: cpu)</span>
+<span class="sd">        :arg interval: The interval for the second sampling of threads</span>
+<span class="sd">        :arg snapshots: Number of samples of thread stacktrace (default: 10)</span>
+<span class="sd">        :arg threads: Specify the number of threads to provide information for</span>
+<span class="sd">            (default: 3)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;type_&#39;</span><span class="p">,</span> <span class="s">&#39;interval&#39;</span><span class="p">,</span> <span class="s">&#39;snapshots&#39;</span><span class="p">,</span> <span class="s">&#39;threads&#39;</span><span class="p">,)</span>
+        <span class="c"># avoid python reserved words</span>
+        <span class="k">if</span> <span class="n">params</span> <span class="ow">and</span> <span class="s">&#39;type_&#39;</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&#39;type_&#39;</span><span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_nodes&#39;</span><span class="p">,</span> <span class="n">node_id</span><span class="p">,</span> <span class="s">&#39;hot_threads&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+        <span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">elasticsearch_tornado  documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li>
+          <li><a href="../elasticsearch_tornado.html" >elasticsearch_tornado</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2014, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3b2.
+    </div>
+  </body>
+</html>
