@@ -68,6 +68,7 @@ class MeowClientTest(AsyncTestCase):
         mc.shards(cb=self.handle_cb)
         self.wait()
 
+    @SkipTest
     def test_segments(self):
         mc = MeowClient(io_loop=self.io_loop)
         mc.segments(cb=self.handle_cb)

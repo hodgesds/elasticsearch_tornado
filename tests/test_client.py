@@ -434,6 +434,7 @@ class BaseClientTest(AsyncTestCase):
         )
         self.wait()
 
+    @SkipTest
     def test_list_benchmarks(self):
         c = BaseClient()
         h_cb = partial(
