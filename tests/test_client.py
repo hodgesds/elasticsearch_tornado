@@ -259,11 +259,11 @@ class BaseClientTest(AsyncTestCase):
         p = {}
         p['source'] = '{ "query": { "match_all": {} } }\n'
         c.delete_by_query(
-                'test',
-                body='{ "query": { "match_all": {} } }\n',
-                doc_type='test',
-                params=p,
-                cb=h_cb
+            'test',
+            body='{ "query": { "match_all": {} } }\n',
+            doc_type='test',
+            params=p,
+            cb=h_cb
         )
         self.wait()
 
@@ -312,10 +312,10 @@ class BaseClientTest(AsyncTestCase):
             **{'codes':[400, 403, 404]}
         )
         c.mpercolate(
-                None,
-                index='test',
-                doc_type='test',
-                cb=h_cb
+            None,
+            index='test',
+            doc_type='test',
+            cb=h_cb
         )
         self.wait()
 
@@ -326,9 +326,9 @@ class BaseClientTest(AsyncTestCase):
             **{'codes':[403, 404]}
         )
         c.count_percolate(
-                'test',
-                'test',
-                cb=h_cb
+            'test',
+            'test',
+            cb=h_cb
         )
         self.wait()
 
@@ -339,10 +339,10 @@ class BaseClientTest(AsyncTestCase):
             **{'codes':[400, 404]}
         )
         c.mlt(
-                'index',
-                'index',
-                'bulk1',
-                cb=h_cb,
+            'index',
+            'index',
+            'bulk1',
+            cb=h_cb,
         )
         self.wait()
 
@@ -363,11 +363,11 @@ class BaseClientTest(AsyncTestCase):
 
         """
         c.termvector(
-                'index',
-                'test',
-                'test123',
-                body=body,
-                cb=h_cb,
+            'index',
+            'test',
+            'test123',
+            body=body,
+            cb=h_cb,
         )
         self.wait()
 
@@ -395,10 +395,10 @@ class BaseClientTest(AsyncTestCase):
         
         """
         c.mtermvectors(
-                index = 'index',
-                doc_type = 'index',
-                body = body,
-                cb=self.handle_cb,
+            index = 'index',
+            doc_type = 'index',
+            body = body,
+            cb=self.handle_cb,
         )
         self.wait()
 
@@ -418,10 +418,10 @@ class BaseClientTest(AsyncTestCase):
 
         '''
         c.benchmark(
-                body     = body,
-                index    = 'index',
-                doc_type = 'index',
-                cb       = self.handle_cb,
+            body     = body,
+            index    = 'index',
+            doc_type = 'index',
+            cb       = self.handle_cb,
         )
         self.wait()
 
@@ -429,8 +429,8 @@ class BaseClientTest(AsyncTestCase):
     def test_abort_benchmark(self):
         c = BaseClient()
         c.abort_benchmark(
-                name = 'test',
-                cb   = self.handle_cb,
+            name = 'test',
+            cb   = self.handle_cb,
         )
         self.wait()
 
@@ -442,8 +442,8 @@ class BaseClientTest(AsyncTestCase):
             **{'codes':[400, 404]}
         )
         c.list_benchmarks(
-                index = 'test',
-                cb=h_cb,
+            index = 'test',
+            cb=h_cb,
         )
         self.wait()
 
@@ -478,10 +478,10 @@ class BaseClientTest(AsyncTestCase):
             **{'codes':[400, 404]}
         )
         c.put_script(
-                'native',
-                'testscript123',
-                body,
-                cb   = h_cb,
+            'native',
+            'testscript123',
+            body,
+            cb = h_cb,
         )
         self.wait()
 
@@ -492,9 +492,9 @@ class BaseClientTest(AsyncTestCase):
             **{'codes':[404]}
         )
         c.get_script(
-                'native',
-                'testscript123',
-                cb=h_cb,
+            'native',
+            'testscript123',
+            cb = h_cb,
         )
         self.wait()
 
@@ -505,18 +505,18 @@ class BaseClientTest(AsyncTestCase):
             **{'codes':[404]}
         )
         c.delete_script(
-                'native',
-                'testscript123',
-                cb=h_cb,
+            'native',
+            'testscript123',
+            cb = h_cb,
         )
         self.wait()
 
     def test_put_template(self):
         c = BaseClient()
         c.put_template(
-                'temp123',
-                '{"template":"test123"}',
-                cb=self.handle_cb,
+            'temp123',
+            '{"template":"test123"}',
+            cb = self.handle_cb,
         )
         self.wait()
 
@@ -527,8 +527,8 @@ class BaseClientTest(AsyncTestCase):
             **{'codes':[404]}
         )
         c.get_template(
-                'temp123',
-                cb=h_cb,
+            'temp123',
+            cb = h_cb,
         )
         self.wait()
 
@@ -539,7 +539,7 @@ class BaseClientTest(AsyncTestCase):
             **{'codes':[404]}
         )
         c.delete_template(
-                temp_id='temp123',
-                cb=h_cb,
+            temp_id='temp123',
+            cb = h_cb,
         )
         self.wait()
