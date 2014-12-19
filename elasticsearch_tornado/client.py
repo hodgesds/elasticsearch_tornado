@@ -1,8 +1,6 @@
 import sys
 from   abc import ABCMeta, abstractmethod
 from   tornado.httpclient import AsyncHTTPClient, HTTPRequest
-from   .patched_curlclient import PatchedCurlClient
-
 
 PY2 = sys.version_info[0] == 2
 if PY2:
@@ -33,6 +31,10 @@ class BaseClient(object):
         if not curl:
             self.client = AsyncHTTPClient(io_loop)
         else:
+            try:
+                from   .patched_curlclient import PatchedCurlClient
+            except:
+                raise ImportError("pycurl>7.19.5 is required to use curl client")
             self.client = PatchedCurlClient(io_loop)
 
     def mk_req(self, url, **kwargs):
