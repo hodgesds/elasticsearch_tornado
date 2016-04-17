@@ -105,6 +105,9 @@ Simple use-case:
         print(res.body)
 
 
+    ioloop.IOLoop.instance().run_sync(main_coro)
+
+
 .. code-block:: bash
 
     {"_index":"test_index","_type":"test_doctype","_id":"AVQmGdzo66UC-UgKXqlX","_version":1,"found":true,"_source":{"age": 100, "user": "foo"}
