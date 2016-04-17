@@ -5,7 +5,7 @@ class MeowClient(BaseClient):
 
     def aliases(self, name=None, params={}, callback=None, **kwargs):
         """
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-aliases.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-alias.html#cat-alias>`_
 
         :arg name: A comma-separated list of alias names to return
         :arg h: Comma-separated list of column names to display
@@ -33,7 +33,7 @@ class MeowClient(BaseClient):
         """
         Allocation provides a snapshot of how shards have located around the
         cluster and the state of disk usage.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-allocation.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-allocation.html#cat-allocation>`_
 
         :arg node_id: A comma-separated list of node IDs or names to limit the
             returned information
@@ -62,7 +62,7 @@ class MeowClient(BaseClient):
         """
         Count provides quick access to the document count of the entire cluster,
         or individual indices.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-count.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-count.html#cat-count>`_
 
         :arg index: A comma-separated list of index names to limit the returned
             information
@@ -135,7 +135,7 @@ class MeowClient(BaseClient):
     def indices(self, index=None, params={}, callback=None, **kwargs):
         """
         The indices command provides a cross-section of each index.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-indices.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-indices.html#cat-indices>`_
 
         :arg index: A comma-separated list of index names to limit the returned
             information
@@ -167,7 +167,7 @@ class MeowClient(BaseClient):
     def master(self, params={}, callback=None, **kwargs):
         """
         Displays the master's node ID, bound IP address, and node name.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-master.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-master.html#cat-master>`_
 
         :arg h: Comma-separated list of column names to display
         :arg get_help: Return help information, default False
@@ -192,7 +192,7 @@ class MeowClient(BaseClient):
     def nodes(self, params={}, callback=None, **kwargs):
         """
         The nodes command shows the cluster topology.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-nodes.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-nodes.html#cat-nodes>`_
 
         :arg h: Comma-separated list of column names to display
         :arg get_help: Return help information, default False
@@ -217,7 +217,7 @@ class MeowClient(BaseClient):
     def recovery(self, index=None, params={}, callback=None, **kwargs):
         """
         recovery is a view of shard replication.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-recovery.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-recovery.html#cat-recovery>`_
 
         :arg index: A comma-separated list of index names to limit the returned
             information
@@ -245,7 +245,7 @@ class MeowClient(BaseClient):
     def shards(self, index=None, params={}, callback=None, **kwargs):
         """
         The shards command is the detailed view of what nodes contain which shards.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-shards.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-shards.html#cat-shards>`_
 
         :arg index: A comma-separated list of index names to limit the returned
             information
@@ -300,7 +300,7 @@ class MeowClient(BaseClient):
         pending_tasks provides the same information as the
         :meth:`~elasticsearch.client.cluster.ClusterClient.pending_tasks` API
         in a convenient tabular format.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-pending-tasks.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-pending-tasks.html#cat-pending-tasks>`_
 
         :arg h: Comma-separated list of column names to display
         :arg get_help: Return help information, default False
@@ -325,7 +325,7 @@ class MeowClient(BaseClient):
     def thread_pool(self, params={}, callback=None, **kwargs):
         """
         Get information about thread pools.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-thread-pool.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-thread-pool.html#cat-thread-pool>`_
 
         :arg full_id: Enables displaying the complete node ids (default: 'false')
         :arg h: Comma-separated list of column names to display
@@ -352,7 +352,7 @@ class MeowClient(BaseClient):
     def fielddata(self, fields=None, params={}, callback=None, **kwargs):
         """
         Shows information about currently loaded fielddata on a per-node basis.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-fielddata.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-fielddata.html#cat-fielddata>`_
 
         :arg fields: A comma-separated list of fields to return the fielddata
             size
@@ -384,7 +384,7 @@ class MeowClient(BaseClient):
 
     def plugins(self, params={}, callback=None, **kwargs):
         """
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cat-plugins.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-plugins.html#cat-plugins>`_
 
         :arg h: Comma-separated list of column names to display
         :arg get_help: Return help information, default False

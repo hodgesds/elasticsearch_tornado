@@ -1,5 +1,5 @@
 import sys
-from   abc import ABCMeta, abstractmethod
+#from   abc import ABCMeta, abstractmethod
 from   tornado.httpclient import AsyncHTTPClient, HTTPRequest
 
 PY2 = sys.version_info[0] == 2
@@ -11,7 +11,7 @@ else:
 
 class BaseClient(object):
 
-    __metaclass__ = ABCMeta
+    #__metaclass__ = ABCMeta
 
     def __init__(self,
             host         = 'localhost',

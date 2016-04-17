@@ -4,8 +4,8 @@ from setuptools import setup, find_packages
 import sys
 import os
 
-VERSION = (2, 0, 0)
-__version__ = VERSION
+VERSION        = (2, 0, 1)
+__version__    = VERSION
 __versionstr__ = '.'.join(map(str, VERSION))
 
 f = open(join(dirname(__file__), 'README'))
@@ -29,19 +29,20 @@ if sys.version_info[:2] == (2, 6):
     install_requires.append('unittest2')
 
 setup(
-    name = 'elasticsearch_tornado',
-    description = "Tornado HTTP client for Elasticsearch",
-    license="Apache License, Version 2.0",
-    url = "https://github.com/hodgesds/elasticsearch_tornado",
+    name             = 'elasticsearch_tornado',
+    description      = "Tornado HTTP client for Elasticsearch",
+    license          = "Apache License, Version 2.0",
+    url              = "https://github.com/hodgesds/elasticsearch_tornado",
     long_description = long_description,
-    version = __versionstr__,
-    author = "Daniel Hodges",
-    author_email = "hodges.daniel.scott@gmail.com",
-    packages=find_packages(
-        where='.',
-        exclude=('tests*', )
+    version          = __versionstr__,
+    author           = "Daniel Hodges",
+    author_email     = "hodges.daniel.scott@gmail.com",
+    scripts          = ['bin/et'],
+    packages         = find_packages(
+        where        = '.',
+        exclude      = ('tests*', )
     ),
-    classifiers = [
+    classifiers      = [
         "Development Status :: 4 - Beta",
         "License :: OSI Approved :: Apache Software License",
         "Intended Audience :: Developers",
@@ -57,8 +58,8 @@ setup(
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
     ],
-    install_requires=install_requires,
 
-    test_suite='tests.run_tests.run_all',
-    tests_require=tests_require,
+    install_requires = install_requires,
+    test_suite       = 'tests.run_tests.run_all',
+    tests_require    = tests_require,
 )

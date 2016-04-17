@@ -6,7 +6,7 @@ class ClusterClient(BaseClient):
     def health(self, index=None, params={}, callback=None, **kwargs):
         """
         Get a very simple status on the health of the cluster.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-health.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-health.html#cluster-health>`_
 
         :arg index: Limit the information returned to a specific index
         :arg level: Specify the level of detail for returned information, default u'cluster'
@@ -94,7 +94,7 @@ class ClusterClient(BaseClient):
         The Cluster Stats API allows to retrieve statistics from a cluster wide
         perspective. The API returns basic index metrics and information about
         the current nodes that form the cluster.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-stats.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-stats.html#cluster-stats>`_
 
         :arg node_id: A comma-separated list of node IDs or names to limit the
             returned information; use `_local` to return information from the node
