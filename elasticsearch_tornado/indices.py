@@ -131,7 +131,7 @@ class IndicesClient(BaseClient):
             callback = callback
         )
 
-    def get(self, index, feature=None, params={}, callback=None, **kwargs):
+    def indices(self, index, feature=None, params={}, callback=None, **kwargs):
         """
         `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-index.html#indices-get-index>`_
 

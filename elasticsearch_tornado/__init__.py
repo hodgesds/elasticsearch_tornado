@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-VERSION        = (2, 0, 1)
+VERSION        = (2, 0, 2)
 __version__    = VERSION
 __versionstr__ = '.'.join(map(str, VERSION))
 
@@ -10,6 +10,7 @@ from .cluster  import ClusterClient
 from .indices  import IndicesClient
 from .nodes    import NodesClient
 from .snapshot import SnapshotClient
+from .utils    import serialize
 
 
 class EsClient(MeowClient, ClusterClient, IndicesClient, NodesClient,

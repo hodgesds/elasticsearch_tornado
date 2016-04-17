@@ -3,7 +3,7 @@ from .client import BaseClient
 
 class SnapshotClient(BaseClient):
 
-    def create(self, repository, snapshot, body, params={}, callback=None, **kwargs):
+    def create_snapshot(self, repository, snapshot, body, params={}, callback=None, **kwargs):
         """
         Create a snapshot in repository
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html>`_
@@ -28,7 +28,7 @@ class SnapshotClient(BaseClient):
             callback = callback
         )
 
-    def delete(self, repository, snapshot, params={}, callback=None, **kwargs):
+    def delete_snapshot(self, repository, snapshot, params={}, callback=None, **kwargs):
         """
         Deletes a snapshot from a repository.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html>`_
@@ -50,7 +50,7 @@ class SnapshotClient(BaseClient):
             callback = callback
         )
 
-    def get(self, repository, snapshot, params={}, callback=None, **kwargs):
+    def get_snapshot(self, repository, snapshot, params={}, callback=None, **kwargs):
         """
         Retrieve information about a snapshot.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html>`_
