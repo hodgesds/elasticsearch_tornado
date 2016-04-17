@@ -6,15 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>elasticsearch_tornado.cluster &mdash; elasticsearch_tornado  documentation</title>
+    <title>elasticsearch_tornado.cluster &mdash; Elasticsearch Tornado 1.1.1 documentation</title>
     
-    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '',
+        VERSION:     '1.1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="elasticsearch_tornado  documentation" href="../../index.html" />
+    <link rel="top" title="Elasticsearch Tornado 1.1.1 documentation" href="../../index.html" />
     <link rel="up" title="elasticsearch_tornado" href="../elasticsearch_tornado.html" /> 
   </head>
   <body role="document">
@@ -36,9 +36,9 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">elasticsearch_tornado  documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li>
-          <li><a href="../elasticsearch_tornado.html" accesskey="U">elasticsearch_tornado</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Elasticsearch Tornado 1.1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="../elasticsearch_tornado.html" accesskey="U">elasticsearch_tornado</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -48,20 +48,15 @@
           <div class="body" role="main">
             
   <h1>Source code for elasticsearch_tornado.cluster</h1><div class="highlight"><pre>
-<span class="kn">from</span> <span class="nn">client</span> <span class="kn">import</span> <span class="n">BaseClient</span>
+<span></span><span class="kn">from</span> <span class="nn">.client</span> <span class="kn">import</span> <span class="n">BaseClient</span>
 
 
-<div class="viewcode-block" id="ClusterClient"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cluster.ClusterClient">[docs]</a><span class="k">class</span> <span class="nc">ClusterClient</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">kwargs</span>
-    <span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ClusterClient</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<div class="viewcode-block" id="ClusterClient"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cluster.ClusterClient">[docs]</a><span class="k">class</span> <span class="nc">ClusterClient</span><span class="p">(</span><span class="n">BaseClient</span><span class="p">):</span>
 
-<div class="viewcode-block" id="ClusterClient.health"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cluster.ClusterClient.health">[docs]</a>    <span class="k">def</span> <span class="nf">health</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="ClusterClient.health"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cluster.ClusterClient.health">[docs]</a>    <span class="k">def</span> <span class="nf">health</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a very simple status on the health of the cluster.</span>
-<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-health.html&gt;`_</span>
+<span class="sd">        `&lt;https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-health.html#cluster-health&gt;`_</span>
 
 <span class="sd">        :arg index: Limit the information returned to a specific index</span>
 <span class="sd">        :arg level: Specify the level of detail for returned information, default u&#39;cluster&#39;</span>
@@ -73,19 +68,23 @@
 <span class="sd">        :arg wait_for_relocating_shards: Wait until the specified number of relocating shards is finished</span>
 <span class="sd">        :arg wait_for_status: Wait until cluster is in a specific state, default None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="s">&#39;level&#39;</span><span class="p">,</span> <span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s">&#39;timeout&#39;</span><span class="p">,</span>
-            <span class="s">&#39;wait_for_active_shards&#39;</span><span class="p">,</span> <span class="s">&#39;wait_for_nodes&#39;</span><span class="p">,</span>
-            <span class="s">&#39;wait_for_relocating_shards&#39;</span><span class="p">,</span> <span class="s">&#39;wait_for_status&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;level&#39;</span><span class="p">,</span> <span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s1">&#39;timeout&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;wait_for_active_shards&#39;</span><span class="p">,</span> <span class="s1">&#39;wait_for_nodes&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;wait_for_relocating_shards&#39;</span><span class="p">,</span> <span class="s1">&#39;wait_for_status&#39;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_cluster&#39;</span><span class="p">,</span> <span class="s">&#39;health&#39;</span><span class="p">,</span> <span class="n">index</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_cluster&#39;</span><span class="p">,</span> <span class="s1">&#39;health&#39;</span><span class="p">,</span> <span class="n">index</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="ClusterClient.pending_tasks"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cluster.ClusterClient.pending_tasks">[docs]</a>    <span class="k">def</span> <span class="nf">pending_tasks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ClusterClient.pending_tasks"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cluster.ClusterClient.pending_tasks">[docs]</a>    <span class="k">def</span> <span class="nf">pending_tasks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The pending cluster tasks API returns a list of any cluster-level</span>
 <span class="sd">        changes (e.g. create index, update mapping, allocate or fail shard)</span>
@@ -95,15 +94,19 @@
 <span class="sd">        :arg local: Return local information, do not retrieve the state from master node (default: false)</span>
 <span class="sd">        :arg master_timeout: Specify timeout for connection to master</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_cluster&#39;</span><span class="p">,</span> <span class="s">&#39;pending_tasks&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;master_timeout&#39;</span><span class="p">,)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_cluster&#39;</span><span class="p">,</span> <span class="s1">&#39;pending_tasks&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="ClusterClient.state"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cluster.ClusterClient.state">[docs]</a>    <span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ClusterClient.state"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cluster.ClusterClient.state">[docs]</a>    <span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get a comprehensive state information of the whole cluster.</span>
 <span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-state.html&gt;`_</span>
@@ -119,24 +122,29 @@
 <span class="sd">        :arg master_timeout: Specify timeout for connection to master</span>
 <span class="sd">        :arg flat_settings: Return settings in flat format (default: false)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="s">&#39;index_templates&#39;</span><span class="p">,</span> <span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s">&#39;flat_settings&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;index_templates&#39;</span><span class="p">,</span> <span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s1">&#39;flat_settings&#39;</span><span class="p">,</span>
         <span class="p">)</span>
+
         <span class="k">if</span> <span class="n">index</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">metric</span><span class="p">:</span>
-            <span class="n">metric</span> <span class="o">=</span> <span class="s">&#39;_all&#39;</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_cluster&#39;</span><span class="p">,</span> <span class="s">&#39;state&#39;</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="n">index</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+            <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;_all&#39;</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_cluster&#39;</span><span class="p">,</span> <span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="n">index</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="ClusterClient.stats"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cluster.ClusterClient.stats">[docs]</a>    <span class="k">def</span> <span class="nf">stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ClusterClient.stats"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cluster.ClusterClient.stats">[docs]</a>    <span class="k">def</span> <span class="nf">stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The Cluster Stats API allows to retrieve statistics from a cluster wide</span>
 <span class="sd">        perspective. The API returns basic index metrics and information about</span>
 <span class="sd">        the current nodes that form the cluster.</span>
-<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-stats.html&gt;`_</span>
+<span class="sd">        `&lt;https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-stats.html#cluster-stats&gt;`_</span>
 
 <span class="sd">        :arg node_id: A comma-separated list of node IDs or names to limit the</span>
 <span class="sd">            returned information; use `_local` to return information from the node</span>
@@ -145,17 +153,22 @@
 <span class="sd">        :arg human: Whether to return time and byte values in human-readable format.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;flat_settings&#39;</span><span class="p">,</span> <span class="s">&#39;human&#39;</span><span class="p">,)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;flat_settings&#39;</span><span class="p">,</span> <span class="s1">&#39;human&#39;</span><span class="p">,)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="n">node_id</span><span class="p">:</span>
-            <span class="n">node_id</span> <span class="o">=</span> <span class="s">&#39;nodes/</span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">node_id</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_cluster&#39;</span><span class="p">,</span> <span class="s">&#39;stats&#39;</span><span class="p">,</span> <span class="n">node_id</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+            <span class="n">node_id</span> <span class="o">=</span> <span class="s1">&#39;nodes/</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">node_id</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_cluster&#39;</span><span class="p">,</span> <span class="s1">&#39;stats&#39;</span><span class="p">,</span> <span class="n">node_id</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="ClusterClient.reroute"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cluster.ClusterClient.reroute">[docs]</a>    <span class="k">def</span> <span class="nf">reroute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ClusterClient.reroute"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cluster.ClusterClient.reroute">[docs]</a>    <span class="k">def</span> <span class="nf">reroute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Explicitly execute a cluster reroute allocation command including specific commands.</span>
 <span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-reroute.html&gt;`_</span>
@@ -170,16 +183,20 @@
 <span class="sd">        :arg timeout: Explicit operation timeout</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="s">&#39;dry_run&#39;</span><span class="p">,</span> <span class="s">&#39;explain&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s">&#39;metric&#39;</span><span class="p">,</span> <span class="s">&#39;timeout&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;dry_run&#39;</span><span class="p">,</span> <span class="s1">&#39;explain&#39;</span><span class="p">,</span> <span class="s1">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s1">&#39;metric&#39;</span><span class="p">,</span> <span class="s1">&#39;timeout&#39;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_cluster&#39;</span><span class="p">,</span> <span class="s">&#39;reroute&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_cluster&#39;</span><span class="p">,</span> <span class="s1">&#39;reroute&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;POST&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="ClusterClient.get_settings"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cluster.ClusterClient.get_settings">[docs]</a>    <span class="k">def</span> <span class="nf">get_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">body</span>     <span class="o">=</span> <span class="n">body</span><span class="p">,</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ClusterClient.get_settings"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cluster.ClusterClient.get_settings">[docs]</a>    <span class="k">def</span> <span class="nf">get_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get cluster settings.</span>
 <span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-update-settings.html&gt;`_</span>
@@ -188,15 +205,19 @@
 <span class="sd">        :arg master_timeout: Explicit operation timeout for connection to master node</span>
 <span class="sd">        :arg timeout: Explicit operation timeout</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;flat_settings&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s">&#39;timeout&#39;</span><span class="p">,)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_cluster&#39;</span><span class="p">,</span> <span class="s">&#39;settings&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;flat_settings&#39;</span><span class="p">,</span> <span class="s1">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s1">&#39;timeout&#39;</span><span class="p">,)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_cluster&#39;</span><span class="p">,</span> <span class="s1">&#39;settings&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="ClusterClient.put_settings"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cluster.ClusterClient.put_settings">[docs]</a>    <span class="k">def</span> <span class="nf">put_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="ClusterClient.put_settings"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cluster.ClusterClient.put_settings">[docs]</a>    <span class="k">def</span> <span class="nf">put_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update cluster wide specific settings.</span>
 <span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-update-settings.html&gt;`_</span>
@@ -205,15 +226,18 @@
 <span class="sd">            `persistent` (survives cluster restart).</span>
 <span class="sd">        :arg flat_settings: Return settings in flat format (default: false)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;flat_settings&#39;</span><span class="p">,)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_cluster&#39;</span><span class="p">,</span> <span class="s">&#39;settings&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;flat_settings&#39;</span><span class="p">,)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_cluster&#39;</span><span class="p">,</span> <span class="s1">&#39;settings&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;PUT&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-        <span class="n">_</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transport</span><span class="o">.</span><span class="n">perform_request</span><span class="p">(</span><span class="s">&#39;PUT&#39;</span><span class="p">,</span> <span class="s">&#39;/_cluster/settings&#39;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">data</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;PUT&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">body</span>     <span class="o">=</span> <span class="n">body</span><span class="p">,</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div></div>
 </pre></div>
 
           </div>
@@ -229,9 +253,6 @@
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -247,14 +268,14 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">elasticsearch_tornado  documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li>
-          <li><a href="../elasticsearch_tornado.html" >elasticsearch_tornado</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Elasticsearch Tornado 1.1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="../elasticsearch_tornado.html" >elasticsearch_tornado</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2014, Author.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3b2.
+        &copy; Copyright 2014, Daniel Hodges.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
     </div>
   </body>
 </html>

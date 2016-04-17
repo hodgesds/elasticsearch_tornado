@@ -6,15 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>elasticsearch_tornado.cat &mdash; elasticsearch_tornado  documentation</title>
+    <title>elasticsearch_tornado.cat &mdash; Elasticsearch Tornado 1.1.1 documentation</title>
     
-    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '',
+        VERSION:     '1.1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="elasticsearch_tornado  documentation" href="../../index.html" />
+    <link rel="top" title="Elasticsearch Tornado 1.1.1 documentation" href="../../index.html" />
     <link rel="up" title="elasticsearch_tornado" href="../elasticsearch_tornado.html" /> 
   </head>
   <body role="document">
@@ -36,9 +36,9 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">elasticsearch_tornado  documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li>
-          <li><a href="../elasticsearch_tornado.html" accesskey="U">elasticsearch_tornado</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Elasticsearch Tornado 1.1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="../elasticsearch_tornado.html" accesskey="U">elasticsearch_tornado</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -48,19 +48,14 @@
           <div class="body" role="main">
             
   <h1>Source code for elasticsearch_tornado.cat</h1><div class="highlight"><pre>
-<span class="kn">from</span> <span class="nn">client</span> <span class="kn">import</span> <span class="n">BaseClient</span>
+<span></span><span class="kn">from</span> <span class="nn">.client</span> <span class="kn">import</span> <span class="n">BaseClient</span>
 
 
 <div class="viewcode-block" id="MeowClient"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient">[docs]</a><span class="k">class</span> <span class="nc">MeowClient</span><span class="p">(</span><span class="n">BaseClient</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">kwargs</span>
-    <span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">MeowClient</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-<div class="viewcode-block" id="MeowClient.aliases"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.aliases">[docs]</a>    <span class="k">def</span> <span class="nf">aliases</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="MeowClient.aliases"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.aliases">[docs]</a>    <span class="k">def</span> <span class="nf">aliases</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-aliases.html&gt;`_</span>
+<span class="sd">        `&lt;https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-alias.html#cat-alias&gt;`_</span>
 
 <span class="sd">        :arg name: A comma-separated list of alias names to return</span>
 <span class="sd">        :arg h: Comma-separated list of column names to display</span>
@@ -71,20 +66,24 @@
 <span class="sd">            node</span>
 <span class="sd">        :arg v: Verbose mode. Display column headers, default False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="s">&#39;help&#39;</span><span class="p">,</span> <span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">,)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_cat&#39;</span><span class="p">,</span> <span class="s">&#39;aliases&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
 
-</div>
-<div class="viewcode-block" id="MeowClient.allocation"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.allocation">[docs]</a>    <span class="k">def</span> <span class="nf">allocation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;help&#39;</span><span class="p">,</span> <span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_cat&#39;</span><span class="p">,</span> <span class="s1">&#39;aliases&#39;</span><span class="p">,</span> <span class="n">name</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MeowClient.allocation"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.allocation">[docs]</a>    <span class="k">def</span> <span class="nf">allocation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_id</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Allocation provides a snapshot of how shards have located around the</span>
 <span class="sd">        cluster and the state of disk usage.</span>
-<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-allocation.html&gt;`_</span>
+<span class="sd">        `&lt;https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-allocation.html#cat-allocation&gt;`_</span>
 
 <span class="sd">        :arg node_id: A comma-separated list of node IDs or names to limit the</span>
 <span class="sd">            returned information</span>
@@ -97,19 +96,23 @@
 <span class="sd">            node</span>
 <span class="sd">        :arg v: Verbose mode. Display column headers, default False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;bytes&#39;</span><span class="p">,</span> <span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="s">&#39;help&#39;</span><span class="p">,</span> <span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">,)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_cat&#39;</span><span class="p">,</span> <span class="s">&#39;allocation&#39;</span><span class="p">,</span> <span class="n">node_id</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;bytes&#39;</span><span class="p">,</span> <span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;help&#39;</span><span class="p">,</span> <span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_cat&#39;</span><span class="p">,</span> <span class="s1">&#39;allocation&#39;</span><span class="p">,</span> <span class="n">node_id</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="MeowClient.count"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.count">[docs]</a>    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MeowClient.count"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.count">[docs]</a>    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Count provides quick access to the document count of the entire cluster,</span>
 <span class="sd">        or individual indices.</span>
-<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-count.html&gt;`_</span>
+<span class="sd">        `&lt;https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-count.html#cat-count&gt;`_</span>
 
 <span class="sd">        :arg index: A comma-separated list of index names to limit the returned</span>
 <span class="sd">            information</span>
@@ -121,15 +124,19 @@
 <span class="sd">            node</span>
 <span class="sd">        :arg v: Verbose mode. Display column headers, default False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;bytes&#39;</span><span class="p">,</span> <span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="s">&#39;help&#39;</span><span class="p">,</span> <span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">,)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_cat&#39;</span><span class="p">,</span> <span class="s">&#39;count&#39;</span><span class="p">,</span> <span class="n">index</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;bytes&#39;</span><span class="p">,</span> <span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;help&#39;</span><span class="p">,</span> <span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_cat&#39;</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">,</span> <span class="n">index</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="MeowClient.health"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.health">[docs]</a>    <span class="k">def</span> <span class="nf">health</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MeowClient.health"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.health">[docs]</a>    <span class="k">def</span> <span class="nf">health</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        health is a terse, one-line representation of the same information from</span>
 <span class="sd">        :meth:`~elasticsearch.client.cluster.ClusterClient.health` API</span>
@@ -144,33 +151,41 @@
 <span class="sd">        :arg ts: Set to false to disable timestamping, default True</span>
 <span class="sd">        :arg v: Verbose mode. Display column headers, default False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="s">&#39;help&#39;</span><span class="p">,</span> <span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s">&#39;ts&#39;</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">,</span> <span class="p">)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_cat/health&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;help&#39;</span><span class="p">,</span> <span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s1">&#39;ts&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="p">)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_cat/health&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="MeowClient.help"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.help">[docs]</a>    <span class="k">def</span> <span class="nf">help</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MeowClient.help"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.help">[docs]</a>    <span class="k">def</span> <span class="nf">help</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A simple help for the cat api.</span>
 <span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat.html&gt;`_</span>
 
 <span class="sd">        :arg get_help: Return help information, default False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;help&#39;</span><span class="p">,)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_cat&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;help&#39;</span><span class="p">,)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_cat&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="MeowClient.indices"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.indices">[docs]</a>    <span class="k">def</span> <span class="nf">indices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MeowClient.indices"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.indices">[docs]</a>    <span class="k">def</span> <span class="nf">indices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The indices command provides a cross-section of each index.</span>
-<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-indices.html&gt;`_</span>
+<span class="sd">        `&lt;https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-indices.html#cat-indices&gt;`_</span>
 
 <span class="sd">        :arg index: A comma-separated list of index names to limit the returned</span>
 <span class="sd">            information</span>
@@ -185,20 +200,24 @@
 <span class="sd">            False</span>
 <span class="sd">        :arg v: Verbose mode. Display column headers, default False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="s">&#39;bytes&#39;</span><span class="p">,</span> <span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="s">&#39;help&#39;</span><span class="p">,</span> <span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s">&#39;pri&#39;</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;bytes&#39;</span><span class="p">,</span> <span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;help&#39;</span><span class="p">,</span> <span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s1">&#39;pri&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_cat&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_cat&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="MeowClient.master"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.master">[docs]</a>    <span class="k">def</span> <span class="nf">master</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MeowClient.master"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.master">[docs]</a>    <span class="k">def</span> <span class="nf">master</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Displays the master&#39;s node ID, bound IP address, and node name.</span>
-<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-master.html&gt;`_</span>
+<span class="sd">        `&lt;https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-master.html#cat-master&gt;`_</span>
 
 <span class="sd">        :arg h: Comma-separated list of column names to display</span>
 <span class="sd">        :arg get_help: Return help information, default False</span>
@@ -208,18 +227,22 @@
 <span class="sd">            node</span>
 <span class="sd">        :arg v: Verbose mode. Display column headers, default False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="s">&#39;help&#39;</span><span class="p">,</span> <span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">,)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_cat&#39;</span><span class="p">,</span> <span class="s">&#39;master&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;help&#39;</span><span class="p">,</span> <span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_cat&#39;</span><span class="p">,</span> <span class="s1">&#39;master&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="MeowClient.nodes"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.nodes">[docs]</a>    <span class="k">def</span> <span class="nf">nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MeowClient.nodes"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.nodes">[docs]</a>    <span class="k">def</span> <span class="nf">nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The nodes command shows the cluster topology.</span>
-<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-nodes.html&gt;`_</span>
+<span class="sd">        `&lt;https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-nodes.html#cat-nodes&gt;`_</span>
 
 <span class="sd">        :arg h: Comma-separated list of column names to display</span>
 <span class="sd">        :arg get_help: Return help information, default False</span>
@@ -229,18 +252,22 @@
 <span class="sd">            node</span>
 <span class="sd">        :arg v: Verbose mode. Display column headers, default False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="s">&#39;help&#39;</span><span class="p">,</span> <span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">,)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_cat&#39;</span><span class="p">,</span> <span class="s">&#39;nodes&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;help&#39;</span><span class="p">,</span> <span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_cat&#39;</span><span class="p">,</span> <span class="s1">&#39;nodes&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="MeowClient.recovery"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.recovery">[docs]</a>    <span class="k">def</span> <span class="nf">recovery</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MeowClient.recovery"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.recovery">[docs]</a>    <span class="k">def</span> <span class="nf">recovery</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        recovery is a view of shard replication.</span>
-<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-recovery.html&gt;`_</span>
+<span class="sd">        `&lt;https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-recovery.html#cat-recovery&gt;`_</span>
 
 <span class="sd">        :arg index: A comma-separated list of index names to limit the returned</span>
 <span class="sd">            information</span>
@@ -253,18 +280,22 @@
 <span class="sd">            node</span>
 <span class="sd">        :arg v: Verbose mode. Display column headers, default False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;bytes&#39;</span><span class="p">,</span> <span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="s">&#39;help&#39;</span><span class="p">,</span> <span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">,)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_cat&#39;</span><span class="p">,</span> <span class="s">&#39;recovery&#39;</span><span class="p">,</span> <span class="n">index</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;bytes&#39;</span><span class="p">,</span> <span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;help&#39;</span><span class="p">,</span> <span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_cat&#39;</span><span class="p">,</span> <span class="s1">&#39;recovery&#39;</span><span class="p">,</span> <span class="n">index</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="MeowClient.shards"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.shards">[docs]</a>    <span class="k">def</span> <span class="nf">shards</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MeowClient.shards"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.shards">[docs]</a>    <span class="k">def</span> <span class="nf">shards</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The shards command is the detailed view of what nodes contain which shards.</span>
-<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-shards.html&gt;`_</span>
+<span class="sd">        `&lt;https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-shards.html#cat-shards&gt;`_</span>
 
 <span class="sd">        :arg index: A comma-separated list of index names to limit the returned</span>
 <span class="sd">            information</span>
@@ -276,15 +307,19 @@
 <span class="sd">            node</span>
 <span class="sd">        :arg v: Verbose mode. Display column headers, default False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="s">&#39;help&#39;</span><span class="p">,</span> <span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">,)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_cat&#39;</span><span class="p">,</span> <span class="s">&#39;shards&#39;</span><span class="p">,</span> <span class="n">index</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;help&#39;</span><span class="p">,</span> <span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_cat&#39;</span><span class="p">,</span> <span class="s1">&#39;shards&#39;</span><span class="p">,</span> <span class="n">index</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="MeowClient.segments"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.segments">[docs]</a>    <span class="k">def</span> <span class="nf">segments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MeowClient.segments"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.segments">[docs]</a>    <span class="k">def</span> <span class="nf">segments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The segments command is the detailed view of Lucene segments per index.</span>
 
@@ -298,20 +333,24 @@
 <span class="sd">            node</span>
 <span class="sd">        :arg v: Verbose mode. Display column headers, default False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="s">&#39;help&#39;</span><span class="p">,</span> <span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">,)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_cat&#39;</span><span class="p">,</span> <span class="s">&#39;segments&#39;</span><span class="p">,</span> <span class="n">index</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;help&#39;</span><span class="p">,</span> <span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_cat&#39;</span><span class="p">,</span> <span class="s1">&#39;segments&#39;</span><span class="p">,</span> <span class="n">index</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="MeowClient.pending_tasks"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.pending_tasks">[docs]</a>    <span class="k">def</span> <span class="nf">pending_tasks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MeowClient.pending_tasks"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.pending_tasks">[docs]</a>    <span class="k">def</span> <span class="nf">pending_tasks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        pending_tasks provides the same information as the</span>
 <span class="sd">        :meth:`~elasticsearch.client.cluster.ClusterClient.pending_tasks` API</span>
 <span class="sd">        in a convenient tabular format.</span>
-<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-pending-tasks.html&gt;`_</span>
+<span class="sd">        `&lt;https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-pending-tasks.html#cat-pending-tasks&gt;`_</span>
 
 <span class="sd">        :arg h: Comma-separated list of column names to display</span>
 <span class="sd">        :arg get_help: Return help information, default False</span>
@@ -321,18 +360,22 @@
 <span class="sd">            node</span>
 <span class="sd">        :arg v: Verbose mode. Display column headers, default False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="s">&#39;help&#39;</span><span class="p">,</span> <span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">,)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_cat&#39;</span><span class="p">,</span> <span class="s">&#39;pending_tasks&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;help&#39;</span><span class="p">,</span> <span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_cat&#39;</span><span class="p">,</span> <span class="s1">&#39;pending_tasks&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="MeowClient.thread_pool"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.thread_pool">[docs]</a>    <span class="k">def</span> <span class="nf">thread_pool</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MeowClient.thread_pool"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.thread_pool">[docs]</a>    <span class="k">def</span> <span class="nf">thread_pool</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get information about thread pools.</span>
-<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-thread-pool.html&gt;`_</span>
+<span class="sd">        `&lt;https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-thread-pool.html#cat-thread-pool&gt;`_</span>
 
 <span class="sd">        :arg full_id: Enables displaying the complete node ids (default: &#39;false&#39;)</span>
 <span class="sd">        :arg h: Comma-separated list of column names to display</span>
@@ -344,18 +387,22 @@
 <span class="sd">        :arg v: Verbose mode. Display column headers (default: &#39;false&#39;)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;full_id&#39;</span><span class="p">,</span> <span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="s">&#39;help&#39;</span><span class="p">,</span> <span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">,)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_cat&#39;</span><span class="p">,</span> <span class="s">&#39;thread_pool&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;full_id&#39;</span><span class="p">,</span> <span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;help&#39;</span><span class="p">,</span> <span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_cat&#39;</span><span class="p">,</span> <span class="s1">&#39;thread_pool&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="MeowClient.fielddata"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.fielddata">[docs]</a>    <span class="k">def</span> <span class="nf">fielddata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MeowClient.fielddata"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.fielddata">[docs]</a>    <span class="k">def</span> <span class="nf">fielddata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Shows information about currently loaded fielddata on a per-node basis.</span>
-<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-fielddata.html&gt;`_</span>
+<span class="sd">        `&lt;https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-fielddata.html#cat-fielddata&gt;`_</span>
 
 <span class="sd">        :arg fields: A comma-separated list of fields to return the fielddata</span>
 <span class="sd">            size</span>
@@ -371,19 +418,23 @@
 <span class="sd">        :arg v: Verbose mode. Display column headers (default: &#39;false&#39;)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="s">&#39;bytes&#39;</span><span class="p">,</span> <span class="s">&#39;fields&#39;</span><span class="p">,</span> <span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="s">&#39;help&#39;</span><span class="p">,</span> <span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;bytes&#39;</span><span class="p">,</span> <span class="s1">&#39;fields&#39;</span><span class="p">,</span> <span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;help&#39;</span><span class="p">,</span> <span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_cat&#39;</span><span class="p">,</span> <span class="s">&#39;fielddata&#39;</span><span class="p">,</span> <span class="n">fields</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_cat&#39;</span><span class="p">,</span> <span class="s1">&#39;fielddata&#39;</span><span class="p">,</span> <span class="n">fields</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="MeowClient.plugins"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.plugins">[docs]</a>    <span class="k">def</span> <span class="nf">plugins</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="MeowClient.plugins"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.cat.MeowClient.plugins">[docs]</a>    <span class="k">def</span> <span class="nf">plugins</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cat-plugins.html&gt;`_</span>
+<span class="sd">        `&lt;https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-plugins.html#cat-plugins&gt;`_</span>
 
 <span class="sd">        :arg h: Comma-separated list of column names to display</span>
 <span class="sd">        :arg get_help: Return help information, default False</span>
@@ -393,12 +444,16 @@
 <span class="sd">            node</span>
 <span class="sd">        :arg v: Verbose mode. Display column headers, default False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;h&#39;</span><span class="p">,</span> <span class="s">&#39;help&#39;</span><span class="p">,</span> <span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s">&#39;v&#39;</span><span class="p">,)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_cat&#39;</span><span class="p">,</span> <span class="s">&#39;plugins&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;help&#39;</span><span class="p">,</span> <span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_cat&#39;</span><span class="p">,</span> <span class="s1">&#39;plugins&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
         <span class="p">)</span></div></div>
 </pre></div>
 
@@ -415,9 +470,6 @@
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -433,14 +485,14 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">elasticsearch_tornado  documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li>
-          <li><a href="../elasticsearch_tornado.html" >elasticsearch_tornado</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Elasticsearch Tornado 1.1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="../elasticsearch_tornado.html" >elasticsearch_tornado</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2014, Author.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3b2.
+        &copy; Copyright 2014, Daniel Hodges.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
     </div>
   </body>
 </html>

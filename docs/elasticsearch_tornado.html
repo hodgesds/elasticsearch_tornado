@@ -6,15 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>elasticsearch_tornado package &mdash; elasticsearch_tornado  documentation</title>
+    <title>elasticsearch_tornado package &mdash; Elasticsearch Tornado 1.1.1 documentation</title>
     
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '',
+        VERSION:     '1.1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,8 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="elasticsearch_tornado  documentation" href="index.html" />
-    <link rel="prev" title="Welcome to elasticsearch_tornado’s documentation!" href="index.html" /> 
+    <link rel="top" title="Elasticsearch Tornado 1.1.1 documentation" href="index.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -36,10 +35,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="index.html" title="Welcome to elasticsearch_tornado’s documentation!"
-             accesskey="P">previous</a> |</li>
-        <li><a href="index.html">elasticsearch_tornado  documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Elasticsearch Tornado 1.1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -57,12 +53,12 @@
 <span id="elasticsearch-tornado-cat-module"></span><h2>elasticsearch_tornado.cat module<a class="headerlink" href="#module-elasticsearch_tornado.cat" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="elasticsearch_tornado.cat.MeowClient">
-<em class="property">class </em><code class="descclassname">elasticsearch_tornado.cat.</code><code class="descname">MeowClient</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">elasticsearch_tornado.cat.</code><code class="descname">MeowClient</code><span class="sig-paren">(</span><em>host='localhost'</em>, <em>port=9200</em>, <em>prefix=''</em>, <em>method='http'</em>, <em>ssl=False</em>, <em>curl=False</em>, <em>verify_certs=True</em>, <em>ca_certs=''</em>, <em>io_loop=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#elasticsearch_tornado.client.BaseClient" title="elasticsearch_tornado.client.BaseClient"><code class="xref py py-class docutils literal"><span class="pre">elasticsearch_tornado.client.BaseClient</span></code></a></p>
 <dl class="method">
 <dt id="elasticsearch_tornado.cat.MeowClient.aliases">
-<code class="descname">aliases</code><span class="sig-paren">(</span><em>name=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.aliases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.aliases" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-aliases.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-aliases.html</a></p>
+<code class="descname">aliases</code><span class="sig-paren">(</span><em>name=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.aliases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.aliases" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-alias.html#cat-alias">https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-alias.html#cat-alias</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -85,10 +81,10 @@ node</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.cat.MeowClient.allocation">
-<code class="descname">allocation</code><span class="sig-paren">(</span><em>node_id=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.allocation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.allocation" title="Permalink to this definition">¶</a></dt>
+<code class="descname">allocation</code><span class="sig-paren">(</span><em>node_id=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.allocation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.allocation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Allocation provides a snapshot of how shards have located around the
 cluster and the state of disk usage.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-allocation.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-allocation.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-allocation.html#cat-allocation">https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-allocation.html#cat-allocation</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -113,10 +109,10 @@ node</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.cat.MeowClient.count">
-<code class="descname">count</code><span class="sig-paren">(</span><em>index=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.count"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.count" title="Permalink to this definition">¶</a></dt>
+<code class="descname">count</code><span class="sig-paren">(</span><em>index=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.count"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.count" title="Permalink to this definition">¶</a></dt>
 <dd><p>Count provides quick access to the document count of the entire cluster,
 or individual indices.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-count.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-count.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-count.html#cat-count">https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-count.html#cat-count</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -140,9 +136,9 @@ node</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.cat.MeowClient.fielddata">
-<code class="descname">fielddata</code><span class="sig-paren">(</span><em>fields=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.fielddata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.fielddata" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fielddata</code><span class="sig-paren">(</span><em>fields=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.fielddata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.fielddata" title="Permalink to this definition">¶</a></dt>
 <dd><p>Shows information about currently loaded fielddata on a per-node basis.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-fielddata.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-fielddata.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-fielddata.html#cat-fielddata">https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-fielddata.html#cat-fielddata</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -169,7 +165,7 @@ node</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.cat.MeowClient.health">
-<code class="descname">health</code><span class="sig-paren">(</span><em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.health"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.health" title="Permalink to this definition">¶</a></dt>
+<code class="descname">health</code><span class="sig-paren">(</span><em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.health"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.health" title="Permalink to this definition">¶</a></dt>
 <dd><p>health is a terse, one-line representation of the same information from
 <code class="xref py py-meth docutils literal"><span class="pre">health()</span></code> API
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-health.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-health.html</a></p>
@@ -195,7 +191,7 @@ node</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.cat.MeowClient.help">
-<code class="descname">help</code><span class="sig-paren">(</span><em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.help"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.help" title="Permalink to this definition">¶</a></dt>
+<code class="descname">help</code><span class="sig-paren">(</span><em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.help"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.help" title="Permalink to this definition">¶</a></dt>
 <dd><p>A simple help for the cat api.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -210,9 +206,9 @@ node</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.cat.MeowClient.indices">
-<code class="descname">indices</code><span class="sig-paren">(</span><em>index=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.indices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.indices" title="Permalink to this definition">¶</a></dt>
+<code class="descname">indices</code><span class="sig-paren">(</span><em>index=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.indices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.indices" title="Permalink to this definition">¶</a></dt>
 <dd><p>The indices command provides a cross-section of each index.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-indices.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-indices.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-indices.html#cat-indices">https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-indices.html#cat-indices</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -239,9 +235,9 @@ False</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.cat.MeowClient.master">
-<code class="descname">master</code><span class="sig-paren">(</span><em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.master"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.master" title="Permalink to this definition">¶</a></dt>
+<code class="descname">master</code><span class="sig-paren">(</span><em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.master"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.master" title="Permalink to this definition">¶</a></dt>
 <dd><p>Displays the master&#8217;s node ID, bound IP address, and node name.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-master.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-master.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-master.html#cat-master">https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-master.html#cat-master</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -263,9 +259,9 @@ node</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.cat.MeowClient.nodes">
-<code class="descname">nodes</code><span class="sig-paren">(</span><em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.nodes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.nodes" title="Permalink to this definition">¶</a></dt>
+<code class="descname">nodes</code><span class="sig-paren">(</span><em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.nodes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.nodes" title="Permalink to this definition">¶</a></dt>
 <dd><p>The nodes command shows the cluster topology.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-nodes.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-nodes.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-nodes.html#cat-nodes">https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-nodes.html#cat-nodes</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -287,11 +283,11 @@ node</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.cat.MeowClient.pending_tasks">
-<code class="descname">pending_tasks</code><span class="sig-paren">(</span><em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.pending_tasks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.pending_tasks" title="Permalink to this definition">¶</a></dt>
+<code class="descname">pending_tasks</code><span class="sig-paren">(</span><em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.pending_tasks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.pending_tasks" title="Permalink to this definition">¶</a></dt>
 <dd><p>pending_tasks provides the same information as the
 <code class="xref py py-meth docutils literal"><span class="pre">pending_tasks()</span></code> API
 in a convenient tabular format.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-pending-tasks.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-pending-tasks.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-pending-tasks.html#cat-pending-tasks">https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-pending-tasks.html#cat-pending-tasks</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -313,8 +309,8 @@ node</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.cat.MeowClient.plugins">
-<code class="descname">plugins</code><span class="sig-paren">(</span><em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.plugins"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.plugins" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cat-plugins.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cat-plugins.html</a></p>
+<code class="descname">plugins</code><span class="sig-paren">(</span><em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.plugins"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.plugins" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-plugins.html#cat-plugins">https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-plugins.html#cat-plugins</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -336,9 +332,9 @@ node</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.cat.MeowClient.recovery">
-<code class="descname">recovery</code><span class="sig-paren">(</span><em>index=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.recovery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.recovery" title="Permalink to this definition">¶</a></dt>
+<code class="descname">recovery</code><span class="sig-paren">(</span><em>index=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.recovery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.recovery" title="Permalink to this definition">¶</a></dt>
 <dd><p>recovery is a view of shard replication.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-recovery.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-recovery.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-recovery.html#cat-recovery">https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-recovery.html#cat-recovery</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -363,7 +359,7 @@ node</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.cat.MeowClient.segments">
-<code class="descname">segments</code><span class="sig-paren">(</span><em>index=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.segments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.segments" title="Permalink to this definition">¶</a></dt>
+<code class="descname">segments</code><span class="sig-paren">(</span><em>index=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.segments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.segments" title="Permalink to this definition">¶</a></dt>
 <dd><p>The segments command is the detailed view of Lucene segments per index.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -388,9 +384,9 @@ node</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.cat.MeowClient.shards">
-<code class="descname">shards</code><span class="sig-paren">(</span><em>index=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.shards"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.shards" title="Permalink to this definition">¶</a></dt>
+<code class="descname">shards</code><span class="sig-paren">(</span><em>index=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.shards"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.shards" title="Permalink to this definition">¶</a></dt>
 <dd><p>The shards command is the detailed view of what nodes contain which shards.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-shards.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-shards.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-shards.html#cat-shards">https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-shards.html#cat-shards</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -414,9 +410,9 @@ node</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.cat.MeowClient.thread_pool">
-<code class="descname">thread_pool</code><span class="sig-paren">(</span><em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.thread_pool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.thread_pool" title="Permalink to this definition">¶</a></dt>
+<code class="descname">thread_pool</code><span class="sig-paren">(</span><em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cat.html#MeowClient.thread_pool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cat.MeowClient.thread_pool" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get information about thread pools.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-thread-pool.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-thread-pool.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-thread-pool.html#cat-thread-pool">https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-thread-pool.html#cat-thread-pool</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -444,11 +440,11 @@ node</li>
 <span id="elasticsearch-tornado-client-module"></span><h2>elasticsearch_tornado.client module<a class="headerlink" href="#module-elasticsearch_tornado.client" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="elasticsearch_tornado.client.BaseClient">
-<em class="property">class </em><code class="descclassname">elasticsearch_tornado.client.</code><code class="descname">BaseClient</code><span class="sig-paren">(</span><em>host='localhost'</em>, <em>port=9200</em>, <em>prefix=''</em>, <em>method='http'</em>, <em>ssl=False</em>, <em>verify_certs=True</em>, <em>ca_certs=''</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">elasticsearch_tornado.client.</code><code class="descname">BaseClient</code><span class="sig-paren">(</span><em>host='localhost'</em>, <em>port=9200</em>, <em>prefix=''</em>, <em>method='http'</em>, <em>ssl=False</em>, <em>curl=False</em>, <em>verify_certs=True</em>, <em>ca_certs=''</em>, <em>io_loop=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.abort_benchmark">
-<code class="descname">abort_benchmark</code><span class="sig-paren">(</span><em>name=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.abort_benchmark"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.abort_benchmark" title="Permalink to this definition">¶</a></dt>
+<code class="descname">abort_benchmark</code><span class="sig-paren">(</span><em>name=None</em>, <em>params={}</em>, <em>body=''</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.abort_benchmark"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.abort_benchmark" title="Permalink to this definition">¶</a></dt>
 <dd><p>Aborts a running benchmark.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html</a>
 :arg name: A benchmark name</p>
@@ -456,7 +452,7 @@ node</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.benchmark">
-<code class="descname">benchmark</code><span class="sig-paren">(</span><em>index=None</em>, <em>doc_type=None</em>, <em>body=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.benchmark"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.benchmark" title="Permalink to this definition">¶</a></dt>
+<code class="descname">benchmark</code><span class="sig-paren">(</span><em>index=None</em>, <em>doc_type=None</em>, <em>body=''</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.benchmark"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.benchmark" title="Permalink to this definition">¶</a></dt>
 <dd><p>The benchmark API provides a standard mechanism for submitting queries
 and measuring their performance relative to one another.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html</a>
@@ -481,7 +477,7 @@ iteration (default: false)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.bulk">
-<code class="descname">bulk</code><span class="sig-paren">(</span><em>body</em>, <em>index=None</em>, <em>doc_type=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.bulk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.bulk" title="Permalink to this definition">¶</a></dt>
+<code class="descname">bulk</code><span class="sig-paren">(</span><em>body</em>, <em>index=None</em>, <em>doc_type=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.bulk"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.bulk" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform many index/delete operations in a single API call.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-bulk.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-bulk.html</a>
 See the <code class="xref py py-func docutils literal"><span class="pre">bulk()</span></code> helper function for a more
@@ -511,7 +507,7 @@ serialize (one per row).</div></blockquote>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.clear_scroll">
-<code class="descname">clear_scroll</code><span class="sig-paren">(</span><em>scroll_id=None</em>, <em>body=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.clear_scroll"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.clear_scroll" title="Permalink to this definition">¶</a></dt>
+<code class="descname">clear_scroll</code><span class="sig-paren">(</span><em>scroll_id=None</em>, <em>body=''</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.clear_scroll"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.clear_scroll" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clear the scroll request created by specifying the scroll parameter to
 search.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-scroll.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-scroll.html</a>
@@ -523,7 +519,7 @@ search.
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.count">
-<code class="descname">count</code><span class="sig-paren">(</span><em>index=None</em>, <em>doc_type=None</em>, <em>body=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.count"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.count" title="Permalink to this definition">¶</a></dt>
+<code class="descname">count</code><span class="sig-paren">(</span><em>index=None</em>, <em>doc_type=None</em>, <em>body=''</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.count"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.count" title="Permalink to this definition">¶</a></dt>
 <dd><p>Execute a query and get the number of matches for that query.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-count.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-count.html</a>
 :arg index: A comma-separated list of indices to restrict the results
@@ -557,7 +553,7 @@ performed on (default: random)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.count_percolate">
-<code class="descname">count_percolate</code><span class="sig-paren">(</span><em>index</em>, <em>doc_type</em>, <em>doc_id=None</em>, <em>body=None</em>, <em>params={}</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.count_percolate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.count_percolate" title="Permalink to this definition">¶</a></dt>
+<code class="descname">count_percolate</code><span class="sig-paren">(</span><em>index</em>, <em>doc_type</em>, <em>doc_id=None</em>, <em>body=''</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.count_percolate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.count_percolate" title="Permalink to this definition">¶</a></dt>
 <dd><p>The percolator allows to register queries against an index, and then
 send percolate requests which include a doc, and getting back the
 queries that match on that doc out of the set of registered queries.
@@ -601,7 +597,7 @@ performed on (default: random)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.create">
-<code class="descname">create</code><span class="sig-paren">(</span><em>index</em>, <em>doc_type</em>, <em>body</em>, <em>doc_id=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.create" title="Permalink to this definition">¶</a></dt>
+<code class="descname">create</code><span class="sig-paren">(</span><em>index</em>, <em>doc_type</em>, <em>body</em>, <em>doc_id=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds a typed JSON document in a specific index, making it searchable.
 Behind the scenes this method calls index(..., op_type=&#8217;create&#8217;)
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-index_.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-index_.html</a>
@@ -625,7 +621,7 @@ Behind the scenes this method calls index(..., op_type=&#8217;create&#8217;)
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.delete">
-<code class="descname">delete</code><span class="sig-paren">(</span><em>index</em>, <em>doc_type</em>, <em>doc_id</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.delete" title="Permalink to this definition">¶</a></dt>
+<code class="descname">delete</code><span class="sig-paren">(</span><em>index</em>, <em>doc_type</em>, <em>doc_id</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.delete" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete a typed JSON document from a specific index based on its id.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-delete.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-delete.html</a>
 :arg index: The name of the index
@@ -643,7 +639,7 @@ Behind the scenes this method calls index(..., op_type=&#8217;create&#8217;)
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.delete_by_query">
-<code class="descname">delete_by_query</code><span class="sig-paren">(</span><em>index</em>, <em>doc_type=None</em>, <em>body=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.delete_by_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.delete_by_query" title="Permalink to this definition">¶</a></dt>
+<code class="descname">delete_by_query</code><span class="sig-paren">(</span><em>index</em>, <em>doc_type=None</em>, <em>body=''</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.delete_by_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.delete_by_query" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete documents from one or more indices and one or more types based on a query.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-delete-by-query.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-delete-by-query.html</a>
 :arg index: A comma-separated list of indices to restrict the operation;</p>
@@ -685,7 +681,7 @@ request body)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.delete_script">
-<code class="descname">delete_script</code><span class="sig-paren">(</span><em>lang</em>, <em>script_id</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.delete_script"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.delete_script" title="Permalink to this definition">¶</a></dt>
+<code class="descname">delete_script</code><span class="sig-paren">(</span><em>lang</em>, <em>script_id</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.delete_script"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.delete_script" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove a stored script from elasticsearch.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-scripting.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-scripting.html</a>
 :arg lang: Script language
@@ -696,7 +692,7 @@ request body)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.delete_template">
-<code class="descname">delete_template</code><span class="sig-paren">(</span><em>temp_id=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.delete_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.delete_template" title="Permalink to this definition">¶</a></dt>
+<code class="descname">delete_template</code><span class="sig-paren">(</span><em>temp_id=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.delete_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.delete_template" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete a search template.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-template.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-template.html</a>
 :arg temp_id: Template ID</p>
@@ -704,7 +700,7 @@ request body)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.exists">
-<code class="descname">exists</code><span class="sig-paren">(</span><em>index</em>, <em>doc_id</em>, <em>doc_type='_all'</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.exists" title="Permalink to this definition">¶</a></dt>
+<code class="descname">exists</code><span class="sig-paren">(</span><em>index</em>, <em>doc_id</em>, <em>doc_type='_all'</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.exists" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a boolean indicating whether or not given document exists in Elasticsearch.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-get.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-get.html</a>
 :arg index: The name of the index
@@ -734,7 +730,7 @@ performing the operation</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.explain">
-<code class="descname">explain</code><span class="sig-paren">(</span><em>index</em>, <em>doc_type</em>, <em>doc_id</em>, <em>body=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.explain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.explain" title="Permalink to this definition">¶</a></dt>
+<code class="descname">explain</code><span class="sig-paren">(</span><em>index</em>, <em>doc_type</em>, <em>doc_id</em>, <em>body=''</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.explain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.explain" title="Permalink to this definition">¶</a></dt>
 <dd><p>The explain api computes a score explanation for a query and a specific
 document. This can give useful feedback whether a document matches or
 didn&#8217;t match a specific query.
@@ -781,7 +777,7 @@ request body)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.get">
-<code class="descname">get</code><span class="sig-paren">(</span><em>index</em>, <em>doc_id</em>, <em>doc_type='_all'</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.get" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get</code><span class="sig-paren">(</span><em>index</em>, <em>doc_id</em>, <em>doc_type='_all'</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.get" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a typed JSON document from the index based on its id.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-get.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-get.html</a>
 :arg index: The name of the index
@@ -820,7 +816,7 @@ performing the operation</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.get_script">
-<code class="descname">get_script</code><span class="sig-paren">(</span><em>lang</em>, <em>script_id</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.get_script"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.get_script" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_script</code><span class="sig-paren">(</span><em>lang</em>, <em>script_id</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.get_script"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.get_script" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve a script from the API.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-scripting.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-scripting.html</a>
 :arg lang: Script language
@@ -831,7 +827,7 @@ performing the operation</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.get_source">
-<code class="descname">get_source</code><span class="sig-paren">(</span><em>index</em>, <em>doc_id</em>, <em>doc_type='_all'</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.get_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.get_source" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_source</code><span class="sig-paren">(</span><em>index</em>, <em>doc_id</em>, <em>doc_type='_all'</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.get_source"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.get_source" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the source of a document by it&#8217;s index, type and id.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-get.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-get.html</a>
 :arg index: The name of the index
@@ -868,7 +864,7 @@ performing the operation</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.get_template">
-<code class="descname">get_template</code><span class="sig-paren">(</span><em>temp_id</em>, <em>body=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.get_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.get_template" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_template</code><span class="sig-paren">(</span><em>temp_id</em>, <em>body=''</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.get_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.get_template" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve a search template.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-template.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-template.html</a>
 :arg temp_id: Template ID
@@ -877,7 +873,7 @@ performing the operation</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.index">
-<code class="descname">index</code><span class="sig-paren">(</span><em>index</em>, <em>doc_type</em>, <em>body</em>, <em>doc_id=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.index" title="Permalink to this definition">¶</a></dt>
+<code class="descname">index</code><span class="sig-paren">(</span><em>index</em>, <em>doc_type</em>, <em>body</em>, <em>doc_id=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.index" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds or updates a typed JSON document in a specific index, making it searchable.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-index_.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-index_.html</a>
 :arg index: The name of the index
@@ -899,7 +895,7 @@ performing the operation</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.info">
-<code class="descname">info</code><span class="sig-paren">(</span><em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.info" title="Permalink to this definition">¶</a></dt>
+<code class="descname">info</code><span class="sig-paren">(</span><em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.info" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the basic info from the current cluster.</p>
 </dd></dl>
 
@@ -923,7 +919,7 @@ performing the operation</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.mget">
-<code class="descname">mget</code><span class="sig-paren">(</span><em>body</em>, <em>index=None</em>, <em>doc_type=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.mget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.mget" title="Permalink to this definition">¶</a></dt>
+<code class="descname">mget</code><span class="sig-paren">(</span><em>body</em>, <em>index=None</em>, <em>doc_type=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.mget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.mget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get multiple documents based on an index, type (optional) and ids.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-multi-get.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-multi-get.html</a>
 :arg body: Document identifiers; can be either <cite>docs</cite> (containing full</p>
@@ -960,16 +956,25 @@ performing the operation</li>
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.mk_req">
 <code class="descname">mk_req</code><span class="sig-paren">(</span><em>url</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.mk_req"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.mk_req" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Helper function to create a tornado HTTPRequest object, kwargs get passed in to
+create the HTTPRequest object. See:
+<a class="reference external" href="http://tornado.readthedocs.org/en/latest/httpclient.html#request-objects">http://tornado.readthedocs.org/en/latest/httpclient.html#request-objects</a></p>
+</dd></dl>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.mk_url">
 <code class="descname">mk_url</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.mk_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.mk_url" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><dl class="docutils">
+<dt>Args get parameterized into base url:</dt>
+<dd><a href="#id8"><span class="problematic" id="id9">*</span></a>(foo, bar, baz) -&gt; /foo/bar/baz</dd>
+<dt>Kwargs get encoded and appended to base url:</dt>
+<dd><a href="#id10"><span class="problematic" id="id11">**</span></a>{&#8216;hello&#8217;:&#8217;world&#8217;} -&gt; /foo/bar/baz?hello=world</dd>
+</dl>
+</dd></dl>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.mlt">
-<code class="descname">mlt</code><span class="sig-paren">(</span><em>index</em>, <em>doc_type</em>, <em>doc_id</em>, <em>body=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.mlt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.mlt" title="Permalink to this definition">¶</a></dt>
+<code class="descname">mlt</code><span class="sig-paren">(</span><em>index</em>, <em>doc_type</em>, <em>doc_id</em>, <em>body=''</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.mlt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.mlt" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get documents that are &#8220;like&#8221; a specified document.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-more-like-this.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-more-like-this.html</a>
 :arg index: The name of the index
@@ -1019,7 +1024,7 @@ against (default: the same type as the document)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.mpercolate">
-<code class="descname">mpercolate</code><span class="sig-paren">(</span><em>body</em>, <em>index=None</em>, <em>doc_type=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.mpercolate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.mpercolate" title="Permalink to this definition">¶</a></dt>
+<code class="descname">mpercolate</code><span class="sig-paren">(</span><em>body</em>, <em>index=None</em>, <em>doc_type=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.mpercolate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.mpercolate" title="Permalink to this definition">¶</a></dt>
 <dd><p>The percolator allows to register queries against an index, and then
 send percolate requests which include a doc, and getting back the
 queries that match on that doc out of the set of registered queries.
@@ -1052,7 +1057,7 @@ ignored when unavailable (missing or closed)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.msearch">
-<code class="descname">msearch</code><span class="sig-paren">(</span><em>body</em>, <em>index=None</em>, <em>doc_type=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.msearch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.msearch" title="Permalink to this definition">¶</a></dt>
+<code class="descname">msearch</code><span class="sig-paren">(</span><em>body</em>, <em>index=None</em>, <em>doc_type=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.msearch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.msearch" title="Permalink to this definition">¶</a></dt>
 <dd><p>Execute several search requests within the same API.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-multi-search.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-multi-search.html</a>
 :arg body: The request definitions (metadata-search request definition</p>
@@ -1076,7 +1081,7 @@ dicts to serialize (one per row).</div></blockquote>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.mtermvectors">
-<code class="descname">mtermvectors</code><span class="sig-paren">(</span><em>index=None</em>, <em>doc_type=None</em>, <em>body=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.mtermvectors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.mtermvectors" title="Permalink to this definition">¶</a></dt>
+<code class="descname">mtermvectors</code><span class="sig-paren">(</span><em>index=None</em>, <em>doc_type=None</em>, <em>body=''</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.mtermvectors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.mtermvectors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Multi termvectors API allows to get multiple termvectors based on an
 index, type and id.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/docs-multi-termvectors.html</a>
@@ -1129,7 +1134,7 @@ False</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.percolate">
-<code class="descname">percolate</code><span class="sig-paren">(</span><em>index</em>, <em>doc_type</em>, <em>doc_id=None</em>, <em>body=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.percolate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.percolate" title="Permalink to this definition">¶</a></dt>
+<code class="descname">percolate</code><span class="sig-paren">(</span><em>index</em>, <em>doc_type</em>, <em>doc_id=None</em>, <em>body=''</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.percolate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.percolate" title="Permalink to this definition">¶</a></dt>
 <dd><p>The percolator allows to register queries against an index, and then
 send percolate requests which include a doc, and getting back the
 queries that match on that doc out of the set of registered queries.
@@ -1174,12 +1179,13 @@ performed on (default: random)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.ping">
-<code class="descname">ping</code><span class="sig-paren">(</span><em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.ping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.ping" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="descname">ping</code><span class="sig-paren">(</span><em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.ping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.ping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ping request to check status of elasticsearch host</p>
+</dd></dl>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.put_script">
-<code class="descname">put_script</code><span class="sig-paren">(</span><em>lang</em>, <em>script_id</em>, <em>body</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.put_script"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.put_script" title="Permalink to this definition">¶</a></dt>
+<code class="descname">put_script</code><span class="sig-paren">(</span><em>lang</em>, <em>script_id</em>, <em>body</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.put_script"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.put_script" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a script in given language with specified ID.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-scripting.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-scripting.html</a>
 :arg lang: Script language
@@ -1192,7 +1198,7 @@ performed on (default: random)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.put_template">
-<code class="descname">put_template</code><span class="sig-paren">(</span><em>temp_id</em>, <em>body</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.put_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.put_template" title="Permalink to this definition">¶</a></dt>
+<code class="descname">put_template</code><span class="sig-paren">(</span><em>temp_id</em>, <em>body</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.put_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.put_template" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a search template.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-template.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-template.html</a>
 :arg temp_id: Template ID
@@ -1201,7 +1207,7 @@ performed on (default: random)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.scroll">
-<code class="descname">scroll</code><span class="sig-paren">(</span><em>scroll_id</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.scroll"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.scroll" title="Permalink to this definition">¶</a></dt>
+<code class="descname">scroll</code><span class="sig-paren">(</span><em>scroll_id</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.scroll"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.scroll" title="Permalink to this definition">¶</a></dt>
 <dd><p>Scroll a search request created by specifying the scroll parameter.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-scroll.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-scroll.html</a>
 :arg scroll_id: The scroll ID
@@ -1212,7 +1218,7 @@ performed on (default: random)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.search">
-<code class="descname">search</code><span class="sig-paren">(</span><em>index=None</em>, <em>doc_type=None</em>, <em>body=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.search" title="Permalink to this definition">¶</a></dt>
+<code class="descname">search</code><span class="sig-paren">(</span><em>index=None</em>, <em>doc_type=None</em>, <em>body=''</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.search" title="Permalink to this definition">¶</a></dt>
 <dd><p>Execute a search query and get back search hits that match the query.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-search.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-search.html</a>
 :arg index: A comma-separated list of index names to search; use <cite>_all</cite></p>
@@ -1281,7 +1287,7 @@ maintained for scrolled search</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.search_shards">
-<code class="descname">search_shards</code><span class="sig-paren">(</span><em>index=None</em>, <em>doc_type=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.search_shards"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.search_shards" title="Permalink to this definition">¶</a></dt>
+<code class="descname">search_shards</code><span class="sig-paren">(</span><em>index=None</em>, <em>doc_type=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.search_shards"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.search_shards" title="Permalink to this definition">¶</a></dt>
 <dd><p>The search shards api returns the indices and shards that a search
 request would be executed against. This can give useful feedback for working
 out issues or planning optimizations with routing and shard preferences.
@@ -1315,7 +1321,7 @@ performed on (default: random)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.search_template">
-<code class="descname">search_template</code><span class="sig-paren">(</span><em>index=None</em>, <em>doc_type=None</em>, <em>body=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.search_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.search_template" title="Permalink to this definition">¶</a></dt>
+<code class="descname">search_template</code><span class="sig-paren">(</span><em>index=None</em>, <em>doc_type=None</em>, <em>body=''</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.search_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.search_template" title="Permalink to this definition">¶</a></dt>
 <dd><p>A query that accepts a query template and a map of key/value pairs to
 fill in template parameters.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/query-dsl-template-query.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/query-dsl-template-query.html</a>
@@ -1352,7 +1358,7 @@ maintained for scrolled search</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.suggest">
-<code class="descname">suggest</code><span class="sig-paren">(</span><em>body</em>, <em>index=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.suggest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.suggest" title="Permalink to this definition">¶</a></dt>
+<code class="descname">suggest</code><span class="sig-paren">(</span><em>body</em>, <em>index=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.suggest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.suggest" title="Permalink to this definition">¶</a></dt>
 <dd><p>The suggest feature suggests similar looking terms based on a provided
 text by using a suggester.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-search.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-search.html</a>
@@ -1385,7 +1391,7 @@ performed on (default: random)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.termvector">
-<code class="descname">termvector</code><span class="sig-paren">(</span><em>index</em>, <em>doc_type</em>, <em>doc_id</em>, <em>body=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.termvector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.termvector" title="Permalink to this definition">¶</a></dt>
+<code class="descname">termvector</code><span class="sig-paren">(</span><em>index</em>, <em>doc_type</em>, <em>doc_id</em>, <em>body=''</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.termvector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.termvector" title="Permalink to this definition">¶</a></dt>
 <dd><p>Added in 1.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-termvectors.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-termvectors.html</a>
 :arg index: The index in which the document resides.
@@ -1425,7 +1431,7 @@ frequency should be returned., default False</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.client.BaseClient.update">
-<code class="descname">update</code><span class="sig-paren">(</span><em>index</em>, <em>doc_type</em>, <em>doc_id</em>, <em>body=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.update" title="Permalink to this definition">¶</a></dt>
+<code class="descname">update</code><span class="sig-paren">(</span><em>index</em>, <em>doc_type</em>, <em>doc_id</em>, <em>body=''</em>, <em>params={}</em>, <em>query_params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/client.html#BaseClient.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.client.BaseClient.update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update a document based on a script or partial data provided.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-update.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-update.html</a>
 :arg index: The name of the index
@@ -1467,11 +1473,11 @@ frequency should be returned., default False</li>
 <span id="elasticsearch-tornado-cluster-module"></span><h2>elasticsearch_tornado.cluster module<a class="headerlink" href="#module-elasticsearch_tornado.cluster" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="elasticsearch_tornado.cluster.ClusterClient">
-<em class="property">class </em><code class="descclassname">elasticsearch_tornado.cluster.</code><code class="descname">ClusterClient</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cluster.html#ClusterClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cluster.ClusterClient" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<em class="property">class </em><code class="descclassname">elasticsearch_tornado.cluster.</code><code class="descname">ClusterClient</code><span class="sig-paren">(</span><em>host='localhost'</em>, <em>port=9200</em>, <em>prefix=''</em>, <em>method='http'</em>, <em>ssl=False</em>, <em>curl=False</em>, <em>verify_certs=True</em>, <em>ca_certs=''</em>, <em>io_loop=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cluster.html#ClusterClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cluster.ClusterClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elasticsearch_tornado.client.BaseClient" title="elasticsearch_tornado.client.BaseClient"><code class="xref py py-class docutils literal"><span class="pre">elasticsearch_tornado.client.BaseClient</span></code></a></p>
 <dl class="method">
 <dt id="elasticsearch_tornado.cluster.ClusterClient.get_settings">
-<code class="descname">get_settings</code><span class="sig-paren">(</span><em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cluster.html#ClusterClient.get_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cluster.ClusterClient.get_settings" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_settings</code><span class="sig-paren">(</span><em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cluster.html#ClusterClient.get_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cluster.ClusterClient.get_settings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get cluster settings.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-update-settings.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-update-settings.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1491,9 +1497,9 @@ frequency should be returned., default False</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.cluster.ClusterClient.health">
-<code class="descname">health</code><span class="sig-paren">(</span><em>index=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cluster.html#ClusterClient.health"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cluster.ClusterClient.health" title="Permalink to this definition">¶</a></dt>
+<code class="descname">health</code><span class="sig-paren">(</span><em>index=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cluster.html#ClusterClient.health"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cluster.ClusterClient.health" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a very simple status on the health of the cluster.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-health.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-health.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-health.html#cluster-health">https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-health.html#cluster-health</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1517,7 +1523,7 @@ frequency should be returned., default False</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.cluster.ClusterClient.pending_tasks">
-<code class="descname">pending_tasks</code><span class="sig-paren">(</span><em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cluster.html#ClusterClient.pending_tasks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cluster.ClusterClient.pending_tasks" title="Permalink to this definition">¶</a></dt>
+<code class="descname">pending_tasks</code><span class="sig-paren">(</span><em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cluster.html#ClusterClient.pending_tasks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cluster.ClusterClient.pending_tasks" title="Permalink to this definition">¶</a></dt>
 <dd><p>The pending cluster tasks API returns a list of any cluster-level
 changes (e.g. create index, update mapping, allocate or fail shard)
 which have not yet been executed.
@@ -1538,7 +1544,7 @@ which have not yet been executed.
 
 <dl class="method">
 <dt id="elasticsearch_tornado.cluster.ClusterClient.put_settings">
-<code class="descname">put_settings</code><span class="sig-paren">(</span><em>body</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cluster.html#ClusterClient.put_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cluster.ClusterClient.put_settings" title="Permalink to this definition">¶</a></dt>
+<code class="descname">put_settings</code><span class="sig-paren">(</span><em>body</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cluster.html#ClusterClient.put_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cluster.ClusterClient.put_settings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update cluster wide specific settings.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-update-settings.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-update-settings.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1558,7 +1564,7 @@ which have not yet been executed.
 
 <dl class="method">
 <dt id="elasticsearch_tornado.cluster.ClusterClient.reroute">
-<code class="descname">reroute</code><span class="sig-paren">(</span><em>body=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cluster.html#ClusterClient.reroute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cluster.ClusterClient.reroute" title="Permalink to this definition">¶</a></dt>
+<code class="descname">reroute</code><span class="sig-paren">(</span><em>body</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cluster.html#ClusterClient.reroute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cluster.ClusterClient.reroute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Explicitly execute a cluster reroute allocation command including specific commands.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-reroute.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-reroute.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1583,7 +1589,7 @@ Defaults to all but metadata</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.cluster.ClusterClient.state">
-<code class="descname">state</code><span class="sig-paren">(</span><em>metric=None</em>, <em>index=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cluster.html#ClusterClient.state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cluster.ClusterClient.state" title="Permalink to this definition">¶</a></dt>
+<code class="descname">state</code><span class="sig-paren">(</span><em>metric=None</em>, <em>index=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cluster.html#ClusterClient.state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cluster.ClusterClient.state" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a comprehensive state information of the whole cluster.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-state.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-state.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1610,11 +1616,11 @@ templates when returning metadata.</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.cluster.ClusterClient.stats">
-<code class="descname">stats</code><span class="sig-paren">(</span><em>node_id=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cluster.html#ClusterClient.stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cluster.ClusterClient.stats" title="Permalink to this definition">¶</a></dt>
+<code class="descname">stats</code><span class="sig-paren">(</span><em>node_id=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/cluster.html#ClusterClient.stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.cluster.ClusterClient.stats" title="Permalink to this definition">¶</a></dt>
 <dd><p>The Cluster Stats API allows to retrieve statistics from a cluster wide
 perspective. The API returns basic index metrics and information about
 the current nodes that form the cluster.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-stats.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-stats.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-stats.html#cluster-stats">https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-stats.html#cluster-stats</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1639,11 +1645,11 @@ you&#8217;re connecting to, leave empty to get information from all nodes</li>
 <span id="elasticsearch-tornado-indices-module"></span><h2>elasticsearch_tornado.indices module<a class="headerlink" href="#module-elasticsearch_tornado.indices" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="elasticsearch_tornado.indices.IndicesClient">
-<em class="property">class </em><code class="descclassname">elasticsearch_tornado.indices.</code><code class="descname">IndicesClient</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">elasticsearch_tornado.indices.</code><code class="descname">IndicesClient</code><span class="sig-paren">(</span><em>host='localhost'</em>, <em>port=9200</em>, <em>prefix=''</em>, <em>method='http'</em>, <em>ssl=False</em>, <em>curl=False</em>, <em>verify_certs=True</em>, <em>ca_certs=''</em>, <em>io_loop=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#elasticsearch_tornado.client.BaseClient" title="elasticsearch_tornado.client.BaseClient"><code class="xref py py-class docutils literal"><span class="pre">elasticsearch_tornado.client.BaseClient</span></code></a></p>
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.analyze">
-<code class="descname">analyze</code><span class="sig-paren">(</span><em>index=None</em>, <em>body=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.analyze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.analyze" title="Permalink to this definition">¶</a></dt>
+<code class="descname">analyze</code><span class="sig-paren">(</span><em>index=None</em>, <em>body=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.analyze"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.analyze" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform the analysis process on a text and return the tokens breakdown of the text.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-analyze.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-analyze.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1675,9 +1681,9 @@ request body is not used)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.clear_cache">
-<code class="descname">clear_cache</code><span class="sig-paren">(</span><em>index=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.clear_cache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.clear_cache" title="Permalink to this definition">¶</a></dt>
+<code class="descname">clear_cache</code><span class="sig-paren">(</span><em>index=None</em>, <em>body=''</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.clear_cache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.clear_cache" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clear either all caches or specific cached associated with one ore more indices.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-clearcache.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-clearcache.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-clearcache.html#indices-clearcache">https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-clearcache.html#indices-clearcache</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1714,7 +1720,7 @@ when unavailable (missing or closed)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.close">
-<code class="descname">close</code><span class="sig-paren">(</span><em>index</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.close" title="Permalink to this definition">¶</a></dt>
+<code class="descname">close</code><span class="sig-paren">(</span><em>index</em>, <em>body=''</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.close" title="Permalink to this definition">¶</a></dt>
 <dd><p>Close an index to remove it&#8217;s overhead from the cluster. Closed index
 is blocked for read/write operations.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-open-close.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-open-close.html</a></p>
@@ -1743,9 +1749,9 @@ ignored when unavailable (missing or closed)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.create">
-<code class="descname">create</code><span class="sig-paren">(</span><em>index</em>, <em>body=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.create" title="Permalink to this definition">¶</a></dt>
+<code class="descname">create</code><span class="sig-paren">(</span><em>index</em>, <em>body</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create an index in Elasticsearch.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-create-index.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-create-index.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-create-index.html#indices-create-index">https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-create-index.html#indices-create-index</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1764,9 +1770,9 @@ ignored when unavailable (missing or closed)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.delete">
-<code class="descname">delete</code><span class="sig-paren">(</span><em>index</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.delete" title="Permalink to this definition">¶</a></dt>
+<code class="descname">delete</code><span class="sig-paren">(</span><em>index</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.delete" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete an index in Elasticsearch
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-delete-index.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-delete-index.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-delete-index.html#indices-delete-index">https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-delete-index.html#indices-delete-index</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1785,9 +1791,9 @@ ignored when unavailable (missing or closed)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.delete_alias">
-<code class="descname">delete_alias</code><span class="sig-paren">(</span><em>index</em>, <em>name</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.delete_alias"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.delete_alias" title="Permalink to this definition">¶</a></dt>
+<code class="descname">delete_alias</code><span class="sig-paren">(</span><em>index</em>, <em>name</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.delete_alias"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.delete_alias" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete specific alias.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-aliases.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-aliases.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html#indices-aliases">https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html#indices-aliases</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1808,7 +1814,7 @@ wildcards); use <cite>_all</cite> to delete all aliases for the specified indice
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.delete_mapping">
-<code class="descname">delete_mapping</code><span class="sig-paren">(</span><em>index</em>, <em>doc_type</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.delete_mapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.delete_mapping" title="Permalink to this definition">¶</a></dt>
+<code class="descname">delete_mapping</code><span class="sig-paren">(</span><em>index</em>, <em>doc_type</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.delete_mapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.delete_mapping" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete a mapping (type) along with its data.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-delete-mapping.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-delete-mapping.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1831,9 +1837,9 @@ specified indices.</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.delete_template">
-<code class="descname">delete_template</code><span class="sig-paren">(</span><em>name</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.delete_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.delete_template" title="Permalink to this definition">¶</a></dt>
+<code class="descname">delete_template</code><span class="sig-paren">(</span><em>name</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.delete_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.delete_template" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete an index template by its name.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-templates.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-templates.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1851,7 +1857,7 @@ specified indices.</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.delete_warmer">
-<code class="descname">delete_warmer</code><span class="sig-paren">(</span><em>index</em>, <em>name</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.delete_warmer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.delete_warmer" title="Permalink to this definition">¶</a></dt>
+<code class="descname">delete_warmer</code><span class="sig-paren">(</span><em>index</em>, <em>name</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.delete_warmer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.delete_warmer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete an index warmer.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-warmers.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-warmers.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1873,9 +1879,9 @@ wildcards); use <cite>_all</cite> to delete all warmers in the specified indices
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.exists">
-<code class="descname">exists</code><span class="sig-paren">(</span><em>index</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.exists" title="Permalink to this definition">¶</a></dt>
+<code class="descname">exists</code><span class="sig-paren">(</span><em>index</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.exists"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.exists" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a boolean indicating whether given index exists.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-indices-exists.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-indices-exists.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-exists.html#indices-exists">https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-exists.html#indices-exists</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1900,9 +1906,9 @@ master node (default: false)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.exists_alias">
-<code class="descname">exists_alias</code><span class="sig-paren">(</span><em>name</em>, <em>index=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.exists_alias"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.exists_alias" title="Permalink to this definition">¶</a></dt>
+<code class="descname">exists_alias</code><span class="sig-paren">(</span><em>name</em>, <em>index=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.exists_alias"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.exists_alias" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a boolean indicating whether given alias exists.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-aliases.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-aliases.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html#indices-aliases">https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html#indices-aliases</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1930,9 +1936,9 @@ master node (default: false)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.exists_template">
-<code class="descname">exists_template</code><span class="sig-paren">(</span><em>name</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.exists_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.exists_template" title="Permalink to this definition">¶</a></dt>
+<code class="descname">exists_template</code><span class="sig-paren">(</span><em>name</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.exists_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.exists_template" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a boolean indicating whether given template exists.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-templates.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-templates.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1950,7 +1956,7 @@ master node (default: false)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.exists_type">
-<code class="descname">exists_type</code><span class="sig-paren">(</span><em>index</em>, <em>doc_type</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.exists_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.exists_type" title="Permalink to this definition">¶</a></dt>
+<code class="descname">exists_type</code><span class="sig-paren">(</span><em>index</em>, <em>doc_type</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.exists_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.exists_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check if a type/types exists in an index/indices.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-types-exists.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-types-exists.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1981,7 +1987,7 @@ master node (default: false)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.flush">
-<code class="descname">flush</code><span class="sig-paren">(</span><em>index=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.flush"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.flush" title="Permalink to this definition">¶</a></dt>
+<code class="descname">flush</code><span class="sig-paren">(</span><em>index=None</em>, <em>body=''</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.flush"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.flush" title="Permalink to this definition">¶</a></dt>
 <dd><p>Explicitly flush one or more indices.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-flush.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-flush.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2013,8 +2019,8 @@ when unavailable (missing or closed)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.get">
-<code class="descname">get</code><span class="sig-paren">(</span><em>index</em>, <em>feature=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.get" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-get.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-get.html</a></p>
+<code class="descname">get</code><span class="sig-paren">(</span><em>index</em>, <em>feature=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.get" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-index.html#indices-get-index">https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-index.html#indices-get-index</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2038,9 +2044,9 @@ master node (default: false)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.get_alias">
-<code class="descname">get_alias</code><span class="sig-paren">(</span><em>index=None</em>, <em>name=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.get_alias"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.get_alias" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_alias</code><span class="sig-paren">(</span><em>index=None</em>, <em>name=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.get_alias"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.get_alias" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve a specified alias.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-aliases.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-aliases.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html#indices-aliases">https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html#indices-aliases</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2068,19 +2074,21 @@ master node (default: false)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.get_aliases">
-<code class="descname">get_aliases</code><span class="sig-paren">(</span><em>index=None</em>, <em>name=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.get_aliases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.get_aliases" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_aliases</code><span class="sig-paren">(</span><em>index=None</em>, <em>name=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.get_aliases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.get_aliases" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve specified aliases
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-aliases.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-aliases.html</a>
-:arg index: A comma-separated list of index names to filter aliases
-:arg name: A comma-separated list of alias names to filter
-:arg local: Return local information, do not retrieve the state from</p>
-<blockquote>
-<div>master node (default: false)</div></blockquote>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html#indices-aliases">https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html#indices-aliases</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>timeout</strong> &#8211; Explicit operation timeout</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>index</strong> &#8211; A comma-separated list of index names to filter aliases</li>
+<li><strong>name</strong> &#8211; A comma-separated list of alias names to filter</li>
+<li><strong>local</strong> &#8211; Return local information, do not retrieve the state from
+master node (default: false)</li>
+<li><strong>timeout</strong> &#8211; Explicit operation timeout</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
@@ -2088,9 +2096,9 @@ master node (default: false)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.get_field_mapping">
-<code class="descname">get_field_mapping</code><span class="sig-paren">(</span><em>field</em>, <em>index=None</em>, <em>doc_type=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.get_field_mapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.get_field_mapping" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_field_mapping</code><span class="sig-paren">(</span><em>field</em>, <em>index=None</em>, <em>doc_type=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.get_field_mapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.get_field_mapping" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve mapping definition of a specific field.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-get-field-mapping.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-get-field-mapping.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-field-mapping.html#indices-get-field-mapping">https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-field-mapping.html#indices-get-field-mapping</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2119,9 +2127,9 @@ master node (default: false)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.get_mapping">
-<code class="descname">get_mapping</code><span class="sig-paren">(</span><em>index=None</em>, <em>doc_type=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.get_mapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.get_mapping" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_mapping</code><span class="sig-paren">(</span><em>index=None</em>, <em>doc_type=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.get_mapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.get_mapping" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve mapping definition of index or index/type.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-get-mapping.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-get-mapping.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-mapping.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-mapping.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2148,9 +2156,9 @@ master node (default: false)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.get_settings">
-<code class="descname">get_settings</code><span class="sig-paren">(</span><em>index=None</em>, <em>name=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.get_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.get_settings" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_settings</code><span class="sig-paren">(</span><em>index=None</em>, <em>name=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.get_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.get_settings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve settings for one or more (or all) indices.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-get-settings.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-get-settings.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-settings.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-settings.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2177,9 +2185,9 @@ master node (default: false)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.get_template">
-<code class="descname">get_template</code><span class="sig-paren">(</span><em>name=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.get_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.get_template" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_template</code><span class="sig-paren">(</span><em>name=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.get_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.get_template" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve an index template by its name.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-templates.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-templates.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2198,7 +2206,7 @@ master node (default: false)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.get_warmer">
-<code class="descname">get_warmer</code><span class="sig-paren">(</span><em>index=None</em>, <em>doc_type=None</em>, <em>name=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.get_warmer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.get_warmer" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_warmer</code><span class="sig-paren">(</span><em>index=None</em>, <em>doc_type=None</em>, <em>name=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.get_warmer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.get_warmer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retreieve an index warmer.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-warmers.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-warmers.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2230,7 +2238,7 @@ master node (default: false)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.open">
-<code class="descname">open</code><span class="sig-paren">(</span><em>index</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.open" title="Permalink to this definition">¶</a></dt>
+<code class="descname">open</code><span class="sig-paren">(</span><em>index</em>, <em>body=''</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.open" title="Permalink to this definition">¶</a></dt>
 <dd><p>Open a closed index to make it available for search.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-open-close.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-open-close.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2257,9 +2265,9 @@ when unavailable (missing or closed)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.optimize">
-<code class="descname">optimize</code><span class="sig-paren">(</span><em>index=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.optimize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.optimize" title="Permalink to this definition">¶</a></dt>
+<code class="descname">optimize</code><span class="sig-paren">(</span><em>index=None</em>, <em>body=''</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.optimize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.optimize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Explicitly optimize one or more indices through an API.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-optimize.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-optimize.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-optimize.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-optimize.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2294,9 +2302,9 @@ merge process is finished (default: true)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.put_alias">
-<code class="descname">put_alias</code><span class="sig-paren">(</span><em>name</em>, <em>index</em>, <em>body=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.put_alias"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.put_alias" title="Permalink to this definition">¶</a></dt>
+<code class="descname">put_alias</code><span class="sig-paren">(</span><em>name</em>, <em>index</em>, <em>body</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.put_alias"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.put_alias" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create an alias for a specific index/indices.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-aliases.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-aliases.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html#indices-aliases">https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html#indices-aliases</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2318,9 +2326,9 @@ operation on all indices.</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.put_mapping">
-<code class="descname">put_mapping</code><span class="sig-paren">(</span><em>doc_type</em>, <em>body</em>, <em>index=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.put_mapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.put_mapping" title="Permalink to this definition">¶</a></dt>
+<code class="descname">put_mapping</code><span class="sig-paren">(</span><em>doc_type</em>, <em>body</em>, <em>index=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.put_mapping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.put_mapping" title="Permalink to this definition">¶</a></dt>
 <dd><p>Register specific mapping definition for a specific type.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-put-mapping.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-put-mapping.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-put-mapping.html#indices-put-mapping">https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-put-mapping.html#indices-put-mapping</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2351,9 +2359,9 @@ ignored when unavailable (missing or closed)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.put_settings">
-<code class="descname">put_settings</code><span class="sig-paren">(</span><em>body</em>, <em>index=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.put_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.put_settings" title="Permalink to this definition">¶</a></dt>
+<code class="descname">put_settings</code><span class="sig-paren">(</span><em>body</em>, <em>index=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.put_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.put_settings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Change specific index level settings in real time.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-update-settings.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-update-settings.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-settings.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-settings.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2380,10 +2388,10 @@ ignored when unavailable (missing or closed)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.put_template">
-<code class="descname">put_template</code><span class="sig-paren">(</span><em>name</em>, <em>body</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.put_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.put_template" title="Permalink to this definition">¶</a></dt>
+<code class="descname">put_template</code><span class="sig-paren">(</span><em>name</em>, <em>body</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.put_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.put_template" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create an index template that will automatically be applied to new
 indices created.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-templates.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-templates.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2407,7 +2415,7 @@ ones (higher numbers are merged later, overriding the lower numbers)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.put_warmer">
-<code class="descname">put_warmer</code><span class="sig-paren">(</span><em>name</em>, <em>body</em>, <em>index=None</em>, <em>doc_type=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.put_warmer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.put_warmer" title="Permalink to this definition">¶</a></dt>
+<code class="descname">put_warmer</code><span class="sig-paren">(</span><em>name</em>, <em>body</em>, <em>index=None</em>, <em>doc_type=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.put_warmer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.put_warmer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create an index warmer to run registered search requests to warm up the
 index before it is available for search.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-warmers.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-warmers.html</a></p>
@@ -2443,11 +2451,11 @@ to warm</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.recovery">
-<code class="descname">recovery</code><span class="sig-paren">(</span><em>index=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.recovery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.recovery" title="Permalink to this definition">¶</a></dt>
+<code class="descname">recovery</code><span class="sig-paren">(</span><em>index=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.recovery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.recovery" title="Permalink to this definition">¶</a></dt>
 <dd><p>The indices recovery API provides insight into on-going shard
 recoveries. Recovery status may be reported for specific indices, or
 cluster-wide.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-recovery.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-recovery.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-recovery.html#indices-recovery">https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-recovery.html#indices-recovery</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2470,7 +2478,7 @@ format. (default: &#8216;false&#8217;)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.refresh">
-<code class="descname">refresh</code><span class="sig-paren">(</span><em>index=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.refresh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.refresh" title="Permalink to this definition">¶</a></dt>
+<code class="descname">refresh</code><span class="sig-paren">(</span><em>body=''</em>, <em>index=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.refresh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.refresh" title="Permalink to this definition">¶</a></dt>
 <dd><p>Explicitly refresh one or more index, making all operations performed
 since the last refresh available for search.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-refresh.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-refresh.html</a></p>
@@ -2500,9 +2508,9 @@ when unavailable (missing or closed)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.segments">
-<code class="descname">segments</code><span class="sig-paren">(</span><em>index=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.segments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.segments" title="Permalink to this definition">¶</a></dt>
+<code class="descname">segments</code><span class="sig-paren">(</span><em>index=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.segments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.segments" title="Permalink to this definition">¶</a></dt>
 <dd><p>Provide low level segments information that a Lucene index (shard level) is built with.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-segments.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-segments.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-segments.html">https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-segments.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2530,7 +2538,7 @@ format (default: false)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.snapshot_index">
-<code class="descname">snapshot_index</code><span class="sig-paren">(</span><em>index=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.snapshot_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.snapshot_index" title="Permalink to this definition">¶</a></dt>
+<code class="descname">snapshot_index</code><span class="sig-paren">(</span><em>index=None</em>, <em>body=''</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.snapshot_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.snapshot_index" title="Permalink to this definition">¶</a></dt>
 <dd><p>Explicitly perform a snapshot through the gateway of one or more indices (backup them).
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-gateway-snapshot.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-gateway-snapshot.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2558,9 +2566,9 @@ when unavailable (missing or closed)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.stats">
-<code class="descname">stats</code><span class="sig-paren">(</span><em>index=None</em>, <em>metric=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.stats" title="Permalink to this definition">¶</a></dt>
+<code class="descname">stats</code><span class="sig-paren">(</span><em>index=None</em>, <em>metric=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.stats" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve statistics on different operations happening on an index.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-stats.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-stats.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-stats.html#indices-stats">https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-stats.html#indices-stats</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2602,7 +2610,7 @@ index metric</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.status">
-<code class="descname">status</code><span class="sig-paren">(</span><em>index=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.status" title="Permalink to this definition">¶</a></dt>
+<code class="descname">status</code><span class="sig-paren">(</span><em>index=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.status" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a comprehensive status information of one or more indices.
 <a class="reference external" href="http://elasticsearch.org/guide/reference/api/admin-indices-_/">http://elasticsearch.org/guide/reference/api/admin-indices-_/</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2634,9 +2642,9 @@ when unavailable (missing or closed)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.update_aliases">
-<code class="descname">update_aliases</code><span class="sig-paren">(</span><em>body</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.update_aliases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.update_aliases" title="Permalink to this definition">¶</a></dt>
+<code class="descname">update_aliases</code><span class="sig-paren">(</span><em>body</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.update_aliases"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.update_aliases" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update specified aliases.
-<a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-aliases.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-aliases.html</a></p>
+<a class="reference external" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html#indices-aliases">https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html#indices-aliases</a></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2654,7 +2662,7 @@ when unavailable (missing or closed)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.indices.IndicesClient.validate_query">
-<code class="descname">validate_query</code><span class="sig-paren">(</span><em>index=None</em>, <em>doc_type=None</em>, <em>body=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.validate_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.validate_query" title="Permalink to this definition">¶</a></dt>
+<code class="descname">validate_query</code><span class="sig-paren">(</span><em>index=None</em>, <em>doc_type=None</em>, <em>body=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/indices.html#IndicesClient.validate_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.indices.IndicesClient.validate_query" title="Permalink to this definition">¶</a></dt>
 <dd><p>Validate a potentially expensive query without executing it.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-validate.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-validate.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2695,11 +2703,11 @@ request body)</li>
 <span id="elasticsearch-tornado-nodes-module"></span><h2>elasticsearch_tornado.nodes module<a class="headerlink" href="#module-elasticsearch_tornado.nodes" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="elasticsearch_tornado.nodes.NodesClient">
-<em class="property">class </em><code class="descclassname">elasticsearch_tornado.nodes.</code><code class="descname">NodesClient</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/nodes.html#NodesClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.nodes.NodesClient" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<em class="property">class </em><code class="descclassname">elasticsearch_tornado.nodes.</code><code class="descname">NodesClient</code><span class="sig-paren">(</span><em>host='localhost'</em>, <em>port=9200</em>, <em>prefix=''</em>, <em>method='http'</em>, <em>ssl=False</em>, <em>curl=False</em>, <em>verify_certs=True</em>, <em>ca_certs=''</em>, <em>io_loop=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/nodes.html#NodesClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.nodes.NodesClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#elasticsearch_tornado.client.BaseClient" title="elasticsearch_tornado.client.BaseClient"><code class="xref py py-class docutils literal"><span class="pre">elasticsearch_tornado.client.BaseClient</span></code></a></p>
 <dl class="method">
 <dt id="elasticsearch_tornado.nodes.NodesClient.hot_threads">
-<code class="descname">hot_threads</code><span class="sig-paren">(</span><em>node_id=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/nodes.html#NodesClient.hot_threads"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.nodes.NodesClient.hot_threads" title="Permalink to this definition">¶</a></dt>
+<code class="descname">hot_threads</code><span class="sig-paren">(</span><em>node_id=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/nodes.html#NodesClient.hot_threads"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.nodes.NodesClient.hot_threads" title="Permalink to this definition">¶</a></dt>
 <dd><p>An API allowing to get the current hot threads on each node in the cluster.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-hot-threads.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-hot-threads.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2725,7 +2733,7 @@ nodes</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.nodes.NodesClient.info">
-<code class="descname">info</code><span class="sig-paren">(</span><em>node_id=None</em>, <em>metric=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/nodes.html#NodesClient.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.nodes.NodesClient.info" title="Permalink to this definition">¶</a></dt>
+<code class="descname">info</code><span class="sig-paren">(</span><em>node_id=None</em>, <em>metric=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/nodes.html#NodesClient.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.nodes.NodesClient.info" title="Permalink to this definition">¶</a></dt>
 <dd><p>The cluster nodes info API allows to retrieve one or more (or all) of
 the cluster nodes information.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-info.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-info.html</a></p>
@@ -2753,7 +2761,7 @@ format., default False</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.nodes.NodesClient.shutdown">
-<code class="descname">shutdown</code><span class="sig-paren">(</span><em>node_id=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/nodes.html#NodesClient.shutdown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.nodes.NodesClient.shutdown" title="Permalink to this definition">¶</a></dt>
+<code class="descname">shutdown</code><span class="sig-paren">(</span><em>node_id=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/nodes.html#NodesClient.shutdown"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.nodes.NodesClient.shutdown" title="Permalink to this definition">¶</a></dt>
 <dd><p>The nodes shutdown API allows to shutdown one or more (or all) nodes in
 the cluster.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-shutdown.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-shutdown.html</a></p>
@@ -2777,7 +2785,7 @@ nodes</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.nodes.NodesClient.stats">
-<code class="descname">stats</code><span class="sig-paren">(</span><em>node_id=None</em>, <em>metric=None</em>, <em>index_metric=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/nodes.html#NodesClient.stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.nodes.NodesClient.stats" title="Permalink to this definition">¶</a></dt>
+<code class="descname">stats</code><span class="sig-paren">(</span><em>node_id=None</em>, <em>metric=None</em>, <em>index_metric=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/nodes.html#NodesClient.stats"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.nodes.NodesClient.stats" title="Permalink to this definition">¶</a></dt>
 <dd><p>The cluster nodes stats API allows to retrieve one or more (or all) of
 the cluster nodes statistics.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-stats.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-stats.html</a></p>
@@ -2827,11 +2835,11 @@ index metric</li>
 <span id="elasticsearch-tornado-snapshot-module"></span><h2>elasticsearch_tornado.snapshot module<a class="headerlink" href="#module-elasticsearch_tornado.snapshot" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="elasticsearch_tornado.snapshot.SnapshotClient">
-<em class="property">class </em><code class="descclassname">elasticsearch_tornado.snapshot.</code><code class="descname">SnapshotClient</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/snapshot.html#SnapshotClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.snapshot.SnapshotClient" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">elasticsearch_tornado.snapshot.</code><code class="descname">SnapshotClient</code><span class="sig-paren">(</span><em>host='localhost'</em>, <em>port=9200</em>, <em>prefix=''</em>, <em>method='http'</em>, <em>ssl=False</em>, <em>curl=False</em>, <em>verify_certs=True</em>, <em>ca_certs=''</em>, <em>io_loop=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/snapshot.html#SnapshotClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.snapshot.SnapshotClient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#elasticsearch_tornado.client.BaseClient" title="elasticsearch_tornado.client.BaseClient"><code class="xref py py-class docutils literal"><span class="pre">elasticsearch_tornado.client.BaseClient</span></code></a></p>
 <dl class="method">
 <dt id="elasticsearch_tornado.snapshot.SnapshotClient.create">
-<code class="descname">create</code><span class="sig-paren">(</span><em>repository</em>, <em>snapshot</em>, <em>body=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/snapshot.html#SnapshotClient.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.snapshot.SnapshotClient.create" title="Permalink to this definition">¶</a></dt>
+<code class="descname">create</code><span class="sig-paren">(</span><em>repository</em>, <em>snapshot</em>, <em>body</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/snapshot.html#SnapshotClient.create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.snapshot.SnapshotClient.create" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a snapshot in repository
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2855,7 +2863,7 @@ has completed before returning, default False</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.snapshot.SnapshotClient.create_repository">
-<code class="descname">create_repository</code><span class="sig-paren">(</span><em>repository</em>, <em>body</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/snapshot.html#SnapshotClient.create_repository"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.snapshot.SnapshotClient.create_repository" title="Permalink to this definition">¶</a></dt>
+<code class="descname">create_repository</code><span class="sig-paren">(</span><em>repository</em>, <em>body</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/snapshot.html#SnapshotClient.create_repository"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.snapshot.SnapshotClient.create_repository" title="Permalink to this definition">¶</a></dt>
 <dd><p>Registers a shared file system repository.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2877,7 +2885,7 @@ node</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.snapshot.SnapshotClient.delete">
-<code class="descname">delete</code><span class="sig-paren">(</span><em>repository</em>, <em>snapshot</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/snapshot.html#SnapshotClient.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.snapshot.SnapshotClient.delete" title="Permalink to this definition">¶</a></dt>
+<code class="descname">delete</code><span class="sig-paren">(</span><em>repository</em>, <em>snapshot</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/snapshot.html#SnapshotClient.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.snapshot.SnapshotClient.delete" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deletes a snapshot from a repository.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2898,7 +2906,7 @@ node</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.snapshot.SnapshotClient.delete_repository">
-<code class="descname">delete_repository</code><span class="sig-paren">(</span><em>repository</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/snapshot.html#SnapshotClient.delete_repository"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.snapshot.SnapshotClient.delete_repository" title="Permalink to this definition">¶</a></dt>
+<code class="descname">delete_repository</code><span class="sig-paren">(</span><em>repository</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/snapshot.html#SnapshotClient.delete_repository"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.snapshot.SnapshotClient.delete_repository" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes a shared file system repository.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2919,7 +2927,7 @@ node</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.snapshot.SnapshotClient.get">
-<code class="descname">get</code><span class="sig-paren">(</span><em>repository</em>, <em>snapshot</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/snapshot.html#SnapshotClient.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.snapshot.SnapshotClient.get" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get</code><span class="sig-paren">(</span><em>repository</em>, <em>snapshot</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/snapshot.html#SnapshotClient.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.snapshot.SnapshotClient.get" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve information about a snapshot.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2940,7 +2948,7 @@ node</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.snapshot.SnapshotClient.get_repository">
-<code class="descname">get_repository</code><span class="sig-paren">(</span><em>repository=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/snapshot.html#SnapshotClient.get_repository"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.snapshot.SnapshotClient.get_repository" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_repository</code><span class="sig-paren">(</span><em>repository=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/snapshot.html#SnapshotClient.get_repository"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.snapshot.SnapshotClient.get_repository" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return information about registered repositories.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2962,7 +2970,7 @@ master node (default: false)</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.snapshot.SnapshotClient.restore">
-<code class="descname">restore</code><span class="sig-paren">(</span><em>repository</em>, <em>snapshot</em>, <em>body=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/snapshot.html#SnapshotClient.restore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.snapshot.SnapshotClient.restore" title="Permalink to this definition">¶</a></dt>
+<code class="descname">restore</code><span class="sig-paren">(</span><em>repository</em>, <em>snapshot</em>, <em>body</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/snapshot.html#SnapshotClient.restore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.snapshot.SnapshotClient.restore" title="Permalink to this definition">¶</a></dt>
 <dd><p>Restore a snapshot.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html</a></p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2986,7 +2994,7 @@ has completed before returning, default False</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.snapshot.SnapshotClient.status">
-<code class="descname">status</code><span class="sig-paren">(</span><em>repository=None</em>, <em>snapshot=None</em>, <em>params={}</em>, <em>cb=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/snapshot.html#SnapshotClient.status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.snapshot.SnapshotClient.status" title="Permalink to this definition">¶</a></dt>
+<code class="descname">status</code><span class="sig-paren">(</span><em>repository=None</em>, <em>snapshot=None</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/snapshot.html#SnapshotClient.status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.snapshot.SnapshotClient.status" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return information about all currently running snapshots. By specifying
 a repository name, it&#8217;s possible to limit the results to a particular
 repository.
@@ -3009,7 +3017,7 @@ node</li>
 
 <dl class="method">
 <dt id="elasticsearch_tornado.snapshot.SnapshotClient.verify_repository">
-<code class="descname">verify_repository</code><span class="sig-paren">(</span><em>repository</em>, <em>master_timeout=10</em>, <em>timeout=10</em>, <em>params=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/snapshot.html#SnapshotClient.verify_repository"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.snapshot.SnapshotClient.verify_repository" title="Permalink to this definition">¶</a></dt>
+<code class="descname">verify_repository</code><span class="sig-paren">(</span><em>repository</em>, <em>master_timeout=10</em>, <em>timeout=10</em>, <em>body=''</em>, <em>params={}</em>, <em>callback=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado/snapshot.html#SnapshotClient.verify_repository"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.snapshot.SnapshotClient.verify_repository" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a list of nodes where repository was successfully verified or
 an error message if verification process failed.
 <a class="reference external" href="http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-snapshots.html">http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-snapshots.html</a></p>
@@ -3037,7 +3045,7 @@ node</li>
 <dl class="class">
 <dt id="elasticsearch_tornado.EsClient">
 <em class="property">class </em><code class="descclassname">elasticsearch_tornado.</code><code class="descname">EsClient</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/elasticsearch_tornado.html#EsClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#elasticsearch_tornado.EsClient" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#elasticsearch_tornado.client.BaseClient" title="elasticsearch_tornado.client.BaseClient"><code class="xref py py-class docutils literal"><span class="pre">elasticsearch_tornado.client.BaseClient</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#elasticsearch_tornado.cat.MeowClient" title="elasticsearch_tornado.cat.MeowClient"><code class="xref py py-class docutils literal"><span class="pre">elasticsearch_tornado.cat.MeowClient</span></code></a>, <a class="reference internal" href="#elasticsearch_tornado.cluster.ClusterClient" title="elasticsearch_tornado.cluster.ClusterClient"><code class="xref py py-class docutils literal"><span class="pre">elasticsearch_tornado.cluster.ClusterClient</span></code></a>, <a class="reference internal" href="#elasticsearch_tornado.indices.IndicesClient" title="elasticsearch_tornado.indices.IndicesClient"><code class="xref py py-class docutils literal"><span class="pre">elasticsearch_tornado.indices.IndicesClient</span></code></a>, <a class="reference internal" href="#elasticsearch_tornado.nodes.NodesClient" title="elasticsearch_tornado.nodes.NodesClient"><code class="xref py py-class docutils literal"><span class="pre">elasticsearch_tornado.nodes.NodesClient</span></code></a>, <a class="reference internal" href="#elasticsearch_tornado.snapshot.SnapshotClient" title="elasticsearch_tornado.snapshot.SnapshotClient"><code class="xref py py-class docutils literal"><span class="pre">elasticsearch_tornado.snapshot.SnapshotClient</span></code></a></p>
 </dd></dl>
 
 </div>
@@ -3064,9 +3072,6 @@ node</li>
 </li>
 </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="index.html"
-                        title="previous chapter">Welcome to elasticsearch_tornado&#8217;s documentation!</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -3082,9 +3087,6 @@ node</li>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -3100,15 +3102,12 @@ node</li>
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li class="right" >
-          <a href="index.html" title="Welcome to elasticsearch_tornado’s documentation!"
-             >previous</a> |</li>
-        <li><a href="index.html">Elasticsearch Tornado  documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">Elasticsearch Tornado 1.1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
         &copy; Copyright 2014, Daniel Hodges.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3b2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
     </div>
   </body>
 </html>

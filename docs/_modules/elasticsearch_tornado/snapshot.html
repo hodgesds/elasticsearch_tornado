@@ -6,15 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>elasticsearch_tornado.snapshot &mdash; elasticsearch_tornado  documentation</title>
+    <title>elasticsearch_tornado.snapshot &mdash; Elasticsearch Tornado 1.1.1 documentation</title>
     
-    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '',
+        VERSION:     '1.1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="elasticsearch_tornado  documentation" href="../../index.html" />
+    <link rel="top" title="Elasticsearch Tornado 1.1.1 documentation" href="../../index.html" />
     <link rel="up" title="elasticsearch_tornado" href="../elasticsearch_tornado.html" /> 
   </head>
   <body role="document">
@@ -36,9 +36,9 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">elasticsearch_tornado  documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li>
-          <li><a href="../elasticsearch_tornado.html" accesskey="U">elasticsearch_tornado</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Elasticsearch Tornado 1.1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="../elasticsearch_tornado.html" accesskey="U">elasticsearch_tornado</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -48,18 +48,12 @@
           <div class="body" role="main">
             
   <h1>Source code for elasticsearch_tornado.snapshot</h1><div class="highlight"><pre>
-<span class="kn">from</span> <span class="nn">client</span> <span class="kn">import</span> <span class="n">BaseClient</span>
+<span></span><span class="kn">from</span> <span class="nn">.client</span> <span class="kn">import</span> <span class="n">BaseClient</span>
 
 
 <div class="viewcode-block" id="SnapshotClient"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.snapshot.SnapshotClient">[docs]</a><span class="k">class</span> <span class="nc">SnapshotClient</span><span class="p">(</span><span class="n">BaseClient</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">kwargs</span>
-    <span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">SnapshotClient</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-
-<div class="viewcode-block" id="SnapshotClient.create"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.snapshot.SnapshotClient.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repository</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="SnapshotClient.create"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.snapshot.SnapshotClient.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repository</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a snapshot in repository</span>
 <span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html&gt;`_</span>
@@ -72,15 +66,19 @@
 <span class="sd">        :arg wait_for_completion: Should this request wait until the operation</span>
 <span class="sd">            has completed before returning, default False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s">&#39;wait_for_completion&#39;</span><span class="p">,)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_snapshot&#39;</span><span class="p">,</span> <span class="n">repository</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s1">&#39;wait_for_completion&#39;</span><span class="p">,)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_snapshot&#39;</span><span class="p">,</span> <span class="n">repository</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;PUT&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="SnapshotClient.delete"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.snapshot.SnapshotClient.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repository</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;PUT&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="SnapshotClient.delete"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.snapshot.SnapshotClient.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repository</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Deletes a snapshot from a repository.</span>
 <span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html&gt;`_</span>
@@ -90,15 +88,19 @@
 <span class="sd">        :arg master_timeout: Explicit operation timeout for connection to master</span>
 <span class="sd">            node</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;master_timeout&#39;</span><span class="p">,)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_snapshot&#39;</span><span class="p">,</span> <span class="n">repository</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;master_timeout&#39;</span><span class="p">,)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_snapshot&#39;</span><span class="p">,</span> <span class="n">repository</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;DELETE&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="SnapshotClient.get"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.snapshot.SnapshotClient.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repository</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;DELETE&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="SnapshotClient.get"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.snapshot.SnapshotClient.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repository</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Retrieve information about a snapshot.</span>
 <span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html&gt;`_</span>
@@ -108,15 +110,19 @@
 <span class="sd">        :arg master_timeout: Explicit operation timeout for connection to master</span>
 <span class="sd">            node</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;master_timeout&#39;</span><span class="p">,)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_snapshot&#39;</span><span class="p">,</span> <span class="n">repository</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;master_timeout&#39;</span><span class="p">,)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_snapshot&#39;</span><span class="p">,</span> <span class="n">repository</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="SnapshotClient.delete_repository"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.snapshot.SnapshotClient.delete_repository">[docs]</a>    <span class="k">def</span> <span class="nf">delete_repository</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repository</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="SnapshotClient.delete_repository"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.snapshot.SnapshotClient.delete_repository">[docs]</a>    <span class="k">def</span> <span class="nf">delete_repository</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repository</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Removes a shared file system repository.</span>
 <span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html&gt;`_</span>
@@ -126,15 +132,19 @@
 <span class="sd">            node</span>
 <span class="sd">        :arg timeout: Explicit operation timeout</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s">&#39;timeout&#39;</span><span class="p">,)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_snapshot&#39;</span><span class="p">,</span> <span class="n">repository</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s1">&#39;timeout&#39;</span><span class="p">,)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_snapshot&#39;</span><span class="p">,</span> <span class="n">repository</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;DELETE&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="SnapshotClient.get_repository"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.snapshot.SnapshotClient.get_repository">[docs]</a>    <span class="k">def</span> <span class="nf">get_repository</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repository</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;DELETE&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="SnapshotClient.get_repository"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.snapshot.SnapshotClient.get_repository">[docs]</a>    <span class="k">def</span> <span class="nf">get_repository</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repository</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return information about registered repositories.</span>
 <span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html&gt;`_</span>
@@ -145,15 +155,19 @@
 <span class="sd">        :arg local: Return local information, do not retrieve the state from</span>
 <span class="sd">            master node (default: false)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;local&#39;</span><span class="p">,</span> <span class="s">&#39;master_timeout&#39;</span><span class="p">,)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_snapshot&#39;</span><span class="p">,</span> <span class="n">repository</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;local&#39;</span><span class="p">,</span> <span class="s1">&#39;master_timeout&#39;</span><span class="p">,)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_snapshot&#39;</span><span class="p">,</span> <span class="n">repository</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="SnapshotClient.create_repository"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.snapshot.SnapshotClient.create_repository">[docs]</a>    <span class="k">def</span> <span class="nf">create_repository</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repository</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="SnapshotClient.create_repository"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.snapshot.SnapshotClient.create_repository">[docs]</a>    <span class="k">def</span> <span class="nf">create_repository</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repository</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Registers a shared file system repository.</span>
 <span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html&gt;`_</span>
@@ -164,15 +178,19 @@
 <span class="sd">            node</span>
 <span class="sd">        :arg timeout: Explicit operation timeout</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s">&#39;timeout&#39;</span><span class="p">,)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_snapshot&#39;</span><span class="p">,</span> <span class="n">repository</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s1">&#39;timeout&#39;</span><span class="p">,)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_snapshot&#39;</span><span class="p">,</span> <span class="n">repository</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;PUT&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="SnapshotClient.restore"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.snapshot.SnapshotClient.restore">[docs]</a>    <span class="k">def</span> <span class="nf">restore</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repository</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;PUT&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="SnapshotClient.restore"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.snapshot.SnapshotClient.restore">[docs]</a>    <span class="k">def</span> <span class="nf">restore</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repository</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Restore a snapshot.</span>
 <span class="sd">        `&lt;http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html&gt;`_</span>
@@ -185,19 +203,23 @@
 <span class="sd">        :arg wait_for_completion: Should this request wait until the operation</span>
 <span class="sd">            has completed before returning, default False</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s">&#39;wait_for_completion&#39;</span><span class="p">,)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s1">&#39;wait_for_completion&#39;</span><span class="p">,)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
         <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span>
-                <span class="s">&#39;_snapshot&#39;</span><span class="p">,</span> <span class="n">repository</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">,</span> <span class="s">&#39;_restore&#39;</span>
+                <span class="s1">&#39;_snapshot&#39;</span><span class="p">,</span> <span class="n">repository</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">,</span> <span class="s1">&#39;_restore&#39;</span>
             <span class="p">],</span>
             <span class="o">**</span><span class="n">params</span>
         <span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;POST&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
-<div class="viewcode-block" id="SnapshotClient.status"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.snapshot.SnapshotClient.status">[docs]</a>    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repository</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">snapshot</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">cb</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="SnapshotClient.status"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.snapshot.SnapshotClient.status">[docs]</a>    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">repository</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">snapshot</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{},</span> <span class="n">callback</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return information about all currently running snapshots. By specifying</span>
 <span class="sd">        a repository name, it&#39;s possible to limit the results to a particular</span>
@@ -209,23 +231,30 @@
 <span class="sd">        :arg master_timeout: Explicit operation timeout for connection to master</span>
 <span class="sd">            node</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;master_timeout&#39;</span><span class="p">,)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
+
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;master_timeout&#39;</span><span class="p">,)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
         <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span>
-                <span class="s">&#39;_snapshot&#39;</span><span class="p">,</span> <span class="n">repository</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">,</span> <span class="s">&#39;_status&#39;</span>
+                <span class="s1">&#39;_snapshot&#39;</span><span class="p">,</span> <span class="n">repository</span><span class="p">,</span> <span class="n">snapshot</span><span class="p">,</span> <span class="s1">&#39;_status&#39;</span>
             <span class="p">],</span>
             <span class="o">**</span><span class="n">params</span>
         <span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
-        <span class="p">)</span>
-</div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="p">)</span></div>
+
 <div class="viewcode-block" id="SnapshotClient.verify_repository"><a class="viewcode-back" href="../../elasticsearch_tornado.html#elasticsearch_tornado.snapshot.SnapshotClient.verify_repository">[docs]</a>    <span class="k">def</span> <span class="nf">verify_repository</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
             <span class="n">repository</span><span class="p">,</span>
             <span class="n">master_timeout</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
             <span class="n">timeout</span>        <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
-            <span class="n">params</span>         <span class="o">=</span> <span class="bp">None</span>
+            <span class="n">body</span>           <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="n">params</span>         <span class="o">=</span> <span class="p">{},</span>
+            <span class="n">callback</span>       <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
         <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns a list of nodes where repository was successfully verified or</span>
@@ -237,12 +266,16 @@
 <span class="sd">            node</span>
 <span class="sd">        :arg timeout: Explicit operation timeout</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s">&#39;timeout&#39;</span><span class="p">,)</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">query_params</span> <span class="ow">and</span> <span class="n">v</span><span class="p">)</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s">&#39;_snapshot&#39;</span><span class="p">,</span> <span class="n">repository</span><span class="p">,</span> <span class="s">&#39;_verify&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="n">query_params</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;master_timeout&#39;</span><span class="p">,</span> <span class="s1">&#39;timeout&#39;</span><span class="p">,)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_params</span><span class="p">(</span><span class="n">query_params</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mk_url</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="s1">&#39;_snapshot&#39;</span><span class="p">,</span> <span class="n">repository</span><span class="p">,</span> <span class="s1">&#39;_verify&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">fetch</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;POST&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">cb</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mk_req</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">),</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
         <span class="p">)</span></div></div>
 </pre></div>
 
@@ -259,9 +292,6 @@
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -277,14 +307,14 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">elasticsearch_tornado  documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Module code</a> &raquo;</li>
-          <li><a href="../elasticsearch_tornado.html" >elasticsearch_tornado</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="../../index.html">Elasticsearch Tornado 1.1.1 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="../elasticsearch_tornado.html" >elasticsearch_tornado</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &copy; Copyright 2014, Author.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3b2.
+        &copy; Copyright 2014, Daniel Hodges.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.1.
     </div>
   </body>
 </html>
