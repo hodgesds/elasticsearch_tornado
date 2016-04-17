@@ -40,7 +40,7 @@ class SnapshotClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 404]}
         )
-        c.create('test', 'test', body, cb=h_cb)
+        c.create('test', 'test', body, callback=h_cb)
         self.wait()
 
     def test_delete(self):
@@ -49,7 +49,7 @@ class SnapshotClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 404]}
         )
-        c.delete('test', 'test', cb=h_cb)
+        c.delete('test', 'test', callback=h_cb)
         self.wait()
 
     def test_get(self):
@@ -58,7 +58,7 @@ class SnapshotClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 404]}
         )
-        c.get('test', 'test', cb=h_cb)
+        c.get('test', 'test', callback=h_cb)
         self.wait()
 
     def test_delete_repository(self):
@@ -67,7 +67,7 @@ class SnapshotClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 404]}
         )
-        c.delete_repository('test', cb=h_cb)
+        c.delete_repository('test', callback=h_cb)
         self.wait()
 
     def test_get_repository(self):
@@ -76,7 +76,7 @@ class SnapshotClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 404]}
         )
-        c.get_repository(cb=h_cb)
+        c.get_repository(callback=h_cb)
         self.wait()
 
     def test_create_repository(self):
@@ -95,7 +95,7 @@ class SnapshotClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 404]}
         )
-        c.create_repository('test', body, cb=h_cb)
+        c.create_repository('test', body, callback=h_cb)
         self.wait()
 
     def test_restore(self):
@@ -114,7 +114,7 @@ class SnapshotClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 404]}
         )
-        c.restore('test', 'test', body, cb=h_cb)
+        c.restore('test', 'test', body, callback=h_cb)
         self.wait()
 
     def test_status(self):
@@ -123,7 +123,7 @@ class SnapshotClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 404]}
         )
-        c.status(cb=h_cb)
+        c.status(callback=h_cb)
         self.wait()
 
     def test_verify_repository(self):
@@ -132,6 +132,6 @@ class SnapshotClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 404]}
         )
-        c.verify_repository('test', cb=h_cb)
+        c.verify_repository('test', callback=h_cb)
         self.wait()
 

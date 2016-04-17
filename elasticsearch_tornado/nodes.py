@@ -2,13 +2,8 @@ from .client import BaseClient
 
 
 class NodesClient(BaseClient):
-    def __init__(self,
-        *args,
-        **kwargs
-    ):
-        super(NodesClient, self).__init__(*args, **kwargs)
 
-    def info(self, node_id=None, metric=None, params={}, cb=None, **kwargs):
+    def info(self, node_id=None, metric=None, params={}, callback=None, **kwargs):
         """
         The cluster nodes info API allows to retrieve one or more (or all) of
         the cluster nodes information.
@@ -25,15 +20,19 @@ class NodesClient(BaseClient):
         :arg human: Whether to return time and byte values in human-readable
             format., default False
         """
+
         query_params = ('flat_settings', 'human',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_nodes', node_id, metric], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def shutdown(self, node_id=None, params={}, cb=None, **kwargs):
+    def shutdown(self, node_id=None, params={}, callback=None, **kwargs):
         """
         The nodes shutdown API allows to shutdown one or more (or all) nodes in
         the cluster.
@@ -46,15 +45,19 @@ class NodesClient(BaseClient):
         :arg delay: Set the delay for the operation (default: 1s)
         :arg exit: Exit the JVM as well (default: true)
         """
+
         query_params = ('delay', 'exit',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_cluster', 'nodes', node_id, '_shutdown'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='POST', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def stats(self, node_id=None, metric=None, index_metric=None, params={}, cb=None, **kwargs):
+    def stats(self, node_id=None, metric=None, index_metric=None, params={}, callback=None, **kwargs):
         """
         The cluster nodes stats API allows to retrieve one or more (or all) of
         the cluster nodes statistics.
@@ -88,22 +91,26 @@ class NodesClient(BaseClient):
         :arg types: A comma-separated list of document types for the `indexing`
             index metric
         """
+
         query_params = (
             'completion_fields', 'fielddata_fields', 'fields', 'groups',
             'human', 'level', 'types',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[
                 '_nodes', node_id, 'stats', metric, index_metric
             ],
             **params
         )
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def hot_threads(self, node_id=None, params={}, cb=None, **kwargs):
+    def hot_threads(self, node_id=None, params={}, callback=None, **kwargs):
         """
         An API allowing to get the current hot threads on each node in the cluster.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-hot-threads.html>`_
@@ -118,13 +125,18 @@ class NodesClient(BaseClient):
         :arg threads: Specify the number of threads to provide information for
             (default: 3)
         """
+
         query_params = ('type_', 'interval', 'snapshots', 'threads',)
+
         # avoid python reserved words
         if params and 'type_' in params:
             params['type'] = params.pop('type_')
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_nodes', node_id, 'hot_threads'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )

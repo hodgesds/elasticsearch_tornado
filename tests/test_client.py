@@ -40,12 +40,12 @@ class BaseClientTest(AsyncTestCase):
 
     def test_ping(self):
         c = BaseClient()
-        c.ping(cb=self.handle_cb)
+        c.ping(callback=self.handle_cb)
         self.wait()
 
     def test_info(self):
         c = BaseClient()
-        c.info(cb=self.handle_cb)
+        c.info(callback=self.handle_cb)
         self.wait()
 
     def test_index(self):
@@ -54,7 +54,8 @@ class BaseClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.index('test', 'test', '{"test":"123"}', doc_id='test123', cb=h_cb)
+        c.index('test', 'test', '{"test":"123"}', doc_id='test123',
+                callback=h_cb)
         self.wait()
 
     def test_exists(self):
@@ -63,7 +64,7 @@ class BaseClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.exists('test', 'test123', cb=h_cb)
+        c.exists('test', 'test123', callback=h_cb)
         self.wait()
 
     def test_get(self):
@@ -72,7 +73,7 @@ class BaseClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.get('test', 'test123', cb=h_cb)
+        c.get('test', 'test123', callback=h_cb)
         self.wait()
 
     def test_get_source(self):
@@ -81,7 +82,7 @@ class BaseClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.get_source('test', 'test123', cb=h_cb)
+        c.get_source('test', 'test123', callback=h_cb)
         self.wait()
 
     def test_mget(self):
@@ -106,7 +107,7 @@ class BaseClientTest(AsyncTestCase):
         ]
         }
         '''
-        c.mget(body, index='test', doc_type='test', cb=h_cb)
+        c.mget(body, index='test', doc_type='test', callback=h_cb)
         self.wait()
 
     def test_update(self):
@@ -124,7 +125,7 @@ class BaseClientTest(AsyncTestCase):
         }
 
         """
-        c.update('test', 'test', 'test123', body=body, cb=h_cb)
+        c.update('test', 'test', 'test123', body=body, callback=h_cb)
         self.wait()
 
     def test_search(self):
@@ -133,7 +134,7 @@ class BaseClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 404, 403,]}
         )
-        c.search(index='test', doc_type='test', cb=h_cb)
+        c.search(index='test', doc_type='test', callback=h_cb)
         self.wait()
 
     def test_search_shards(self):
@@ -142,7 +143,7 @@ class BaseClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 404, 403,]}
         )
-        c.search_shards(index='test', doc_type='test', cb=h_cb)
+        c.search_shards(index='test', doc_type='test', callback=h_cb)
         self.wait()
 
     def test_search_template(self):
@@ -151,7 +152,7 @@ class BaseClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 404, 403,]}
         )
-        c.search_template(index='test', doc_type='test', cb=h_cb)
+        c.search_template(index='test', doc_type='test', callback=h_cb)
         self.wait()
 
     def test_explain(self):
@@ -168,7 +169,7 @@ class BaseClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 401, 403, 404]}
         )
-        c.explain('test', 'test', 'test123', body=body, cb=h_cb)
+        c.explain('test', 'test', 'test123', body=body, callback=h_cb)
         self.wait()
 
     def test_scroll(self):
@@ -177,7 +178,7 @@ class BaseClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.scroll('test', cb=h_cb)
+        c.scroll('test', callback=h_cb)
         self.wait()
 
     def test_clear_scroll(self):
@@ -186,7 +187,7 @@ class BaseClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.clear_scroll('aaaaa', cb=h_cb)
+        c.clear_scroll('aaaaa', callback=h_cb)
         self.wait()
 
     def test_delete(self):
@@ -199,7 +200,7 @@ class BaseClientTest(AsyncTestCase):
             'test',
             'test',
             'test123',
-            cb=h_cb
+            callback=h_cb
         )
         self.wait()
 
@@ -213,7 +214,7 @@ class BaseClientTest(AsyncTestCase):
             body     = '',
             index    = 'test',
             doc_type = 'test',
-            cb=h_cb
+            callback=h_cb
         )
         self.wait()
 
@@ -232,7 +233,7 @@ class BaseClientTest(AsyncTestCase):
             body,
             index    = 'test',
             doc_type = 'test',
-            cb=h_cb
+            callback=h_cb
         )
         self.wait()
 
@@ -246,7 +247,7 @@ class BaseClientTest(AsyncTestCase):
             None,
             index='test',
             doc_type='test',
-            cb=h_cb
+            callback=h_cb
         )
         self.wait()
 
@@ -263,7 +264,7 @@ class BaseClientTest(AsyncTestCase):
             body='{ "query": { "match_all": {} } }\n',
             doc_type='test',
             params=p,
-            cb=h_cb
+            callback=h_cb
         )
         self.wait()
 
@@ -286,8 +287,8 @@ class BaseClientTest(AsyncTestCase):
         """
         c.suggest(
             body,
-            index = 'test',
-            cb    = h_cb
+            index    = 'test',
+            callback = h_cb
         )
         self.wait()
 
@@ -301,7 +302,7 @@ class BaseClientTest(AsyncTestCase):
             'test',
             'test',
             body=None,
-            cb=h_cb
+            callback=h_cb
         )
         self.wait()
 
@@ -315,7 +316,7 @@ class BaseClientTest(AsyncTestCase):
             None,
             index='test',
             doc_type='test',
-            cb=h_cb
+            callback=h_cb
         )
         self.wait()
 
@@ -328,7 +329,7 @@ class BaseClientTest(AsyncTestCase):
         c.count_percolate(
             'test',
             'test',
-            cb=h_cb
+            callback=h_cb
         )
         self.wait()
 
@@ -342,7 +343,7 @@ class BaseClientTest(AsyncTestCase):
             'index',
             'index',
             'bulk1',
-            cb=h_cb,
+            callback=h_cb,
         )
         self.wait()
 
@@ -367,7 +368,7 @@ class BaseClientTest(AsyncTestCase):
             'test',
             'test123',
             body=body,
-            cb=h_cb,
+            callback=h_cb,
         )
         self.wait()
 
@@ -392,13 +393,13 @@ class BaseClientTest(AsyncTestCase):
                 }
             ]
         }
-        
+
         """
         c.mtermvectors(
             index = 'index',
             doc_type = 'index',
             body = body,
-            cb=self.handle_cb,
+            callback=self.handle_cb,
         )
         self.wait()
 
@@ -421,7 +422,7 @@ class BaseClientTest(AsyncTestCase):
             body     = body,
             index    = 'index',
             doc_type = 'index',
-            cb       = self.handle_cb,
+            callback = self.handle_cb,
         )
         self.wait()
 
@@ -430,7 +431,7 @@ class BaseClientTest(AsyncTestCase):
         c = BaseClient()
         c.abort_benchmark(
             name = 'test',
-            cb   = self.handle_cb,
+            callback = self.handle_cb,
         )
         self.wait()
 
@@ -443,7 +444,7 @@ class BaseClientTest(AsyncTestCase):
         )
         c.list_benchmarks(
             index = 'test',
-            cb=h_cb,
+            callback=h_cb,
         )
         self.wait()
 
@@ -481,7 +482,7 @@ class BaseClientTest(AsyncTestCase):
             'native',
             'testscript123',
             body,
-            cb = h_cb,
+            callback = h_cb,
         )
         self.wait()
 
@@ -494,7 +495,7 @@ class BaseClientTest(AsyncTestCase):
         c.get_script(
             'native',
             'testscript123',
-            cb = h_cb,
+            callback = h_cb,
         )
         self.wait()
 
@@ -507,7 +508,7 @@ class BaseClientTest(AsyncTestCase):
         c.delete_script(
             'native',
             'testscript123',
-            cb = h_cb,
+            callback = h_cb,
         )
         self.wait()
 
@@ -516,7 +517,7 @@ class BaseClientTest(AsyncTestCase):
         c.put_template(
             'temp123',
             '{"template":"test123"}',
-            cb = self.handle_cb,
+            callback = self.handle_cb,
         )
         self.wait()
 
@@ -528,7 +529,7 @@ class BaseClientTest(AsyncTestCase):
         )
         c.get_template(
             'temp123',
-            cb = h_cb,
+            callback = h_cb,
         )
         self.wait()
 
@@ -540,6 +541,6 @@ class BaseClientTest(AsyncTestCase):
         )
         c.delete_template(
             temp_id='temp123',
-            cb = h_cb,
+            callback = h_cb,
         )
         self.wait()

@@ -1,5 +1,5 @@
 Tornado Elasticsearch Client
-============================
+----------------------------
 
 Tornado http client for Elasticsearch. Its goal is to provide common
 ground for all Elasticsearch-related code in tornado and provide a
@@ -11,7 +11,12 @@ allows for you to design your own pooling/handling of callbacks.
 Elasticsearch Compatibility
 ---------------------------
 
-The library is compatible with Elasticsearch 1.x
+The library is compatible with Elasticsearch 2.X
+
+Documentation
+-------------
+http://elasticsearch-tornado.readthedocs.org/en/latest/
+
 
 Python Compatibility
 --------------------
@@ -20,41 +25,40 @@ Tested with python:
 2.6, 2.7, 3.2, 3.3, 3.4 and pypy
 
 
-
 Example use
 -----------
 
-Simple use-case::
+Simple use-case:
 
-    >>> from elasticsearch_tornado import EsClient
-    >>> import tornado.ioloop
+.. code-block:: python
 
-    >>> def ex_cb(req):
-    >>>     print req
-    >>>     ioloop = tornado.ioloop.IOLoop.instance()
-    >>>     ioloop.stop()
+    from elasticsearch_tornado import EsClient
+    import tornado.ioloop
 
-    >>> io_loop = tornado.ioloop.IOLoop.instance()
+    def ex_cb(req):
+        print req
+        ioloop = tornado.ioloop.IOLoop.instance()
+        ioloop.stop()
 
-    >>> c = EsClient()
+    io_loop = tornado.ioloop.IOLoop.instance()
+
+    c = EsClient()
     # make an info request (same as http://localhost:9200)
-    >>> c.info(cb=ex_cb)
-    >>> io_loop.start()
+    c.info(callback=ex_cb)
+    io_loop.start()
 
 
 
 Features
 --------
-
 The client's features include:
- * Non blocking requests with callbacks
+ * Non blocking requests with callbacks/coroutines
  * DYOS- Do You Own Serialization- (remember those trailing \n's)
- * >95% Test coverage
 
 License
 -------
 
-Copyright 2014 Daniel Hodges
+Copyright 2014-2016 Daniel Hodges
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -68,13 +72,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-Documentation
--------------
-http://elasticsearch-tornado.readthedocs.org/en/latest/
-
-
 Requirements
 ------------
+
 .. image:: https://requires.io/github/hodgesds/elasticsearch_tornado/requirements.svg?branch=master
     :target: https://requires.io/github/hodgesds/elasticsearch_tornado/requirements/?branch=master
     :alt: Requirements Status

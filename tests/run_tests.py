@@ -13,7 +13,7 @@ import nose
 def run_all(argv=None):
     sys.exitfunc = lambda: sys.stderr.write('Shutting down....\n')
 
-    # fetch elasticsearch 
+    # fetch elasticsearch
     # always insert coverage when running tests
     if argv is None:
         argv = [

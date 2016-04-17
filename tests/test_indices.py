@@ -25,7 +25,7 @@ class IndicesClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 404]}
         )
-        c.analyze(index='test', cb=h_cb)
+        c.analyze(index='test', callback=h_cb)
         self.wait()
 
     def test_refresh(self):
@@ -34,7 +34,7 @@ class IndicesClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.refresh(index='test', cb=h_cb)
+        c.refresh(index='test', callback=h_cb)
         self.wait()
 
     def test_flush(self):
@@ -43,7 +43,7 @@ class IndicesClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.flush(index='test', cb=h_cb)
+        c.flush(index='test', callback=h_cb)
         self.wait()
 
     def test_create(self):
@@ -63,7 +63,7 @@ class IndicesClientTest(AsyncTestCase):
         }
 
         """
-        c.create('test', body, cb=h_cb)
+        c.create('test', body, callback=h_cb)
         self.wait()
 
     def test_get(self):
@@ -72,7 +72,7 @@ class IndicesClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.get('test', cb=h_cb)
+        c.get('test', callback=h_cb)
         self.wait()
 
     def test_open(self):
@@ -81,7 +81,7 @@ class IndicesClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.open('test', cb=h_cb)
+        c.open('test', callback=h_cb)
         self.wait()
 
     def test_close(self):
@@ -90,7 +90,7 @@ class IndicesClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.close('test', cb=h_cb)
+        c.close('test', callback=h_cb)
         self.wait()
 
     def test_delete(self):
@@ -99,7 +99,7 @@ class IndicesClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.delete('test', cb=h_cb)
+        c.delete('test', callback=h_cb)
         self.wait()
 
     def test_exists(self):
@@ -108,7 +108,7 @@ class IndicesClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.exists('test', cb=h_cb)
+        c.exists('test', callback=h_cb)
         self.wait()
 
     def test_exists_type(self):
@@ -117,7 +117,7 @@ class IndicesClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.exists_type('test', 'type', cb=h_cb)
+        c.exists_type('test', 'type', callback=h_cb)
         self.wait()
 
     def test_put_mapping(self):
@@ -136,7 +136,7 @@ class IndicesClientTest(AsyncTestCase):
         }
 
         """
-        c.put_mapping('test', body, cb=h_cb)
+        c.put_mapping('test', body, callback=h_cb)
         self.wait()
 
     def test_get_mapping(self):
@@ -145,7 +145,7 @@ class IndicesClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.get_mapping(index='test', cb=h_cb)
+        c.get_mapping(index='test', callback=h_cb)
         self.wait()
 
     def test_get_field_mapping(self):
@@ -154,7 +154,7 @@ class IndicesClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.get_field_mapping('test', index='test', cb=h_cb)
+        c.get_field_mapping('test', index='test', callback=h_cb)
         self.wait()
 
     def test_delete_mapping(self):
@@ -163,7 +163,7 @@ class IndicesClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.delete_mapping('test', 'test', cb=h_cb)
+        c.delete_mapping('test', 'test', callback=h_cb)
         self.wait()
 
     def test_put_alias(self):
@@ -180,7 +180,7 @@ class IndicesClientTest(AsyncTestCase):
         }
 
         """
-        c.put_alias('test', 'test', body, cb=h_cb)
+        c.put_alias('test', 'test', body, callback=h_cb)
         self.wait()
 
     def test_exists_alias(self):
@@ -189,7 +189,7 @@ class IndicesClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.exists_alias('test', index='test', cb=h_cb)
+        c.exists_alias('test', index='test', callback=h_cb)
         self.wait()
 
     def test_get_alias(self):
@@ -198,7 +198,7 @@ class IndicesClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.get_alias(index='test', cb=h_cb)
+        c.get_alias(index='test', callback=h_cb)
         self.wait()
 
     def test_get_aliases(self):
@@ -207,7 +207,7 @@ class IndicesClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.get_aliases(index='test', cb=h_cb)
+        c.get_aliases(index='test', callback=h_cb)
         self.wait()
 
     def test_update_aliases(self):
@@ -225,7 +225,7 @@ class IndicesClientTest(AsyncTestCase):
         }
 
         """
-        c.update_aliases(body, cb=h_cb)
+        c.update_aliases(body, callback=h_cb)
         self.wait()
 
     def test_delete_alias(self):
@@ -234,7 +234,7 @@ class IndicesClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.delete_alias('test', 'test', cb=h_cb)
+        c.delete_alias('test', 'test', callback=h_cb)
         self.wait()
 
     def test_put_template(self):
@@ -253,7 +253,7 @@ class IndicesClientTest(AsyncTestCase):
         }
 
         """
-        c.put_template('test', body, cb=self.handle_cb)
+        c.put_template('test', body, callback=self.handle_cb)
         self.wait()
 
     def test_exists_template(self):
@@ -262,7 +262,7 @@ class IndicesClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.exists_template('test', cb=h_cb)
+        c.exists_template('test', callback=h_cb)
         self.wait()
 
     def test_get_template(self):
@@ -271,7 +271,7 @@ class IndicesClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.get_template(name='test', cb=h_cb)
+        c.get_template(name='test', callback=h_cb)
         self.wait()
 
     def test_delete_template(self):
@@ -280,12 +280,12 @@ class IndicesClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.delete_template('test', cb=h_cb)
+        c.delete_template('test', callback=h_cb)
         self.wait()
 
     def test_get_settings(self):
         c = IndicesClient()
-        c.get_settings(cb=self.handle_cb)
+        c.get_settings(callback=self.handle_cb)
         self.wait()
 
     def test_put_settings(self):
@@ -298,7 +298,7 @@ class IndicesClientTest(AsyncTestCase):
         }
 
         """
-        c.put_settings(body, cb=self.handle_cb)
+        c.put_settings(body, callback=self.handle_cb)
         self.wait()
 
     def test_put_warmer(self):
@@ -318,12 +318,12 @@ class IndicesClientTest(AsyncTestCase):
         }
 
         """
-        c.put_warmer("test", body, cb=self.handle_cb)
+        c.put_warmer("test", body, callback=self.handle_cb)
         self.wait()
 
     def test_get_warmer(self):
         c = IndicesClient()
-        c.get_warmer(cb=self.handle_cb)
+        c.get_warmer(callback=self.handle_cb)
         self.wait()
 
     def test_delete_warmer(self):
@@ -332,42 +332,42 @@ class IndicesClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.delete_warmer('test', 'test', cb=h_cb)
+        c.delete_warmer('test', 'test', callback=h_cb)
         self.wait()
 
     def test_status(self):
         c = IndicesClient()
-        c.status(cb=self.handle_cb)
+        c.status(callback=self.handle_cb)
         self.wait()
 
     def test_stats(self):
         c = IndicesClient()
-        c.stats(cb=self.handle_cb)
+        c.stats(callback=self.handle_cb)
         self.wait()
 
     def test_segments(self):
         c = IndicesClient()
-        c.segments(cb=self.handle_cb)
+        c.segments(callback=self.handle_cb)
         self.wait()
 
     def test_optimize(self):
         c = IndicesClient()
-        c.optimize(cb=self.handle_cb)
+        c.optimize(callback=self.handle_cb)
         self.wait()
 
     def test_validate_query(self):
         c = IndicesClient()
-        c.validate_query(cb=self.handle_cb)
+        c.validate_query(callback=self.handle_cb)
         self.wait()
 
     def test_clear_cache(self):
         c = IndicesClient()
-        c.clear_cache(cb=self.handle_cb)
+        c.clear_cache(callback=self.handle_cb)
         self.wait()
 
     def test_recovery(self):
         c = IndicesClient()
-        c.recovery(cb=self.handle_cb)
+        c.recovery(callback=self.handle_cb)
         self.wait()
 
     def test_snapshot_index(self):
@@ -376,6 +376,6 @@ class IndicesClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.snapshot_index(cb=h_cb)
+        c.snapshot_index(callback=h_cb)
         self.wait()
 

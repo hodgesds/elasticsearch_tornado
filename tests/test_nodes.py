@@ -20,15 +20,15 @@ class NodesClientTest(AsyncTestCase):
 
     def test_info(self):
         c = NodesClient()
-        c.info(cb=self.handle_cb)
+        c.info(callback=self.handle_cb)
         self.wait()
 
     def test_stats(self):
         c = NodesClient()
-        c.stats(cb=self.handle_cb)
+        c.stats(callback=self.handle_cb)
         self.wait()
 
     def test_hot_threads(self):
         c = NodesClient()
-        c.hot_threads(cb=self.handle_cb)
+        c.hot_threads(callback=self.handle_cb)
         self.wait()

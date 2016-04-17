@@ -1,15 +1,9 @@
 from .client import BaseClient
 
 
-
 class MeowClient(BaseClient):
-    def __init__(self,
-        *args,
-        **kwargs
-    ):
-        super(MeowClient, self).__init__(*args, **kwargs)
 
-    def aliases(self, name=None, params={}, cb=None, **kwargs):
+    def aliases(self, name=None, params={}, callback=None, **kwargs):
         """
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-aliases.html>`_
 
@@ -22,16 +16,20 @@ class MeowClient(BaseClient):
             node
         :arg v: Verbose mode. Display column headers, default False
         """
+
         query_params = ('h', 'help', 'local', 'master_timeout', 'v',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_cat', 'aliases', name], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
 
-    def allocation(self, node_id=None, params={}, cb=None, **kwargs):
+    def allocation(self, node_id=None, params={}, callback=None, **kwargs):
         """
         Allocation provides a snapshot of how shards have located around the
         cluster and the state of disk usage.
@@ -48,15 +46,19 @@ class MeowClient(BaseClient):
             node
         :arg v: Verbose mode. Display column headers, default False
         """
+
         query_params = ('bytes', 'h', 'help', 'local', 'master_timeout', 'v',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_cat', 'allocation', node_id], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def count(self, index=None, params={}, cb=None, **kwargs):
+    def count(self, index=None, params={}, callback=None, **kwargs):
         """
         Count provides quick access to the document count of the entire cluster,
         or individual indices.
@@ -72,15 +74,19 @@ class MeowClient(BaseClient):
             node
         :arg v: Verbose mode. Display column headers, default False
         """
+
         query_params = ('bytes', 'h', 'help', 'local', 'master_timeout', 'v',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_cat', 'count', index], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def health(self, params={}, cb=None, **kwargs):
+    def health(self, params={}, callback=None, **kwargs):
         """
         health is a terse, one-line representation of the same information from
         :meth:`~elasticsearch.client.cluster.ClusterClient.health` API
@@ -95,30 +101,38 @@ class MeowClient(BaseClient):
         :arg ts: Set to false to disable timestamping, default True
         :arg v: Verbose mode. Display column headers, default False
         """
+
         query_params = ('h', 'help', 'local', 'master_timeout', 'ts', 'v', )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_cat/health'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def help(self, params={}, cb=None, **kwargs):
+    def help(self, params={}, callback=None, **kwargs):
         """
         A simple help for the cat api.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat.html>`_
 
         :arg get_help: Return help information, default False
         """
+
         query_params = ('help',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_cat'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def indices(self, index=None, params={}, cb=None, **kwargs):
+    def indices(self, index=None, params={}, callback=None, **kwargs):
         """
         The indices command provides a cross-section of each index.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-indices.html>`_
@@ -136,17 +150,21 @@ class MeowClient(BaseClient):
             False
         :arg v: Verbose mode. Display column headers, default False
         """
+
         query_params = (
             'bytes', 'h', 'help', 'local', 'master_timeout', 'pri', 'v',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_cat'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def master(self, params={}, cb=None, **kwargs):
+    def master(self, params={}, callback=None, **kwargs):
         """
         Displays the master's node ID, bound IP address, and node name.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-master.html>`_
@@ -159,15 +177,19 @@ class MeowClient(BaseClient):
             node
         :arg v: Verbose mode. Display column headers, default False
         """
+
         query_params = ('h', 'help', 'local', 'master_timeout', 'v',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_cat', 'master'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def nodes(self, params={}, cb=None, **kwargs):
+    def nodes(self, params={}, callback=None, **kwargs):
         """
         The nodes command shows the cluster topology.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-nodes.html>`_
@@ -180,15 +202,19 @@ class MeowClient(BaseClient):
             node
         :arg v: Verbose mode. Display column headers, default False
         """
+
         query_params = ('h', 'help', 'local', 'master_timeout', 'v',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_cat', 'nodes'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def recovery(self, index=None, params={}, cb=None, **kwargs):
+    def recovery(self, index=None, params={}, callback=None, **kwargs):
         """
         recovery is a view of shard replication.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-recovery.html>`_
@@ -204,15 +230,19 @@ class MeowClient(BaseClient):
             node
         :arg v: Verbose mode. Display column headers, default False
         """
+
         query_params = ('bytes', 'h', 'help', 'local', 'master_timeout', 'v',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_cat', 'recovery', index], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def shards(self, index=None, params={}, cb=None, **kwargs):
+    def shards(self, index=None, params={}, callback=None, **kwargs):
         """
         The shards command is the detailed view of what nodes contain which shards.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-shards.html>`_
@@ -227,15 +257,19 @@ class MeowClient(BaseClient):
             node
         :arg v: Verbose mode. Display column headers, default False
         """
+
         query_params = ('h', 'help', 'local', 'master_timeout', 'v',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_cat', 'shards', index], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def segments(self, index=None, params={}, cb=None, **kwargs):
+    def segments(self, index=None, params={}, callback=None, **kwargs):
         """
         The segments command is the detailed view of Lucene segments per index.
 
@@ -249,15 +283,19 @@ class MeowClient(BaseClient):
             node
         :arg v: Verbose mode. Display column headers, default False
         """
+
         query_params = ('h', 'help', 'local', 'master_timeout', 'v',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_cat', 'segments', index], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def pending_tasks(self, params={}, cb=None, **kwargs):
+    def pending_tasks(self, params={}, callback=None, **kwargs):
         """
         pending_tasks provides the same information as the
         :meth:`~elasticsearch.client.cluster.ClusterClient.pending_tasks` API
@@ -272,15 +310,19 @@ class MeowClient(BaseClient):
             node
         :arg v: Verbose mode. Display column headers, default False
         """
+
         query_params = ('h', 'help', 'local', 'master_timeout', 'v',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_cat', 'pending_tasks'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def thread_pool(self, params={}, cb=None, **kwargs):
+    def thread_pool(self, params={}, callback=None, **kwargs):
         """
         Get information about thread pools.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-thread-pool.html>`_
@@ -295,15 +337,19 @@ class MeowClient(BaseClient):
         :arg v: Verbose mode. Display column headers (default: 'false')
 
         """
+
         query_params = ('full_id', 'h', 'help', 'local', 'master_timeout', 'v',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_cat', 'thread_pool'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def fielddata(self, fields=None, params={}, cb=None, **kwargs):
+    def fielddata(self, fields=None, params={}, callback=None, **kwargs):
         """
         Shows information about currently loaded fielddata on a per-node basis.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat-fielddata.html>`_
@@ -322,17 +368,21 @@ class MeowClient(BaseClient):
         :arg v: Verbose mode. Display column headers (default: 'false')
 
         """
+
         query_params = (
             'bytes', 'fields', 'h', 'help', 'local', 'master_timeout', 'v',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_cat', 'fielddata', fields], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def plugins(self, params={}, cb=None, **kwargs):
+    def plugins(self, params={}, callback=None, **kwargs):
         """
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cat-plugins.html>`_
 
@@ -344,10 +394,14 @@ class MeowClient(BaseClient):
             node
         :arg v: Verbose mode. Display column headers, default False
         """
+
         query_params = ('h', 'help', 'local', 'master_timeout', 'v',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_cat', 'plugins'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )

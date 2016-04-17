@@ -2,14 +2,8 @@ from .client import BaseClient
 
 
 class IndicesClient(BaseClient):
-    def __init__(self,
-        *args,
-        **kwargs
-    ):
-        super(IndicesClient, self).__init__(*args, **kwargs)
 
-
-    def analyze(self, index=None, body=None, params={}, cb=None, **kwargs):
+    def analyze(self, index=None, body=None, params={}, callback=None, **kwargs):
         """
         Perform the analysis process on a text and return the tokens breakdown of the text.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-analyze.html>`_
@@ -30,18 +24,22 @@ class IndicesClient(BaseClient):
             request body is not used)
         :arg tokenizer: The name of the tokenizer to use for the analysis
         """
+
         query_params = (
             'analyzer', 'char_filters', 'field', 'filters', 'format', 'index',
             'prefer_local', 'text', 'tokenizer',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, '_analyze'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def refresh(self, body='', index=None, params={}, cb=None, **kwargs):
+    def refresh(self, body='', index=None, params={}, callback=None, **kwargs):
         """
         Explicitly refresh one or more index, making all operations performed
         since the last refresh available for search.
@@ -60,18 +58,22 @@ class IndicesClient(BaseClient):
             when unavailable (missing or closed)
         :arg force: Force a refresh even if not required
         """
+
         query_params = (
             'allow_no_indices', 'expand_wildcards', 'ignore_indices',
             'ignore_unavailable', 'force',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, '_refresh'], **params)
+
         self.client.fetch(
             self.mk_req(url, body=body, method='POST', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def flush(self, index=None, body='', params={}, cb=None, **kwargs):
+    def flush(self, index=None, body='', params={}, callback=None, **kwargs):
         """
         Explicitly flush one or more indices.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-flush.html>`_
@@ -92,38 +94,46 @@ class IndicesClient(BaseClient):
         :arg ignore_unavailable: Whether specified concrete indices should be ignored
             when unavailable (missing or closed)
         """
+
         query_params = (
             'force', 'full', 'allow_no_indices', 'expand_wildcards',
             'ignore_indices', 'ignore_unavailable',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, '_flush'], **params)
+
         self.client.fetch(
             self.mk_req(url, body=body, method='POST', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def create(self, index, body, params={}, cb=None, **kwargs):
+    def create(self, index, body, params={}, callback=None, **kwargs):
         """
         Create an index in Elasticsearch.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-create-index.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-create-index.html#indices-create-index>`_
 
         :arg index: The name of the index
         :arg body: The configuration for the index (`settings` and `mappings`)
         :arg master_timeout: Specify timeout for connection to master
         :arg timeout: Explicit operation timeout
         """
+
         query_params = ('timeout', 'master_timeout',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index], **params)
+
         self.client.fetch(
             self.mk_req(url, body=body, method='PUT', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def get(self, index, feature=None, params={}, cb=None, **kwargs):
+    def get(self, index, feature=None, params={}, callback=None, **kwargs):
         """
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-get.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-index.html#indices-get-index>`_
 
         :arg index: A comma-separated list of index names
         :arg feature: A comma-separated list of features
@@ -135,18 +145,22 @@ class IndicesClient(BaseClient):
         :arg local: Return local information, do not retrieve the state from
             master node (default: false)
         """
+
         query_params = (
             'allow_no_indices', 'expand_wildcards', 'ignore_unavailable',
             'local',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, feature], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def open(self, index, body='', params={}, cb=None, **kwargs):
+    def open(self, index, body='', params={}, callback=None, **kwargs):
         """
         Open a closed index to make it available for search.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-open-close.html>`_
@@ -162,18 +176,22 @@ class IndicesClient(BaseClient):
         :arg ignore_unavailable: Whether specified concrete indices should be ignored
             when unavailable (missing or closed)
         """
+
         query_params = (
             'timeout', 'master_timeout' 'allow_no_indices', 'expand_wildcards',
             'ignore_unavailable',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, '_open'], **params)
+
         self.client.fetch(
             self.mk_req(url, body=body, method='POST', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def close(self, index, body='', params={}, cb=None, **kwargs):
+    def close(self, index, body='', params={}, callback=None, **kwargs):
         """
         Close an index to remove it's overhead from the cluster. Closed index
         is blocked for read/write operations.
@@ -191,39 +209,47 @@ class IndicesClient(BaseClient):
         :arg master_timeout: Specify timeout for connection to master
         :arg timeout: Explicit operation timeout
         """
+
         query_params = (
             'allow_no_indices', 'expand_wildcards', 'ignore_unavailable',
             'master_timeout', 'timeout',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, '_close'], **params)
+
         self.client.fetch(
             self.mk_req(url, body=body, method='POST', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def delete(self, index, params={}, cb=None, **kwargs):
+    def delete(self, index, params={}, callback=None, **kwargs):
         """
         Delete an index in Elasticsearch
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-delete-index.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-delete-index.html#indices-delete-index>`_
 
         :arg index: A comma-separated list of indices to delete; use `_all` or
             '*' to delete all indices
         :arg master_timeout: Specify timeout for connection to master
         :arg timeout: Explicit operation timeout
         """
+
         query_params = ('timeout', 'master_timeout',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index], **params)
+
         self.client.fetch(
             self.mk_req(url, method='DELETE', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def exists(self, index, params={}, cb=None, **kwargs):
+    def exists(self, index, params={}, callback=None, **kwargs):
         """
         Return a boolean indicating whether given index exists.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-indices-exists.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-exists.html#indices-exists>`_
 
         :arg index: A list of indices to check
         :arg allow_no_indices: Whether to ignore if a wildcard indices
@@ -236,18 +262,22 @@ class IndicesClient(BaseClient):
         :arg local: Return local information, do not retrieve the state from
             master node (default: false)
         """
+
         query_params = (
             'allow_no_indices', 'expand_wildcards', 'ignore_unavailable',
             'local',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index], **params)
+
         self.client.fetch(
             self.mk_req(url, method='HEAD', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def exists_type(self, index, doc_type, params={}, cb=None, **kwargs):
+    def exists_type(self, index, doc_type, params={}, callback=None, **kwargs):
         """
         Check if a type/types exists in an index/indices.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-types-exists.html>`_
@@ -267,21 +297,25 @@ class IndicesClient(BaseClient):
         :arg local: Return local information, do not retrieve the state from
             master node (default: false)
         """
+
         query_params = (
             'allow_no_indices', 'expand_wildcards', 'ignore_indices',
             'ignore_unavailable', 'local',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, doc_type], **params)
+
         self.client.fetch(
             self.mk_req(url, method='HEAD', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def put_mapping(self, doc_type, body, index=None, params={}, cb=None, **kwargs):
+    def put_mapping(self, doc_type, body, index=None, params={}, callback=None, **kwargs):
         """
         Register specific mapping definition for a specific type.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-put-mapping.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-put-mapping.html#indices-put-mapping>`_
 
         :arg index: A comma-separated list of index names the alias should
             point to (supports wildcards); use `_all` or omit to perform the
@@ -300,21 +334,25 @@ class IndicesClient(BaseClient):
         :arg master_timeout: Specify timeout for connection to master
         :arg timeout: Explicit operation timeout
         """
+
         query_params = (
             'allow_no_indices', 'expand_wildcards', 'ignore_conflicts',
             'ignore_unavailable', 'master_timeout', 'timeout',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, '_mapping', doc_type], **params)
+
         self.client.fetch(
             self.mk_req(url, body=body, method='PUT', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def get_mapping(self, index=None, doc_type=None, params={}, cb=None, **kwargs):
+    def get_mapping(self, index=None, doc_type=None, params={}, callback=None, **kwargs):
         """
         Retrieve mapping definition of index or index/type.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-get-mapping.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-mapping.html>`_
 
         :arg index: A comma-separated list of index names; use `_all` or empty
             string for all indices
@@ -329,21 +367,25 @@ class IndicesClient(BaseClient):
         :arg local: Return local information, do not retrieve the state from
             master node (default: false)
         """
+
         query_params = (
             'ignore_unavailable', 'allow_no_indices', 'expand_wildcards',
             'local',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, '_mapping', doc_type], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def get_field_mapping(self, field, index=None, doc_type=None, params={}, cb=None, **kwargs):
+    def get_field_mapping(self, field, index=None, doc_type=None, params={}, callback=None, **kwargs):
         """
         Retrieve mapping definition of a specific field.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-get-field-mapping.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-field-mapping.html#indices-get-field-mapping>`_
 
         :arg index: A comma-separated list of index names; use `_all` or empty
             string for all indices
@@ -360,18 +402,22 @@ class IndicesClient(BaseClient):
         :arg local: Return local information, do not retrieve the state from
             master node (default: false)
         """
+
         query_params = (
             'include_defaults', 'ignore_unavailable', 'allow_no_indices',
             'expand_wildcards', 'local',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, '_mapping', doc_type, 'field', field], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def delete_mapping(self, index, doc_type, params={}, cb=None, **kwargs):
+    def delete_mapping(self, index, doc_type, params={}, callback=None, **kwargs):
         """
         Delete a mapping (type) along with its data.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-delete-mapping.html>`_
@@ -383,18 +429,22 @@ class IndicesClient(BaseClient):
             specified indices.
         :arg master_timeout: Specify timeout for connection to master
         """
+
         query_params = ('master_timeout',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, '_mapping', doc_type], **params)
+
         self.client.fetch(
             self.mk_req(url, method='DELETE', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def put_alias(self, name, index, body, params={}, cb=None, **kwargs):
+    def put_alias(self, name, index, body, params={}, callback=None, **kwargs):
         """
         Create an alias for a specific index/indices.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-aliases.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html#indices-aliases>`_
 
         :arg index: A comma-separated list of index names the alias should
             point to (supports wildcards); use `_all` or omit to perform the
@@ -404,18 +454,22 @@ class IndicesClient(BaseClient):
         :arg master_timeout: Specify timeout for connection to master
         :arg timeout: Explicit timestamp for the document
         """
+
         query_params = ('timeout', 'master_timeout',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, '_alias', name], **params)
+
         self.client.fetch(
             self.mk_req(url, body=body, method='PUT', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def exists_alias(self, name, index=None, params={}, cb=None, **kwargs):
+    def exists_alias(self, name, index=None, params={}, callback=None, **kwargs):
         """
         Return a boolean indicating whether given alias exists.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-aliases.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html#indices-aliases>`_
 
         :arg name: A comma-separated list of alias names to return
         :arg index: A comma-separated list of index names to filter aliases
@@ -431,21 +485,25 @@ class IndicesClient(BaseClient):
         :arg local: Return local information, do not retrieve the state from
             master node (default: false)
         """
+
         query_params = (
             'allow_no_indices', 'expand_wildcards', 'ignore_indices',
             'ignore_unavailable', 'local',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, '_alias', name], **params)
+
         self.client.fetch(
             self.mk_req(url, method='HEAD', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def get_alias(self, index=None, name=None, params={}, cb=None, **kwargs):
+    def get_alias(self, index=None, name=None, params={}, callback=None, **kwargs):
         """
         Retrieve a specified alias.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-aliases.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html#indices-aliases>`_
 
         :arg name: A comma-separated list of alias names to return
         :arg index: A comma-separated list of index names to filter aliases
@@ -461,56 +519,69 @@ class IndicesClient(BaseClient):
         :arg local: Return local information, do not retrieve the state from
             master node (default: false)
         """
+
         query_params = (
             'allow_no_indices', 'expand_wildcards', 'ignore_indices',
             'ignore_unavailable', 'local',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, '_alias', name], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def get_aliases(self, index=None, name=None, params={}, cb=None, **kwargs):
+    def get_aliases(self, index=None, name=None, params={}, callback=None, **kwargs):
         """
         Retrieve specified aliases
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-aliases.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html#indices-aliases>`_
+
         :arg index: A comma-separated list of index names to filter aliases
         :arg name: A comma-separated list of alias names to filter
         :arg local: Return local information, do not retrieve the state from
             master node (default: false)
         :arg timeout: Explicit operation timeout
         """
+
         query_params = ('local', 'timeout',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, '_aliases', name], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def update_aliases(self, body, params={}, cb=None, **kwargs):
+    def update_aliases(self, body, params={}, callback=None, **kwargs):
         """
         Update specified aliases.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-aliases.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html#indices-aliases>`_
 
         :arg body: The definition of `actions` to perform
         :arg master_timeout: Specify timeout for connection to master
         :arg timeout: Request timeout
         """
+
         query_params = ('timeout', 'master_timeout',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_aliases'], **params)
+
         self.client.fetch(
             self.mk_req(url, body=body, method='POST', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def delete_alias(self, index, name, params={}, cb=None, **kwargs):
+    def delete_alias(self, index, name, params={}, callback=None, **kwargs):
         """
         Delete specific alias.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-aliases.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html#indices-aliases>`_
 
         :arg index: A comma-separated list of index names (supports wildcards);
             use `_all` for all indices
@@ -519,19 +590,23 @@ class IndicesClient(BaseClient):
         :arg master_timeout: Specify timeout for connection to master
         :arg timeout: Explicit timestamp for the document
         """
+
         query_params = ('timeout', 'master_timeout',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, '_alias', name], **params)
+
         self.client.fetch(
             self.mk_req(url, method='DELETE', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def put_template(self, name, body, params={}, cb=None, **kwargs):
+    def put_template(self, name, body, params={}, callback=None, **kwargs):
         """
         Create an index template that will automatically be applied to new
         indices created.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-templates.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html>`_
 
         :arg name: The name of the template
         :arg body: The template definition
@@ -543,72 +618,88 @@ class IndicesClient(BaseClient):
         :arg timeout: Explicit operation timeout
         :arg flat_settings: Return settings in flat format (default: false)
         """
+
         query_params = (
             'create', 'order', 'timeout', 'master_timeout', 'flat_settings',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_template', name], **params)
+
         self.client.fetch(
             self.mk_req(url, body=body, method='PUT', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def exists_template(self, name, params={}, cb=None, **kwargs):
+    def exists_template(self, name, params={}, callback=None, **kwargs):
         """
         Return a boolean indicating whether given template exists.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-templates.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html>`_
 
         :arg name: The name of the template
         :arg local: Return local information, do not retrieve the state from
             master node (default: false)
         """
+
         query_params = ('local',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_template', name], **params)
+
         self.client.fetch(
             self.mk_req(url, method='HEAD', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def get_template(self, name=None, params={}, cb=None, **kwargs):
+    def get_template(self, name=None, params={}, callback=None, **kwargs):
         """
         Retrieve an index template by its name.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-templates.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html>`_
 
         :arg name: The name of the template
         :arg flat_settings: Return settings in flat format (default: false)
         :arg local: Return local information, do not retrieve the state from
             master node (default: false)
         """
+
         query_params = ('flat_settings', 'local',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_template', name], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def delete_template(self, name, params={}, cb=None, **kwargs):
+    def delete_template(self, name, params={}, callback=None, **kwargs):
         """
         Delete an index template by its name.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-templates.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-templates.html>`_
 
         :arg name: The name of the template
         :arg master_timeout: Specify timeout for connection to master
         :arg timeout: Explicit operation timeout
         """
+
         query_params = ('timeout', 'master_timeout',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_template', name], **params)
+
         self.client.fetch(
             self.mk_req(url, method='DELETE', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def get_settings(self, index=None, name=None, params={}, cb=None, **kwargs):
+    def get_settings(self, index=None, name=None, params={}, callback=None, **kwargs):
         """
         Retrieve settings for one or more (or all) indices.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-get-settings.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-settings.html>`_
 
         :arg index: A comma-separated list of index names; use `_all` or empty
             string to perform the operation on all indices
@@ -623,21 +714,25 @@ class IndicesClient(BaseClient):
         :arg local: Return local information, do not retrieve the state from
             master node (default: false)
         """
+
         query_params = (
             'expand_wildcards', 'ignore_indices', 'ignore_unavailable',
             'flat_settings', 'local',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, '_settings', name], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def put_settings(self, body, index=None, params={}, cb=None, **kwargs):
+    def put_settings(self, body, index=None, params={}, callback=None, **kwargs):
         """
         Change specific index level settings in real time.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-update-settings.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-get-settings.html>`_
 
         :arg body: The index settings to be updated
         :arg index: A comma-separated list of index names; use `_all` or empty
@@ -652,18 +747,22 @@ class IndicesClient(BaseClient):
             ignored when unavailable (missing or closed)
         :arg master_timeout: Specify timeout for connection to master
         """
+
         query_params = (
             'allow_no_indices', 'expand_wildcards', 'flat_settings',
             'ignore_unavailable', 'master_timeout',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, '_settings'], **params)
+
         self.client.fetch(
             self.mk_req(url, body=body, method='PUT', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def put_warmer(self, name, body, index=None, doc_type=None, params={}, cb=None, **kwargs):
+    def put_warmer(self, name, body, index=None, doc_type=None, params={}, callback=None, **kwargs):
         """
         Create an index warmer to run registered search requests to warm up the
         index before it is available for search.
@@ -688,18 +787,22 @@ class IndicesClient(BaseClient):
             to warm
         :arg master_timeout: Specify timeout for connection to master
         """
+
         query_params = (
             'allow_no_indices', 'expand_wildcards', 'ignore_unavailable',
             'master_timeout',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, doc_type, '_warmer', name], **params)
+
         self.client.fetch(
             self.mk_req(url, body=body, method='PUT', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def get_warmer(self, index=None, doc_type=None, name=None, params={}, cb=None, **kwargs):
+    def get_warmer(self, index=None, doc_type=None, name=None, params={}, callback=None, **kwargs):
         """
         Retreieve an index warmer.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-warmers.html>`_
@@ -720,18 +823,22 @@ class IndicesClient(BaseClient):
         :arg local: Return local information, do not retrieve the state from
             master node (default: false)
         """
+
         query_params = (
             'allow_no_indices', 'expand_wildcards', 'ignore_unavailable',
             'local',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, doc_type, '_warmer', name], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def delete_warmer(self, index, name, params={}, cb=None, **kwargs):
+    def delete_warmer(self, index, name, params={}, callback=None, **kwargs):
         """
         Delete an index warmer.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-warmers.html>`_
@@ -742,15 +849,19 @@ class IndicesClient(BaseClient):
             wildcards); use `_all` to delete all warmers in the specified indices.
         :arg master_timeout: Specify timeout for connection to master
         """
+
         query_params = ('master_timeout',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, '_warmer', name], **params)
+
         self.client.fetch(
             self.mk_req(url, method='DELETE', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def status(self, index=None, params={}, cb=None, **kwargs):
+    def status(self, index=None, params={}, callback=None, **kwargs):
         """
         Get a comprehensive status information of one or more indices.
         `<http://elasticsearch.org/guide/reference/api/admin-indices-_/>`_
@@ -771,22 +882,26 @@ class IndicesClient(BaseClient):
         :arg snapshot: TODO: ?
         :arg human: Whether to return time and byte values in human-readable format.
         """
+
         query_params = (
             'allow_no_indices', 'expand_wildcards', 'ignore_indices',
             'ignore_unavailable', 'operation_threading', 'recovery', 'snapshot',
             'human',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, '_status'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def stats(self, index=None, metric=None, params={}, cb=None, **kwargs):
+    def stats(self, index=None, metric=None, params={}, callback=None, **kwargs):
         """
         Retrieve statistics on different operations happening on an index.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-stats.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-stats.html#indices-stats>`_
 
         :arg index: A comma-separated list of index names; use `_all` or empty
             string to perform the operation on all indices
@@ -816,22 +931,26 @@ class IndicesClient(BaseClient):
         :arg types: A comma-separated list of document types for the `indexing`
             index metric
         """
+
         query_params = (
             'completion_fields', 'docs', 'fielddata_fields', 'fields', 'groups',
             'allow_no_indices', 'expand_wildcards', 'ignore_indices',
             'ignore_unavailable', 'human', 'level', 'types',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, '_stats', metric], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def segments(self, index=None, params={}, cb=None, **kwargs):
+    def segments(self, index=None, params={}, callback=None, **kwargs):
         """
         Provide low level segments information that a Lucene index (shard level) is built with.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-segments.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-segments.html>`_
 
         :arg index: A comma-separated list of index names; use `_all` or empty
             string to perform the operation on all indices
@@ -847,21 +966,25 @@ class IndicesClient(BaseClient):
         :arg human: Whether to return time and byte values in human-readable
             format (default: false)
         """
+
         query_params = (
             'allow_no_indices', 'expand_wildcards', 'ignore_indices',
             'ignore_unavailable', 'human',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, '_segments'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def optimize(self, index=None, body='', params={}, cb=None, **kwargs):
+    def optimize(self, index=None, body='', params={}, callback=None, **kwargs):
         """
         Explicitly optimize one or more indices through an API.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-optimize.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-optimize.html>`_
 
         :arg index: A comma-separated list of index names; use `_all` or empty
             string to perform the operation on all indices
@@ -884,19 +1007,23 @@ class IndicesClient(BaseClient):
         :arg wait_for_merge: Specify whether the request should block until the
             merge process is finished (default: true)
         """
+
         query_params = (
             'flush', 'allow_no_indices', 'expand_wildcards', 'ignore_indices',
             'ignore_unavailable', 'max_num_segments', 'only_expunge_deletes',
             'operation_threading', 'wait_for_merge',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, '_optimize'], **params)
+
         self.client.fetch(
             self.mk_req(url, body=body, method='POST', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def validate_query(self, index=None, doc_type=None, body=None, params={}, cb=None, **kwargs):
+    def validate_query(self, index=None, doc_type=None, body=None, params={}, callback=None, **kwargs):
         """
         Validate a potentially expensive query without executing it.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-validate.html>`_
@@ -921,21 +1048,25 @@ class IndicesClient(BaseClient):
         :arg source: The URL-encoded query definition (instead of using the
             request body)
         """
+
         query_params = (
             'explain', 'allow_no_indices', 'expand_wildcards', 'ignore_indices',
             'ignore_unavailable', 'operation_threading', 'q', 'source',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, doc_type, '_validate', 'query'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def clear_cache(self, index=None, body='', params={}, cb=None, **kwargs):
+    def clear_cache(self, index=None, body='', params={}, callback=None, **kwargs):
         """
         Clear either all caches or specific cached associated with one ore more indices.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-clearcache.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-clearcache.html#indices-clearcache>`_
 
         :arg index: A comma-separated list of index name to limit the operation
         :arg field_data: Clear field data
@@ -960,25 +1091,29 @@ class IndicesClient(BaseClient):
         :arg index: A comma-separated list of index name to limit the operation
         :arg recycler: Clear the recycler cache
         """
+
         query_params = (
             'field_data', 'fielddata', 'fields', 'filter', 'filter_cache',
             'filter_keys', 'id', 'id_cache', 'allow_no_indices',
             'expand_wildcards', 'ignore_indices', 'ignore_unavailable', 'index',
             'recycler',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, '_cache', 'clear'], **params)
+
         self.client.fetch(
             self.mk_req(url, body=body, method='POST', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def recovery(self, index=None, params={}, cb=None, **kwargs):
+    def recovery(self, index=None, params={}, callback=None, **kwargs):
         """
         The indices recovery API provides insight into on-going shard
         recoveries. Recovery status may be reported for specific indices, or
         cluster-wide.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/indices-recovery.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-recovery.html#indices-recovery>`_
 
         :arg index: A comma-separated list of index names; use `_all` or empty
             string to perform the operation on all indices
@@ -988,17 +1123,20 @@ class IndicesClient(BaseClient):
             recovery (default: 'false')
         :arg human: Whether to return time and byte values in human-readable
             format. (default: 'false')
-
         """
+
         query_params = ('active_only', 'detailed', 'human',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, '_recovery'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def snapshot_index(self, index=None, body='', params={}, cb=None, **kwargs):
+    def snapshot_index(self, index=None, body='', params={}, callback=None, **kwargs):
         """
         Explicitly perform a snapshot through the gateway of one or more indices (backup them).
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-gateway-snapshot.html>`_
@@ -1015,13 +1153,17 @@ class IndicesClient(BaseClient):
         :arg ignore_unavailable: Whether specified concrete indices should be ignored
             when unavailable (missing or closed)
         """
+
         query_params = (
             'allow_no_indices', 'expand_wildcards', 'ignore_indices',
             'ignore_unavailable',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, '_gateway', 'snapshot'], **params)
+
         self.client.fetch(
             self.mk_req(url, body=body, method='POST', **kwargs),
-            callback = cb
+            callback = callback
         )

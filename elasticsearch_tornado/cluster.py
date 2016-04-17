@@ -2,13 +2,8 @@ from .client import BaseClient
 
 
 class ClusterClient(BaseClient):
-    def __init__(self,
-        *args,
-        **kwargs
-    ):
-        super(ClusterClient, self).__init__(*args, **kwargs)
 
-    def health(self, index=None, params={}, cb=None, **kwargs):
+    def health(self, index=None, params={}, callback=None, **kwargs):
         """
         Get a very simple status on the health of the cluster.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-health.html>`_
@@ -23,19 +18,23 @@ class ClusterClient(BaseClient):
         :arg wait_for_relocating_shards: Wait until the specified number of relocating shards is finished
         :arg wait_for_status: Wait until cluster is in a specific state, default None
         """
+
         query_params = (
             'level', 'local', 'master_timeout', 'timeout',
             'wait_for_active_shards', 'wait_for_nodes',
             'wait_for_relocating_shards', 'wait_for_status',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_cluster', 'health', index], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def pending_tasks(self, params={}, cb=None, **kwargs):
+    def pending_tasks(self, params={}, callback=None, **kwargs):
         """
         The pending cluster tasks API returns a list of any cluster-level
         changes (e.g. create index, update mapping, allocate or fail shard)
@@ -45,15 +44,19 @@ class ClusterClient(BaseClient):
         :arg local: Return local information, do not retrieve the state from master node (default: false)
         :arg master_timeout: Specify timeout for connection to master
         """
+
         query_params = ('local', 'master_timeout',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_cluster', 'pending_tasks'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def state(self, metric=None, index=None, params={}, cb=None, **kwargs):
+    def state(self, metric=None, index=None, params={}, callback=None, **kwargs):
         """
         Get a comprehensive state information of the whole cluster.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-state.html>`_
@@ -69,19 +72,24 @@ class ClusterClient(BaseClient):
         :arg master_timeout: Specify timeout for connection to master
         :arg flat_settings: Return settings in flat format (default: false)
         """
+
         query_params = (
             'index_templates', 'local', 'master_timeout', 'flat_settings',
         )
+
         if index and not metric:
             metric = '_all'
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_cluster', 'state', metric, index], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def stats(self, node_id=None, params={}, cb=None, **kwargs):
+    def stats(self, node_id=None, params={}, callback=None, **kwargs):
         """
         The Cluster Stats API allows to retrieve statistics from a cluster wide
         perspective. The API returns basic index metrics and information about
@@ -95,17 +103,22 @@ class ClusterClient(BaseClient):
         :arg human: Whether to return time and byte values in human-readable format.
 
         """
+
         query_params = ('flat_settings', 'human',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         if node_id:
             node_id = 'nodes/%s' % node_id
+
         url = self.mk_url(*['_cluster', 'stats', node_id], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def reroute(self, body, params={}, cb=None, **kwargs):
+    def reroute(self, body, params={}, callback=None, **kwargs):
         """
         Explicitly execute a cluster reroute allocation command including specific commands.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-reroute.html>`_
@@ -122,15 +135,18 @@ class ClusterClient(BaseClient):
         query_params = (
             'dry_run', 'explain', 'master_timeout', 'metric', 'timeout',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_cluster', 'reroute'], **params)
+
         self.client.fetch(
             self.mk_req(url, body=body, method='POST', **kwargs),
             body     = body,
-            callback = cb
+            callback = callback
         )
 
-    def get_settings(self, params={}, cb=None, **kwargs):
+    def get_settings(self, params={}, callback=None, **kwargs):
         """
         Get cluster settings.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-update-settings.html>`_
@@ -139,15 +155,19 @@ class ClusterClient(BaseClient):
         :arg master_timeout: Explicit operation timeout for connection to master node
         :arg timeout: Explicit operation timeout
         """
+
         query_params = ('flat_settings', 'master_timeout', 'timeout',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_cluster', 'settings'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def put_settings(self, body, params={}, cb=None, **kwargs):
+    def put_settings(self, body, params={}, callback=None, **kwargs):
         """
         Update cluster wide specific settings.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-update-settings.html>`_
@@ -156,11 +176,15 @@ class ClusterClient(BaseClient):
             `persistent` (survives cluster restart).
         :arg flat_settings: Return settings in flat format (default: false)
         """
+
         query_params = ('flat_settings',)
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_cluster', 'settings'], **params)
+
         self.client.fetch(
             self.mk_req(url, body=body, method='PUT', **kwargs),
             body     = body,
-            callback = cb
+            callback = callback
         )

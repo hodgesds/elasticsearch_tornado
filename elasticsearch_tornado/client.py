@@ -46,7 +46,7 @@ class BaseClient(object):
         req_url = self.base_url + url
         req_kwargs = kwargs
         req_kwargs['ca_certs'] = req_kwargs.get('ca_certs', self.certs)
-        # have to do this because tornado's HTTP client doesn't 
+        # have to do this because tornado's HTTP client doesn't
         # play nice with elasticsearch
         req_kwargs['allow_nonstandard_methods'] = req_kwargs.get(
             'allow_nonstandard_methods',
@@ -67,31 +67,37 @@ class BaseClient(object):
             url += '?' + params
         return url
 
-    def ping(self, cb=None, **kwargs):
+    def _filter_params(self, q_params, params):
+        return dict(
+            (k,v) for k, v in params.items()
+            if k in q_params and v
+        )
+
+    def ping(self, callback=None, **kwargs):
         """
         Ping request to check status of elasticsearch host
         """
         self.client.fetch(
             self.mk_req('', method='HEAD', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def info(self, cb=None, **kwargs):
+    def info(self, callback=None, **kwargs):
         """
         Get the basic info from the current cluster.
         """
         self.client.fetch(
             self.mk_req('', method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
     def create(self,
             index,
             doc_type,
             body,
-            doc_id = None,
-            params = {},
-            cb     = None,
+            doc_id   = None,
+            params   = {},
+            callback = None,
             **kwargs
         ):
         """
@@ -115,16 +121,21 @@ class BaseClient(object):
         :arg version: Explicit version number for concurrency control
         :arg version_type: Specific version type
         """
+
         method = 'PUT' if doc_id else 'POST'
+
         query_params = ('consistency', 'op_type', 'parent', 'refresh',
             'replication', 'routing', 'timeout', 'timestamp', 'ttl', 'version',
             'version_type',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, doc_type, doc_id], **params)
+
         self.client.fetch(
             self.mk_req(url, method=method, body=body, **kwargs),
-            callback = cb
+            callback = callback
         )
 
 
@@ -132,9 +143,9 @@ class BaseClient(object):
             index,
             doc_type,
             body,
-            doc_id = None,
-            params = {},
-            cb     = None,
+            doc_id   = None,
+            params   = {},
+            callback = None,
             **kwargs
         ):
         """
@@ -156,19 +167,24 @@ class BaseClient(object):
         :arg version: Explicit version number for concurrency control
         :arg version_type: Specific version type
         """
+
         method = 'PUT' if doc_id else 'POST'
+
         query_params = ('consistency', 'op_type', 'parent', 'refresh',
             'replication', 'routing', 'timeout', 'timestamp', 'ttl', 'version',
             'version_type',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, doc_type, doc_id], **params)
+
         self.client.fetch(
             self.mk_req(url, method=method, body=body, **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def exists(self, index, doc_id, doc_type='_all', params={}, cb=None, **kwargs):
+    def exists(self, index, doc_id, doc_type='_all', params={}, callback=None, **kwargs):
         """
         Returns a boolean indicating whether or not given document exists in Elasticsearch.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-get.html>`_
@@ -185,17 +201,21 @@ class BaseClient(object):
             performing the operation
         :arg routing: Specific routing value
         """
+
         query_params = (
             'parent', 'preference', 'realtime', 'refresh', 'routing',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, doc_type, doc_id], **params)
+
         self.client.fetch(
             self.mk_req(url, method='HEAD', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def get(self, index, doc_id, doc_type='_all', params={}, cb=None, **kwargs):
+    def get(self, index, doc_id, doc_type='_all', params={}, callback=None, **kwargs):
         """
         Get a typed JSON document from the index based on its id.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-get.html>`_
@@ -221,15 +241,19 @@ class BaseClient(object):
         :arg version: Explicit version number for concurrency control
         :arg version_type: Explicit version number for concurrency control
         """
+
         query_params = ('_source', '_source_exclude', '_source_include',
             'fields', 'parent', 'preference', 'realtime', 'refresh', 'routing',
             'version', 'version_type',
         )
-        params = dict((k,v) for k, v in params.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, doc_type, doc_id], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
     def get_source(self,
@@ -237,7 +261,7 @@ class BaseClient(object):
             doc_id,
             doc_type = '_all',
             params   = {},
-            cb       = None,
+            callback = None,
             **kwargs
         ):
         """
@@ -263,15 +287,19 @@ class BaseClient(object):
         :arg version: Explicit version number for concurrency control
         :arg version_type: Explicit version number for concurrency control
         """
+
         query_params = ('_source', '_source_exclude', '_source_include',
             'parent', 'preference', 'realtime', 'refresh', 'routing', 'version',
             'version_type',
         )
-        params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, doc_type, doc_id, '_source'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
     def mget(self,
@@ -279,7 +307,7 @@ class BaseClient(object):
             index    = None,
             doc_type = None,
             params   = {},
-            cb       = None,
+            callback = None,
             **kwargs
         ):
         """
@@ -304,24 +332,28 @@ class BaseClient(object):
             performing the operation
         :arg routing: Specific routing value
         """
+
         query_params = ('_source', '_source_exclude', '_source_include',
             'fields', 'parent', 'preference', 'realtime', 'refresh', 'routing',
         )
-        params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, doc_type, '_mget'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', body=body, **kwargs),
-            callback = cb
+            callback = callback
         )
 
     def update(self,
             index,
             doc_type,
             doc_id,
-            body   = '',
-            params = {},
+            body         = '',
+            params       = {},
             query_params = {},
-            cb     = None,
+            callback     = None,
             **kwargs
         ):
         """
@@ -347,15 +379,19 @@ class BaseClient(object):
         :arg version: Explicit version number for concurrency control
         :arg version_type: Explicit version number for concurrency control
         """
+
         query_params = ('consistency', 'fields', 'lang', 'parent', 'refresh',
             'replication', 'retry_on_conflict', 'routing', 'script', 'timeout',
             'timestamp', 'ttl', 'version', 'version_type',
         )
-        params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, doc_type, doc_id, '_update'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='POST', body=body, **kwargs),
-            callback = cb
+            callback = callback
         )
 
 
@@ -364,7 +400,7 @@ class BaseClient(object):
             doc_type = None,
             body     = '',
             params   = {},
-            cb       = None,
+            callback = None,
             **kwargs
         ):
         """
@@ -422,6 +458,7 @@ class BaseClient(object):
         :arg timeout: Explicit operation timeout
         :arg version: Specify whether to return document version as part of a hit
         """
+
         query_params = ('_source', '_source_exclude', '_source_include',
             'analyze_wildcard', 'analyzer', 'default_operator', 'df', 'explain',
             'fields', 'indices_boost', 'lenient', 'allow_no_indices',
@@ -431,23 +468,27 @@ class BaseClient(object):
             'suggest_field', 'suggest_mode', 'suggest_size', 'suggest_text',
             'timeout', 'version',
         )
+
         if 'from_' in params:
             params['from'] = params.pop('from_')
 
         if doc_type and not index:
             index = '_all'
-        params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, doc_type, '_search'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', body=body, **kwargs),
-            callback = cb
+            callback = callback
         )
 
     def search_shards(self,
             index    = None,
             doc_type = None,
             params   = {},
-            cb       = None,
+            callback = None,
             **kwargs
         ):
         """
@@ -473,11 +514,14 @@ class BaseClient(object):
         query_params = ('allow_no_indices', 'expand_wildcards',
             'ignore_unavailable', 'local', 'preference', 'routing',
         )
-        params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, doc_type, '_search_shards'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
     def search_template(self,
@@ -485,7 +529,7 @@ class BaseClient(object):
             doc_type = None,
             body     = '',
             params   = {},
-            cb       = None,
+            callback = None,
             **kwargs
         ):
         """
@@ -511,24 +555,28 @@ class BaseClient(object):
             maintained for scrolled search
         :arg search_type: Search operation type
         """
+
         query_params = ('allow_no_indices', 'expand_wildcards',
             'ignore_unavailable', 'preference', 'routing', 'scroll',
             'search_type',
         )
-        params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, doc_type, '_search', 'template'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', body=body, **kwargs),
-            callback = cb
+            callback = callback
         )
 
     def explain(self,
             index,
             doc_type,
             doc_id,
-            body   = '',
-            params = {},
-            cb     = None,
+            body     = '',
+            params   = {},
+            callback = None,
             **kwargs
         ):
         """
@@ -564,20 +612,24 @@ class BaseClient(object):
         :arg source: The URL-encoded query definition (instead of using the
             request body)
         """
+
         query_params = ('_source', '_source_exclude', '_source_include',
             'analyze_wildcard', 'analyzer', 'default_operator', 'df', 'fields',
             'lenient', 'lowercase_expanded_terms', 'parent', 'preference', 'q',
             'routing', 'source',
         )
-        params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, doc_type, doc_id, '_explain'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', body=body, **kwargs),
-            callback = cb
+            callback = callback
         )
 
 
-    def scroll(self, scroll_id, params={}, cb=None, **kwargs):
+    def scroll(self, scroll_id, params={}, callback=None, **kwargs):
         """
         Scroll a search request created by specifying the scroll parameter.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-request-scroll.html>`_
@@ -585,19 +637,23 @@ class BaseClient(object):
         :arg scroll: Specify how long a consistent view of the index should be
             maintained for scrolled search
         """
+
         query_params = ('scroll',)
-        params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['/_search/scroll'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', body=scroll_id, **kwargs),
-            callback = cb
+            callback = callback
         )
 
     def clear_scroll(self,
             scroll_id = None,
             body      = '',
             params    = {},
-            cb        = None,
+            callback  = None,
             **kwargs
         ):
         """
@@ -608,13 +664,15 @@ class BaseClient(object):
         :arg body: A comma-separated list of scroll IDs to clear if none was
             specified via the scroll_id parameter
         """
+
         url = self.mk_url(*['_search', 'scroll', scroll_id])
+
         self.client.fetch(
             self.mk_req(url, method='DELETE', body=body, **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def delete(self, index, doc_type, doc_id, params={}, cb=None, **kwargs):
+    def delete(self, index, doc_type, doc_id, params={}, callback=None, **kwargs):
         """
         Delete a typed JSON document from a specific index based on its id.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-delete.html>`_
@@ -630,14 +688,18 @@ class BaseClient(object):
         :arg version: Explicit version number for concurrency control
         :arg version_type: Specific version type
         """
+
         query_params = ('consistency', 'parent', 'refresh', 'replication',
             'routing', 'timeout', 'version', 'version_type',
         )
-        params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, doc_type, doc_id], **params)
+
         self.client.fetch(
             self.mk_req(url, method='DELETE', **kwargs),
-            callback = cb
+            callback = callback
         )
 
     def count(self,
@@ -645,7 +707,7 @@ class BaseClient(object):
             doc_type = None,
             body     = '',
             params   = {},
-            cb       = None,
+            callback = None,
             **kwargs
         ):
         """
@@ -668,15 +730,19 @@ class BaseClient(object):
         :arg routing: Specific routing value
         :arg source: The URL-encoded query definition (instead of using the request body)
         """
+
         query_params = ('allow_no_indices', 'expand_wildcards',
             'ignore_unavailable', 'min_score', 'preference', 'q', 'routing',
             'source',
         )
-        params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, doc_type, '_count'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='POST', body=body, **kwargs),
-            callback = cb
+            callback = callback
         )
 
 
@@ -685,7 +751,7 @@ class BaseClient(object):
             index    = None,
             doc_type = None,
             params   = {},
-            cb       = None,
+            callback = None,
             **kwargs
         ):
         """
@@ -707,11 +773,14 @@ class BaseClient(object):
         query_params = (
             'consistency', 'refresh', 'routing', 'replication', 'timeout',
         )
-        params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, doc_type, '_bulk'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='POST', body=body, **kwargs),
-            callback = cb
+            callback = callback
         )
 
 
@@ -720,7 +789,7 @@ class BaseClient(object):
             index    = None,
             doc_type = None,
             params   = {},
-            cb       = None,
+            callback = None,
             **kwargs
         ):
         """
@@ -733,12 +802,16 @@ class BaseClient(object):
         :arg doc_type: A comma-separated list of document types to use as default
         :arg search_type: Search operation type
         """
+
         query_params = ('search_type',)
-        params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, doc_type, '_msearch'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', body=body, **kwargs),
-            callback = cb
+            callback = callback
         )
 
 
@@ -747,7 +820,7 @@ class BaseClient(object):
             doc_type = None,
             body     = '',
             params   = {},
-            cb       = None,
+            callback = None,
             **kwargs
         ):
         """
@@ -783,14 +856,17 @@ class BaseClient(object):
             'df', 'expand_wildcards', 'ignore_unavailable', 'q', 'replication',
             'routing', 'source', 'timeout',
         )
-        params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, doc_type, '_query'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='DELETE', body=body, **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def suggest(self, body, index=None, params={}, cb=None, **kwargs):
+    def suggest(self, body, index=None, params={}, callback=None, **kwargs):
         """
         The suggest feature suggests similar looking terms based on a provided
         text by using a suggester.
@@ -810,24 +886,28 @@ class BaseClient(object):
         :arg routing: Specific routing value
         :arg source: The URL-encoded request definition (instead of using request body)
         """
+
         query_params = (
             'allow_no_indices', 'expand_wildcards', 'ignore_unavailable',
             'preference', 'routing', 'source',
         )
-        params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, '_query'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='POST', body=body, **kwargs),
-            callback = cb
+            callback = callback
         )
 
     def percolate(self,
             index,
             doc_type,
-            doc_id = None,
-            body   = '',
-            params = {},
-            cb     = None,
+            doc_id   = None,
+            body     = '',
+            params   = {},
+            callback = None,
             **kwargs
         ):
         """
@@ -861,16 +941,20 @@ class BaseClient(object):
         :arg version: Explicit version number for concurrency control
         :arg version_type: Specific version type
         """
+
         query_params = (
             'allow_no_indices', 'expand_wildcards', 'ignore_unavailable',
             'percolate_format', 'percolate_index', 'percolate_type',
             'preference', 'routing', 'version', 'version_type',
         )
-        params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, doc_type, doc_id, '_percolate'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', body=body, **kwargs),
-            callback = cb
+            callback = callback
         )
 
     def mpercolate(self,
@@ -878,7 +962,7 @@ class BaseClient(object):
             index    = None,
             doc_type = None,
             params   = {},
-            cb       = None,
+            callback = None,
             **kwargs
         ):
         """
@@ -900,23 +984,27 @@ class BaseClient(object):
         :arg ignore_unavailable: Whether specified concrete indices should be
             ignored when unavailable (missing or closed)
         """
+
         query_params = (
             'allow_no_indices', 'expand_wildcards', 'ignore_unavailable',
         )
-        params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, doc_type, '_mpercolate'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', body=body, **kwargs),
-            callback = cb
+            callback = callback
         )
 
     def count_percolate(self,
             index,
             doc_type,
-            doc_id = None,
-            body   = '',
-            params = {},
-            cb     = None,
+            doc_id   = None,
+            body     = '',
+            params   = {},
+            callback = None,
             **kwargs
         ):
         """
@@ -949,25 +1037,30 @@ class BaseClient(object):
         :arg version: Explicit version number for concurrency control
         :arg version_type: Specific version type
         """
+
         query_params = (
             'allow_no_indices', 'expand_wildcards', 'ignore_unavailable',
             'percolate_index', 'percolate_type', 'preference', 'routing',
             'version', 'version_type',
         )
-        params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
-        url = self.mk_url(*[index, doc_type, doc_id, '_percolate', 'count'], **params)
+
+        params = self._filter_params(query_params, params)
+
+        url = self.mk_url(*[index, doc_type, doc_id, '_percolate', 'count'],
+                **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', body=body, **kwargs),
-            callback = cb
+            callback = callback
         )
 
     def mlt(self,
             index,
             doc_type,
             doc_id,
-            body   = '',
-            params = {},
-            cb     = None,
+            body     = '',
+            params   = {},
+            callback = None,
             **kwargs
         ):
         """
@@ -1006,6 +1099,7 @@ class BaseClient(object):
             against (default: the same type as the document)
         :arg stop_words: A list of stop words to be ignored
         """
+
         query_params = ('boost_terms', 'include', 'max_doc_freq',
             'max_query_terms', 'max_word_length', 'min_doc_freq',
             'min_term_freq', 'min_word_length', 'mlt_fields',
@@ -1014,20 +1108,23 @@ class BaseClient(object):
             'search_size', 'search_source', 'search_type', 'search_types',
             'stop_words',
         )
-        params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, doc_type, doc_id, '_mlt'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', body=body, **kwargs),
-            callback = cb
+            callback = callback
         )
 
     def termvector(self,
             index,
             doc_type,
             doc_id,
-            body   = '',
-            params = {},
-            cb     = None,
+            body     = '',
+            params   = {},
+            callback = None,
             **kwargs
         ):
         """
@@ -1056,15 +1153,19 @@ class BaseClient(object):
         :arg term_statistics: Specifies if total term frequency and document
             frequency should be returned., default False
         """
+
         query_params = (
             'field_statistics', 'fields', 'offsets', 'parent', 'payloads',
             'positions', 'preference', 'realtime', 'routing', 'term_statistics',
         )
-        params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, doc_type, doc_id, '_termvector'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', body=body, **kwargs),
-            callback = cb
+            callback = callback
         )
 
     def mtermvectors(self,
@@ -1072,7 +1173,7 @@ class BaseClient(object):
             doc_type = None,
             body     = '',
             params   = {},
-            cb       = None,
+            callback = None,
             **kwargs
         ):
         """
@@ -1114,15 +1215,19 @@ class BaseClient(object):
             unless otherwise specified in body "params" or "docs"., default
             False
         """
+
         query_params = (
             'field_statistics', 'fields', 'ids', 'offsets', 'parent',
             'payloads', 'positions', 'preference', 'routing', 'term_statistics',
         )
-        params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, doc_type, '_mtermvectors'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', body=body, **kwargs),
-            callback = cb
+            callback = callback
         )
 
     def benchmark(self,
@@ -1130,7 +1235,7 @@ class BaseClient(object):
             doc_type = None,
             body     = '',
             params   = {},
-            cb       = None,
+            callback = None,
             **kwargs
         ):
         """
@@ -1144,24 +1249,30 @@ class BaseClient(object):
         :arg verbose: Specify whether to return verbose statistics about each
             iteration (default: false)
         """
+
         query_params = ('verbose',)
-        params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*[index, doc_type, '_bench'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='PUT', body=body, **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def abort_benchmark(self, name=None, params={}, body='', cb=None, **kwargs):
+    def abort_benchmark(self, name=None, params={}, body='', callback=None, **kwargs):
         """
         Aborts a running benchmark.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/search-benchmark.html>`_
         :arg name: A benchmark name
         """
+
         url = self.mk_url(*['_bench', 'abort', name])
+
         self.client.fetch(
             self.mk_req(url, method='POST', body=body, **kwargs),
-            callback = cb
+            callback = callback
         )
 
     def list_benchmarks(self,
@@ -1178,13 +1289,15 @@ class BaseClient(object):
             string to perform the operation on all indices
         :arg doc_type: The name of the document type
         """
+
         url = self.mk_url(*[index, doc_type, '_bench'], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def put_script(self, lang, script_id, body, params={}, cb=None, **kwargs):
+    def put_script(self, lang, script_id, body, params={}, callback=None, **kwargs):
         """
         Create a script in given language with specified ID.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-scripting.html>`_
@@ -1196,14 +1309,17 @@ class BaseClient(object):
         :arg version_type: Specific version type
         """
         query_params = ('op_type', 'version', 'version_type',)
-        params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_scripts', lang, script_id], **params)
+
         self.client.fetch(
             self.mk_req(url, method='PUT', body=body, **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def get_script(self, lang, script_id, params={}, cb=None, **kwargs):
+    def get_script(self, lang, script_id, params={}, callback=None, **kwargs):
         """
         Retrieve a script from the API.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-scripting.html>`_
@@ -1212,15 +1328,19 @@ class BaseClient(object):
         :arg version: Explicit version number for concurrency control
         :arg version_type: Specific version type
         """
+
         query_params = ('version', 'version_type',)
-        params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_scripts', lang, script_id], **params)
+
         self.client.fetch(
             self.mk_req(url, method='GET', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def delete_script(self, lang, script_id, params={}, cb=None, **kwargs):
+    def delete_script(self, lang, script_id, params={}, callback=None, **kwargs):
         """
         Remove a stored script from elasticsearch.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/modules-scripting.html>`_
@@ -1229,48 +1349,58 @@ class BaseClient(object):
         :arg version: Explicit version number for concurrency control
         :arg version_type: Specific version type
         """
+
         query_params = ('version', 'version_type',)
-        params = dict((k,v) for k, v in kwargs.items() if k in query_params and v)
+
+        params = self._filter_params(query_params, params)
+
         url = self.mk_url(*['_scripts', lang, script_id], **params)
+
         self.client.fetch(
             self.mk_req(url, method='DELETE', **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def put_template(self, temp_id, body, params={}, cb=None, **kwargs):
+    def put_template(self, temp_id, body, params={}, callback=None, **kwargs):
         """
         Create a search template.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-template.html>`_
         :arg temp_id: Template ID
         :arg body: The document
         """
+
         url = self.mk_url(*['_search', 'template', temp_id])
+
         self.client.fetch(
             self.mk_req(url, method='PUT', body=body, **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def get_template(self, temp_id, body='', params={}, cb=None, **kwargs):
+    def get_template(self, temp_id, body='', params={}, callback=None, **kwargs):
         """
         Retrieve a search template.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-template.html>`_
         :arg temp_id: Template ID
         :arg body: The document
         """
+
         url = self.mk_url(*['_search', 'template', temp_id])
+
         self.client.fetch(
             self.mk_req(url, method='GET', body=body, **kwargs),
-            callback = cb
+            callback = callback
         )
 
-    def delete_template(self, temp_id=None, params={}, cb=None, **kwargs):
+    def delete_template(self, temp_id=None, params={}, callback=None, **kwargs):
         """
         Delete a search template.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-template.html>`_
         :arg temp_id: Template ID
         """
+
         url = self.mk_url(*['_search', 'template', temp_id])
+
         self.client.fetch(
             self.mk_req(url, method='DELETE', **kwargs),
-            callback = cb
+            callback = callback
         )

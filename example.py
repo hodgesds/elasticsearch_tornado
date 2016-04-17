@@ -12,6 +12,6 @@ io_loop = tornado.ioloop.IOLoop.instance()
 
 c = EsClient()
 # make an info request (same as http://localhost:9200)
-c.info(cb=ex_cb)
+c.info(callback=ex_cb)
 
 io_loop.start()
