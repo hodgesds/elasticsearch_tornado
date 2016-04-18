@@ -49,7 +49,7 @@ class SnapshotClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 404]}
         )
-        c.delete('test', 'test', callback=h_cb)
+        c.delete_snapshot('test', 'test', callback=h_cb)
         self.wait()
 
     def test_get(self):
@@ -58,7 +58,7 @@ class SnapshotClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 404]}
         )
-        c.get('test', 'test', callback=h_cb)
+        c.get_snapshot('test', 'test', callback=h_cb)
         self.wait()
 
     def test_delete_repository(self):

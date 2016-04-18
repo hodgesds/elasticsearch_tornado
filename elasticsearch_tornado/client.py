@@ -402,7 +402,8 @@ class BaseClient(object):
         ):
         """
         Execute a search query and get back search hits that match the query.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-search.html>`_
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html#search-search>`_
+
         :arg index: A comma-separated list of index names to search; use `_all`
             or empty string to perform the operation on all indices
         :arg doc_type: A comma-separated list of document types to search;
@@ -742,7 +743,6 @@ class BaseClient(object):
             callback = callback
         )
 
-
     def bulk(self,
             body,
             index    = None,
@@ -753,9 +753,8 @@ class BaseClient(object):
         ):
         """
         Perform many index/delete operations in a single API call.
-        `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-bulk.html>`_
-        See the :func:`~elasticsearch.helpers.bulk` helper function for a more
-        friendly API.
+        `<https://www.elastic.co/guide/en/elasticsearch/reference/current/docs-bulk.html#docs-bulk>`_
+
         :arg body: The operation definition and data (action-data pairs), as
             either a newline separated string, or a sequence of dicts to
             serialize (one per row).

@@ -34,6 +34,18 @@ Elasticsearch Tornado also provides a handy cli for interacting with
 Elasticsearch clusters. Here are a few handy commands:
 
 .. code-block:: bash
+    # indexing
+
+    $ cat data.json
+    { "index" : { "_index" : "test", "_type" : "type1", "_id" : "1" } }
+    { "field1" : "value1" }
+
+    $ cat data.json | et index
+    {"took":19,"errors":false,"items":[{"index":{"_index":"test","_type":"type1","_id":"1","_version":8,"_shards":{"total":2,"successful":1,"failed":0},"status":200}}]}
+
+    # searching
+
+    # cat API
 
     $ et cat master
     127.0.0.1 127.0.0.1 8 20 0.05 d * Randall Shire

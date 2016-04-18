@@ -66,13 +66,13 @@ class IndicesClientTest(AsyncTestCase):
         c.create('test', body, callback=h_cb)
         self.wait()
 
-    def test_get(self):
+    def test_indices(self):
         c = IndicesClient()
         h_cb = partial(
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.get('test', callback=h_cb)
+        c.indices('test', callback=h_cb)
         self.wait()
 
     def test_open(self):
