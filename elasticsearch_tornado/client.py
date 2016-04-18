@@ -436,7 +436,7 @@ class BaseClient(object):
         :arg ignore_unavailable: Whether specified concrete indices should be
             ignored when unavailable (missing or closed)
         :arg lowercase_expanded_terms: Specify whether query terms should be lowercased
-        :arg from\_: Starting offset (default: 0)
+        :arg from_: Starting offset (default: 0)
         :arg preference: Specify the node or shard the operation should be
             performed on (default: random)
         :arg q: Query in the Lucene query string syntax
