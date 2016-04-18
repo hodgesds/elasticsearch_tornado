@@ -1,7 +1,6 @@
 Tornado Elasticsearch Client
 ----------------------------
-
-Tornado http client for Elasticsearch. Its goal is to provide common
+Tornado HTTP client for Elasticsearch. Its goal is to provide common
 ground for all Elasticsearch-related code in tornado and provide a
 similar api to the official elasticsearch python client (elasticsearch-py).
 However, this client only works for HTTP (no thrift or memcache) and doesn't
@@ -11,13 +10,11 @@ allows for you to design your own pooling/handling of callbacks.
 
 Elasticsearch Compatibility
 ---------------------------
-
 The library is compatible with Elasticsearch 2.X
 
 
 Installation
 ------------
-
 .. code-block:: bash
 
     pip install elasticsearch_tornado
@@ -34,6 +31,7 @@ Elasticsearch Tornado also provides a handy cli for interacting with
 Elasticsearch clusters. Here are a few handy commands:
 
 .. code-block:: bash
+    
     # indexing
 
     $ cat data.json
@@ -71,7 +69,6 @@ Elasticsearch clusters. Here are a few handy commands:
 
 Example use
 -----------
-
 Simple use-case:
 
 .. code-block:: python
@@ -126,23 +123,14 @@ Simple use-case:
     }
 
 
-Features
---------
-The client's features include:
- * Non blocking requests with callbacks/coroutines
- * DYOS- Do You Own Serialization- (remember those trailing \n's)
-
-
 Python Compatibility
 --------------------
-
 Tested with python:
-2.6, 2.7, 3.2, 3.3, 3.4 and pypy
+2.6, 2.7, 3.2, 3.3, 3.4, 3.5 and pypy
 
 
 License
 -------
-
 Copyright 2014-2016 Daniel Hodges
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -160,7 +148,6 @@ limitations under the License.
 
 Requirements
 ------------
-
 .. image:: https://requires.io/github/hodgesds/elasticsearch_tornado/requirements.svg?branch=master
     :target: https://requires.io/github/hodgesds/elasticsearch_tornado/requirements/?branch=master
     :alt: Requirements Status
@@ -168,6 +155,5 @@ Requirements
 
 Build status
 ------------
-
 .. image:: https://travis-ci.org/hodgesds/elasticsearch_tornado.svg?branch=master
     :target: https://travis-ci.org/hodgesds/elasticsearch_tornado
