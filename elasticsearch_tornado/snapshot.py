@@ -140,7 +140,7 @@ class SnapshotClient(BaseClient):
             callback = callback
         )
 
-    def restore(self, repository, snapshot, body, params={}, callback=None, **kwargs):
+    def restore_snapshot(self, repository, snapshot, body, params={}, callback=None, **kwargs):
         """
         Restore a snapshot.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/modules-snapshots.html>`_
@@ -169,7 +169,7 @@ class SnapshotClient(BaseClient):
             callback = callback
         )
 
-    def status(self, repository=None, snapshot=None, params={}, callback=None, **kwargs):
+    def snapshot_status(self, repository=None, snapshot=None, params={}, callback=None, **kwargs):
         """
         Return information about all currently running snapshots. By specifying
         a repository name, it's possible to limit the results to a particular

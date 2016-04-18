@@ -88,7 +88,7 @@ class BaseClient(object):
             callback = callback
         )
 
-    def create(self,
+    def create_doc(self,
             index,
             doc_type,
             body,
@@ -136,7 +136,7 @@ class BaseClient(object):
         )
 
 
-    def index(self,
+    def index_doc(self,
             index,
             doc_type,
             body,
@@ -181,7 +181,7 @@ class BaseClient(object):
             callback = callback
         )
 
-    def exists(self, index, doc_id, doc_type='_all', params={}, callback=None, **kwargs):
+    def doc_exists(self, index, doc_id, doc_type='_all', params={}, callback=None, **kwargs):
         """
         Returns a boolean indicating whether or not given document exists in Elasticsearch.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-get.html>`_
@@ -212,7 +212,7 @@ class BaseClient(object):
             callback = callback
         )
 
-    def get(self, index, doc_id, doc_type='_all', params={}, callback=None, **kwargs):
+    def get_doc(self, index, doc_id, doc_type='_all', params={}, callback=None, **kwargs):
         """
         Get a typed JSON document from the index based on its id.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-get.html>`_
@@ -343,7 +343,7 @@ class BaseClient(object):
             callback = callback
         )
 
-    def update(self,
+    def update_doc(self,
             index,
             doc_type,
             doc_id,
@@ -670,7 +670,7 @@ class BaseClient(object):
             callback = callback
         )
 
-    def delete(self, index, doc_type, doc_id, params={}, callback=None, **kwargs):
+    def delete_doc(self, index, doc_type, doc_id, params={}, callback=None, **kwargs):
         """
         Delete a typed JSON document from a specific index based on its id.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-delete.html>`_
@@ -700,7 +700,7 @@ class BaseClient(object):
             callback = callback
         )
 
-    def count(self,
+    def doc_count(self,
             index    = None,
             doc_type = None,
             body     = '',

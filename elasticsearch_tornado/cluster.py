@@ -3,7 +3,7 @@ from .client import BaseClient
 
 class ClusterClient(BaseClient):
 
-    def health(self, index=None, params={}, callback=None, **kwargs):
+    def cluster_health(self, index=None, params={}, callback=None, **kwargs):
         """
         Get a very simple status on the health of the cluster.
         `<https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-health.html#cluster-health>`_
@@ -34,7 +34,7 @@ class ClusterClient(BaseClient):
             callback = callback
         )
 
-    def pending_tasks(self, params={}, callback=None, **kwargs):
+    def cluster_pending_tasks(self, params={}, callback=None, **kwargs):
         """
         The pending cluster tasks API returns a list of any cluster-level
         changes (e.g. create index, update mapping, allocate or fail shard)
@@ -56,7 +56,7 @@ class ClusterClient(BaseClient):
             callback = callback
         )
 
-    def state(self, metric=None, index=None, params={}, callback=None, **kwargs):
+    def cluster_state(self, metric=None, index=None, params={}, callback=None, **kwargs):
         """
         Get a comprehensive state information of the whole cluster.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-state.html>`_
@@ -89,7 +89,7 @@ class ClusterClient(BaseClient):
             callback = callback
         )
 
-    def stats(self, node_id=None, params={}, callback=None, **kwargs):
+    def cluster_stats(self, node_id=None, params={}, callback=None, **kwargs):
         """
         The Cluster Stats API allows to retrieve statistics from a cluster wide
         perspective. The API returns basic index metrics and information about
@@ -118,7 +118,7 @@ class ClusterClient(BaseClient):
             callback = callback
         )
 
-    def reroute(self, body, params={}, callback=None, **kwargs):
+    def cluster_reroute(self, body, params={}, callback=None, **kwargs):
         """
         Explicitly execute a cluster reroute allocation command including specific commands.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-reroute.html>`_
@@ -146,7 +146,7 @@ class ClusterClient(BaseClient):
             callback = callback
         )
 
-    def get_settings(self, params={}, callback=None, **kwargs):
+    def cluster_get_settings(self, params={}, callback=None, **kwargs):
         """
         Get cluster settings.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-update-settings.html>`_
@@ -167,7 +167,7 @@ class ClusterClient(BaseClient):
             callback = callback
         )
 
-    def put_settings(self, body, params={}, callback=None, **kwargs):
+    def cluster_put_settings(self, body, params={}, callback=None, **kwargs):
         """
         Update cluster wide specific settings.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-update-settings.html>`_

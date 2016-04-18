@@ -20,76 +20,76 @@ class MeowClientTest(AsyncTestCase):
 
     def test_aliases(self):
         mc = MeowClient(io_loop=self.io_loop)
-        mc.aliases(callback=self.handle_cb)
+        mc.aliases_cat(callback=self.handle_cb)
         self.wait()
 
     def test_allocation(self):
         mc = MeowClient(io_loop=self.io_loop)
-        mc.allocation(callback=self.handle_cb)
+        mc.allocation_cat(callback=self.handle_cb)
         self.wait()
 
     def test_count(self):
         mc = MeowClient(io_loop=self.io_loop)
-        mc.count(callback=self.handle_cb)
+        mc.count_cat(callback=self.handle_cb)
         self.wait()
 
     def test_health(self):
         mc = MeowClient(io_loop=self.io_loop)
-        mc.health(callback=self.handle_cb)
+        mc.health_cat(callback=self.handle_cb)
         self.wait()
 
     def test_help(self):
         mc = MeowClient(io_loop=self.io_loop)
-        mc.help(callback=self.handle_cb)
+        mc.help_cat(callback=self.handle_cb)
         self.wait()
 
     def test_indices(self):
         mc = MeowClient(io_loop=self.io_loop)
-        mc.indices(callback=self.handle_cb)
+        mc.indices_cat(callback=self.handle_cb)
         self.wait()
 
     def test_master(self):
         mc = MeowClient(io_loop=self.io_loop)
-        mc.master(callback=self.handle_cb)
+        mc.master_cat(callback=self.handle_cb)
         self.wait()
 
     def test_nodes(self):
         mc = MeowClient(io_loop=self.io_loop)
-        mc.nodes(callback=self.handle_cb)
+        mc.nodes_cat(callback=self.handle_cb)
         self.wait()
 
     def test_recovery(self):
         mc = MeowClient(io_loop=self.io_loop)
-        mc.recovery(callback=self.handle_cb)
+        mc.recovery_cat(callback=self.handle_cb)
         self.wait()
 
     def test_shards(self):
         mc = MeowClient(io_loop=self.io_loop)
-        mc.shards(callback=self.handle_cb)
+        mc.shards_cat(callback=self.handle_cb)
         self.wait()
 
     @SkipTest
     def test_segments(self):
         mc = MeowClient(io_loop=self.io_loop)
-        mc.segments(callback=self.handle_cb)
+        mc.segments_cat(callback=self.handle_cb)
         self.wait()
 
     def test_pending_tasks(self):
         mc = MeowClient(io_loop=self.io_loop)
-        mc.pending_tasks(callback=self.handle_cb)
+        mc.pending_tasks_cat(callback=self.handle_cb)
         self.wait()
 
     def test_thread_pool(self):
         mc = MeowClient(io_loop=self.io_loop)
-        mc.thread_pool(callback=self.handle_cb)
+        mc.thread_pool_cat(callback=self.handle_cb)
         self.wait()
 
     def test_fielddata(self):
         mc = MeowClient(io_loop=self.io_loop)
-        mc.fielddata(callback=self.handle_cb)
+        mc.fielddata_cat(callback=self.handle_cb)
         self.wait()
 
     def test_plugins(self):
         mc = MeowClient(io_loop=self.io_loop)
-        mc.plugins(callback=self.handle_cb)
+        mc.plugins_cat(callback=self.handle_cb)
         self.wait()

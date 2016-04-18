@@ -3,7 +3,7 @@ from .client import BaseClient
 
 class MeowClient(BaseClient):
 
-    def aliases(self, name=None, params={}, callback=None, **kwargs):
+    def aliases_cat(self, name=None, params={}, callback=None, **kwargs):
         """
         `<https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-alias.html#cat-alias>`_
 
@@ -29,7 +29,7 @@ class MeowClient(BaseClient):
         )
 
 
-    def allocation(self, node_id=None, params={}, callback=None, **kwargs):
+    def allocation_cat(self, node_id=None, params={}, callback=None, **kwargs):
         """
         Allocation provides a snapshot of how shards have located around the
         cluster and the state of disk usage.
@@ -58,7 +58,7 @@ class MeowClient(BaseClient):
             callback = callback
         )
 
-    def count(self, index=None, params={}, callback=None, **kwargs):
+    def count_cat(self, index=None, params={}, callback=None, **kwargs):
         """
         Count provides quick access to the document count of the entire cluster,
         or individual indices.
@@ -86,7 +86,7 @@ class MeowClient(BaseClient):
             callback = callback
         )
 
-    def health(self, params={}, callback=None, **kwargs):
+    def health_cat(self, params={}, callback=None, **kwargs):
         """
         health is a terse, one-line representation of the same information from
         :meth:`~elasticsearch.client.cluster.ClusterClient.health` API
@@ -113,7 +113,7 @@ class MeowClient(BaseClient):
             callback = callback
         )
 
-    def help(self, params={}, callback=None, **kwargs):
+    def help_cat(self, params={}, callback=None, **kwargs):
         """
         A simple help for the cat api.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/master/cat.html>`_
@@ -132,7 +132,7 @@ class MeowClient(BaseClient):
             callback = callback
         )
 
-    def indices(self, index=None, params={}, callback=None, **kwargs):
+    def indices_cat(self, index=None, params={}, callback=None, **kwargs):
         """
         The indices command provides a cross-section of each index.
         `<https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-indices.html#cat-indices>`_
@@ -164,7 +164,7 @@ class MeowClient(BaseClient):
             callback = callback
         )
 
-    def master(self, params={}, callback=None, **kwargs):
+    def master_cat(self, params={}, callback=None, **kwargs):
         """
         Displays the master's node ID, bound IP address, and node name.
         `<https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-master.html#cat-master>`_
@@ -189,7 +189,7 @@ class MeowClient(BaseClient):
             callback = callback
         )
 
-    def nodes(self, params={}, callback=None, **kwargs):
+    def nodes_cat(self, params={}, callback=None, **kwargs):
         """
         The nodes command shows the cluster topology.
         `<https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-nodes.html#cat-nodes>`_
@@ -214,7 +214,7 @@ class MeowClient(BaseClient):
             callback = callback
         )
 
-    def recovery(self, index=None, params={}, callback=None, **kwargs):
+    def recovery_cat(self, index=None, params={}, callback=None, **kwargs):
         """
         recovery is a view of shard replication.
         `<https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-recovery.html#cat-recovery>`_
@@ -242,7 +242,7 @@ class MeowClient(BaseClient):
             callback = callback
         )
 
-    def shards(self, index=None, params={}, callback=None, **kwargs):
+    def shards_cat(self, index=None, params={}, callback=None, **kwargs):
         """
         The shards command is the detailed view of what nodes contain which shards.
         `<https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-shards.html#cat-shards>`_
@@ -269,7 +269,7 @@ class MeowClient(BaseClient):
             callback = callback
         )
 
-    def segments(self, index=None, params={}, callback=None, **kwargs):
+    def segments_cat(self, index=None, params={}, callback=None, **kwargs):
         """
         The segments command is the detailed view of Lucene segments per index.
 
@@ -295,7 +295,7 @@ class MeowClient(BaseClient):
             callback = callback
         )
 
-    def pending_tasks(self, params={}, callback=None, **kwargs):
+    def pending_tasks_cat(self, params={}, callback=None, **kwargs):
         """
         pending_tasks provides the same information as the
         :meth:`~elasticsearch.client.cluster.ClusterClient.pending_tasks` API
@@ -322,7 +322,7 @@ class MeowClient(BaseClient):
             callback = callback
         )
 
-    def thread_pool(self, params={}, callback=None, **kwargs):
+    def thread_pool_cat(self, params={}, callback=None, **kwargs):
         """
         Get information about thread pools.
         `<https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-thread-pool.html#cat-thread-pool>`_
@@ -349,7 +349,7 @@ class MeowClient(BaseClient):
             callback = callback
         )
 
-    def fielddata(self, fields=None, params={}, callback=None, **kwargs):
+    def fielddata_cat(self, fields=None, params={}, callback=None, **kwargs):
         """
         Shows information about currently loaded fielddata on a per-node basis.
         `<https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-fielddata.html#cat-fielddata>`_
@@ -382,7 +382,7 @@ class MeowClient(BaseClient):
             callback = callback
         )
 
-    def plugins(self, params={}, callback=None, **kwargs):
+    def plugins_cat(self, params={}, callback=None, **kwargs):
         """
         `<https://www.elastic.co/guide/en/elasticsearch/reference/current/cat-plugins.html#cat-plugins>`_
 

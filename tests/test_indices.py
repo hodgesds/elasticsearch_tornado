@@ -19,34 +19,34 @@ class IndicesClientTest(AsyncTestCase):
             self.assertTrue(req.code in (200, 201, ))
         self.stop()
 
-    def test_analyze(self):
+    def test_analyze_index(self):
         c = IndicesClient()
         h_cb = partial(
             self.handle_cb,
             **{'codes':[400, 404]}
         )
-        c.analyze(index='test', callback=h_cb)
+        c.analyze_index(index='test', callback=h_cb)
         self.wait()
 
-    def test_refresh(self):
+    def test_refresh_index(self):
         c = IndicesClient()
         h_cb = partial(
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.refresh(index='test', callback=h_cb)
+        c.refresh_index(index='test', callback=h_cb)
         self.wait()
 
-    def test_flush(self):
+    def test_flush_index(self):
         c = IndicesClient()
         h_cb = partial(
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.flush(index='test', callback=h_cb)
+        c.flush_index(index='test', callback=h_cb)
         self.wait()
 
-    def test_create(self):
+    def test_create_index(self):
         c = IndicesClient()
         h_cb = partial(
             self.handle_cb,
@@ -63,7 +63,7 @@ class IndicesClientTest(AsyncTestCase):
         }
 
         """
-        c.create('test', body, callback=h_cb)
+        c.create_index('test', body, callback=h_cb)
         self.wait()
 
     def test_indices(self):
@@ -75,13 +75,13 @@ class IndicesClientTest(AsyncTestCase):
         c.indices('test', callback=h_cb)
         self.wait()
 
-    def test_open(self):
+    def test_open_index(self):
         c = IndicesClient()
         h_cb = partial(
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.open('test', callback=h_cb)
+        c.open_index('test', callback=h_cb)
         self.wait()
 
     def test_close(self):
@@ -90,34 +90,34 @@ class IndicesClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.close('test', callback=h_cb)
+        c.close_index('test', callback=h_cb)
         self.wait()
 
-    def test_delete(self):
+    def test_delete_index(self):
         c = IndicesClient()
         h_cb = partial(
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.delete('test', callback=h_cb)
+        c.delete_index('test', callback=h_cb)
         self.wait()
 
-    def test_exists(self):
+    def test_index_exists(self):
         c = IndicesClient()
         h_cb = partial(
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.exists('test', callback=h_cb)
+        c.index_exists('test', callback=h_cb)
         self.wait()
 
-    def test_exists_type(self):
+    def test_index_exists_type(self):
         c = IndicesClient()
         h_cb = partial(
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.exists_type('test', 'type', callback=h_cb)
+        c.index_exists_type('test', 'type', callback=h_cb)
         self.wait()
 
     def test_put_mapping(self):

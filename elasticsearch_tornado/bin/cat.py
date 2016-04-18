@@ -135,7 +135,7 @@ def plugins_subparser(subparsers):
 @gen.coroutine
 def aliases_coro(args):
     c = EsClient(host=args.host, port=args.port)
-    s = yield gen.Task(c.aliases, **{'name': args.name})
+    s = yield gen.Task(c.aliases_cat, **{'name': args.name})
     print(s.body.rstrip('\n'))
 
 
@@ -148,7 +148,7 @@ def aliases(args):
 @gen.coroutine
 def allocation_coro(args):
     c = EsClient(host=args.host, port=args.port)
-    s = yield gen.Task(c.allocation, **{'node_id': args.node_id})
+    s = yield gen.Task(c.allocation_cat, **{'node_id': args.node_id})
     print(s.body.rstrip('\n'))
 
 
@@ -161,7 +161,7 @@ def allocation(args):
 @gen.coroutine
 def count_coro(args):
     c = EsClient(host=args.host, port=args.port)
-    s = yield gen.Task(c.count, **{'index': args.index})
+    s = yield gen.Task(c.count_cat, **{'index': args.index})
     print(s.body.rstrip('\n'))
 
 
@@ -174,7 +174,7 @@ def count(args):
 @gen.coroutine
 def health_coro(args):
     c = EsClient(host=args.host, port=args.port)
-    s = yield gen.Task(c.health)
+    s = yield gen.Task(c.health_cat)
     print(s.body.rstrip('\n'))
 
 
@@ -187,7 +187,7 @@ def health(args):
 @gen.coroutine
 def indices_coro(args):
     c = EsClient(host=args.host, port=args.port)
-    s = yield gen.Task(c.indices, **{'index': args.index})
+    s = yield gen.Task(c.indices_cat, **{'index': args.index})
     print(s.body.rstrip('\n'))
 
 
@@ -200,7 +200,7 @@ def indices(args):
 @gen.coroutine
 def master_coro(args):
     c = EsClient(host=args.host, port=args.port)
-    s = yield gen.Task(c.master)
+    s = yield gen.Task(c.master_cat)
     print(s.body.rstrip('\n'))
 
 
@@ -213,7 +213,7 @@ def master(args):
 @gen.coroutine
 def nodes_coro(args):
     c = EsClient(host=args.host, port=args.port)
-    s = yield gen.Task(c.nodes)
+    s = yield gen.Task(c.nodes_cat)
     print(s.body.rstrip('\n'))
 
 
@@ -226,7 +226,7 @@ def nodes(args):
 @gen.coroutine
 def recovery_coro(args):
     c = EsClient(host=args.host, port=args.port)
-    s = yield gen.Task(c.recovery, **{'index': args.index})
+    s = yield gen.Task(c.recovery_cat, **{'index': args.index})
     print(s.body.rstrip('\n'))
 
 
@@ -239,7 +239,7 @@ def recovery(args):
 @gen.coroutine
 def shards_coro(args):
     c = EsClient(host=args.host, port=args.port)
-    s = yield gen.Task(c.shards, **{'index': args.index})
+    s = yield gen.Task(c.shards_cat, **{'index': args.index})
     print(s.body.rstrip('\n'))
 
 
@@ -252,7 +252,7 @@ def shards(args):
 @gen.coroutine
 def segments_coro(args):
     c = EsClient(host=args.host, port=args.port)
-    s = yield gen.Task(c.segments, **{'index': args.index})
+    s = yield gen.Task(c.segments_cat, **{'index': args.index})
     print(s.body.rstrip('\n'))
 
 
@@ -265,7 +265,7 @@ def segments(args):
 @gen.coroutine
 def pending_coro(args):
     c = EsClient(host=args.host, port=args.port)
-    s = yield gen.Task(c.pending_tasks)
+    s = yield gen.Task(c.pending_tasks_cat)
     print(s.body.rstrip('\n'))
 
 
@@ -278,7 +278,7 @@ def pending(args):
 @gen.coroutine
 def thread_coro(args):
     c = EsClient(host=args.host, port=args.port)
-    s = yield gen.Task(c.thread_pool)
+    s = yield gen.Task(c.thread_pool_cat)
     print(s.body.rstrip('\n'))
 
 
@@ -291,7 +291,7 @@ def thread(args):
 @gen.coroutine
 def field_coro(args):
     c = EsClient(host=args.host, port=args.port)
-    s = yield gen.Task(c.fielddata, **{'fields': args.field})
+    s = yield gen.Task(c.fielddata_cat, **{'fields': args.field})
     print(s.body.rstrip('\n'))
 
 
@@ -304,7 +304,7 @@ def field(args):
 @gen.coroutine
 def plugins_coro(args):
     c = EsClient(host=args.host, port=args.port)
-    s = yield gen.Task(c.plugins)
+    s = yield gen.Task(c.plugins_cat)
     print(s.body.rstrip('\n'))
 
 

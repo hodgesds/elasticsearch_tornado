@@ -3,7 +3,7 @@ from .client import BaseClient
 
 class IndicesClient(BaseClient):
 
-    def analyze(self, index=None, body=None, params={}, callback=None, **kwargs):
+    def analyze_index(self, index=None, body=None, params={}, callback=None, **kwargs):
         """
         Perform the analysis process on a text and return the tokens breakdown of the text.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-analyze.html>`_
@@ -39,7 +39,7 @@ class IndicesClient(BaseClient):
             callback = callback
         )
 
-    def refresh(self, body='', index=None, params={}, callback=None, **kwargs):
+    def refresh_index(self, body='', index=None, params={}, callback=None, **kwargs):
         """
         Explicitly refresh one or more index, making all operations performed
         since the last refresh available for search.
@@ -73,7 +73,7 @@ class IndicesClient(BaseClient):
             callback = callback
         )
 
-    def flush(self, index=None, body='', params={}, callback=None, **kwargs):
+    def flush_index(self, index=None, body='', params={}, callback=None, **kwargs):
         """
         Explicitly flush one or more indices.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-flush.html>`_
@@ -109,7 +109,7 @@ class IndicesClient(BaseClient):
             callback = callback
         )
 
-    def create(self, index, body, params={}, callback=None, **kwargs):
+    def create_index(self, index, body, params={}, callback=None, **kwargs):
         """
         Create an index in Elasticsearch.
         `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-create-index.html#indices-create-index>`_
@@ -160,7 +160,7 @@ class IndicesClient(BaseClient):
             callback = callback
         )
 
-    def open(self, index, body='', params={}, callback=None, **kwargs):
+    def open_index(self, index, body='', params={}, callback=None, **kwargs):
         """
         Open a closed index to make it available for search.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-open-close.html>`_
@@ -191,7 +191,7 @@ class IndicesClient(BaseClient):
             callback = callback
         )
 
-    def close(self, index, body='', params={}, callback=None, **kwargs):
+    def close_index(self, index, body='', params={}, callback=None, **kwargs):
         """
         Close an index to remove it's overhead from the cluster. Closed index
         is blocked for read/write operations.
@@ -224,7 +224,7 @@ class IndicesClient(BaseClient):
             callback = callback
         )
 
-    def delete(self, index, params={}, callback=None, **kwargs):
+    def delete_index(self, index, params={}, callback=None, **kwargs):
         """
         Delete an index in Elasticsearch
         `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-delete-index.html#indices-delete-index>`_
@@ -246,7 +246,7 @@ class IndicesClient(BaseClient):
             callback = callback
         )
 
-    def exists(self, index, params={}, callback=None, **kwargs):
+    def index_exists(self, index, params={}, callback=None, **kwargs):
         """
         Return a boolean indicating whether given index exists.
         `<https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-exists.html#indices-exists>`_
@@ -277,7 +277,7 @@ class IndicesClient(BaseClient):
             callback = callback
         )
 
-    def exists_type(self, index, doc_type, params={}, callback=None, **kwargs):
+    def index_exists_type(self, index, doc_type, params={}, callback=None, **kwargs):
         """
         Check if a type/types exists in an index/indices.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/indices-types-exists.html>`_

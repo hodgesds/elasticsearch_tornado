@@ -3,7 +3,7 @@ from .client import BaseClient
 
 class NodesClient(BaseClient):
 
-    def info(self, node_id=None, metric=None, params={}, callback=None, **kwargs):
+    def node_info(self, node_id=None, metric=None, params={}, callback=None, **kwargs):
         """
         The cluster nodes info API allows to retrieve one or more (or all) of
         the cluster nodes information.
@@ -32,7 +32,7 @@ class NodesClient(BaseClient):
             callback = callback
         )
 
-    def shutdown(self, node_id=None, params={}, callback=None, **kwargs):
+    def node_shutdown(self, node_id=None, params={}, callback=None, **kwargs):
         """
         The nodes shutdown API allows to shutdown one or more (or all) nodes in
         the cluster.
@@ -57,7 +57,7 @@ class NodesClient(BaseClient):
             callback = callback
         )
 
-    def stats(self, node_id=None, metric=None, index_metric=None, params={}, callback=None, **kwargs):
+    def node_stats(self, node_id=None, metric=None, index_metric=None, params={}, callback=None, **kwargs):
         """
         The cluster nodes stats API allows to retrieve one or more (or all) of
         the cluster nodes statistics.
@@ -110,7 +110,7 @@ class NodesClient(BaseClient):
             callback = callback
         )
 
-    def hot_threads(self, node_id=None, params={}, callback=None, **kwargs):
+    def node_hot_threads(self, node_id=None, params={}, callback=None, **kwargs):
         """
         An API allowing to get the current hot threads on each node in the cluster.
         `<http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-nodes-hot-threads.html>`_

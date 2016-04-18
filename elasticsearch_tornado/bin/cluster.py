@@ -58,7 +58,7 @@ def stats_subparser(subparsers):
 @gen.coroutine
 def health_coro(args):
     c = EsClient(host=args.host, port=args.port)
-    s = yield gen.Task(c.health)
+    s = yield gen.Task(c.cluster_health)
     print(s.body.rstrip('\n'))
 
 
@@ -66,11 +66,12 @@ def health(args):
     m = partial(health_coro, args)
     ioloop.IOLoop.current().run_sync(m)
 
+
 # state
 @gen.coroutine
 def state_coro(args):
     c = EsClient(host=args.host, port=args.port)
-    s = yield gen.Task(c.state, **{'metric': args.metric, 'index':
+    s = yield gen.Task(c.cluster_state, **{'metric': args.metric, 'index':
         args.index})
     print(s.body.rstrip('\n'))
 
@@ -84,7 +85,7 @@ def state(args):
 @gen.coroutine
 def stats_coro(args):
     c = EsClient(host=args.host, port=args.port)
-    s = yield gen.Task(c.stats, **{'node_id': args.node_id})
+    s = yield gen.Task(c.cluster_stats, **{'node_id': args.node_id})
     print(s.body.rstrip('\n'))
 
 

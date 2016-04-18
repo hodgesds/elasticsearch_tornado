@@ -21,22 +21,22 @@ class ClusterClientTest(AsyncTestCase):
 
     def test_health(self):
         c = ClusterClient()
-        c.health(callback=self.handle_cb)
+        c.cluster_health(callback=self.handle_cb)
         self.wait()
 
     def test_pending_tasks(self):
         c = ClusterClient()
-        c.pending_tasks(callback=self.handle_cb)
+        c.cluster_pending_tasks(callback=self.handle_cb)
         self.wait()
 
     def test_state(self):
         c = ClusterClient()
-        c.state(callback=self.handle_cb)
+        c.cluster_state(callback=self.handle_cb)
         self.wait()
 
     def test_stats(self):
         c = ClusterClient()
-        c.stats(callback=self.handle_cb)
+        c.cluster_stats(callback=self.handle_cb)
         self.wait()
 
     def test_reroute(self):
@@ -63,12 +63,12 @@ class ClusterClientTest(AsyncTestCase):
         }
 
         """
-        c.reroute(body, callback=h_cb)
+        c.cluster_reroute(body, callback=h_cb)
         self.wait()
 
     def test_get_settings(self):
         c = ClusterClient()
-        c.get_settings(callback=self.handle_cb)
+        c.cluster_get_settings(callback=self.handle_cb)
         self.wait()
 
     def test_put_settings(self):
@@ -81,5 +81,5 @@ class ClusterClientTest(AsyncTestCase):
         }
 
         """
-        c.put_settings(body, callback=self.handle_cb)
+        c.cluster_put_settings(body, callback=self.handle_cb)
         self.wait()

@@ -48,32 +48,32 @@ class BaseClientTest(AsyncTestCase):
         c.info(callback=self.handle_cb)
         self.wait()
 
-    def test_index(self):
+    def test_index_doc(self):
         c = BaseClient()
         h_cb = partial(
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.index('test', 'test', '{"test":"123"}', doc_id='test123',
+        c.index_doc('test', 'test', '{"test":"123"}', doc_id='test123',
                 callback=h_cb)
         self.wait()
 
-    def test_exists(self):
+    def test_doc_exists(self):
         c = BaseClient()
         h_cb = partial(
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.exists('test', 'test123', callback=h_cb)
+        c.doc_exists('test', 'test123', callback=h_cb)
         self.wait()
 
-    def test_get(self):
+    def test_get_doc(self):
         c = BaseClient()
         h_cb = partial(
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.get('test', 'test123', callback=h_cb)
+        c.get_doc('test', 'test123', callback=h_cb)
         self.wait()
 
     def test_get_source(self):
@@ -110,7 +110,7 @@ class BaseClientTest(AsyncTestCase):
         c.mget(body, index='test', doc_type='test', callback=h_cb)
         self.wait()
 
-    def test_update(self):
+    def test_update_doc(self):
         c = BaseClient()
         h_cb = partial(
             self.handle_cb,
@@ -125,7 +125,7 @@ class BaseClientTest(AsyncTestCase):
         }
 
         """
-        c.update('test', 'test', 'test123', body=body, callback=h_cb)
+        c.update_doc('test', 'test', 'test123', body=body, callback=h_cb)
         self.wait()
 
     def test_search(self):
@@ -190,13 +190,13 @@ class BaseClientTest(AsyncTestCase):
         c.clear_scroll('aaaaa', callback=h_cb)
         self.wait()
 
-    def test_delete(self):
+    def test_delete_doc(self):
         c = BaseClient()
         h_cb = partial(
             self.handle_cb,
             **{'codes':[400, 403, 404]}
         )
-        c.delete(
+        c.delete_doc(
             'test',
             'test',
             'test123',
@@ -204,13 +204,13 @@ class BaseClientTest(AsyncTestCase):
         )
         self.wait()
 
-    def test_count(self):
+    def test_doc_count(self):
         c = BaseClient()
         h_cb = partial(
             self.handle_cb,
             **{'codes':[403, 404]}
         )
-        c.count(
+        c.doc_count(
             body     = '',
             index    = 'test',
             doc_type = 'test',

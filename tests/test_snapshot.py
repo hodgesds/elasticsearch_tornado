@@ -24,7 +24,7 @@ class SnapshotClientTest(AsyncTestCase):
             self.assertTrue(req.code in (200, 201, ))
         self.stop()
 
-    def test_create(self):
+    def test_create_snapshot(self):
         c = SnapshotClient()
         body = """
         {
@@ -40,10 +40,10 @@ class SnapshotClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 404]}
         )
-        c.create('test', 'test', body, callback=h_cb)
+        c.create_snapshot('test', 'test', body, callback=h_cb)
         self.wait()
 
-    def test_delete(self):
+    def test_delete_snapshot(self):
         c = SnapshotClient()
         h_cb = partial(
             self.handle_cb,
@@ -98,7 +98,7 @@ class SnapshotClientTest(AsyncTestCase):
         c.create_repository('test', body, callback=h_cb)
         self.wait()
 
-    def test_restore(self):
+    def test_restore_snapshot(self):
         c = SnapshotClient()
         body = """
         '{
@@ -114,16 +114,16 @@ class SnapshotClientTest(AsyncTestCase):
             self.handle_cb,
             **{'codes':[400, 404]}
         )
-        c.restore('test', 'test', body, callback=h_cb)
+        c.restore_snapshot('test', 'test', body, callback=h_cb)
         self.wait()
 
-    def test_status(self):
+    def test_snapshot_status(self):
         c = SnapshotClient()
         h_cb = partial(
             self.handle_cb,
             **{'codes':[400, 404]}
         )
-        c.status(callback=h_cb)
+        c.snapshot_status(callback=h_cb)
         self.wait()
 
     def test_verify_repository(self):
