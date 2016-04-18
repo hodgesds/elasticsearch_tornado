@@ -91,7 +91,7 @@ Simple use-case:
     @gen.coroutine
     def index(doc):
         p = partial(
-           c.index,
+           c.index_doc,
            'test_index',
            'test_doctype',
            serialize(doc),
@@ -103,7 +103,7 @@ Simple use-case:
     @gen.coroutine
     def get(doc_id):
         p = partial(
-           c.get,
+           c.get_doc,
            'test_index',
             doc_id,
         )

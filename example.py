@@ -11,7 +11,7 @@ c = EsClient()
 @gen.coroutine
 def index(doc):
     p = partial(
-       c.index,
+       c.index_doc,
        'test_index',
        'test_doctype',
        serialize(doc),
@@ -23,7 +23,7 @@ def index(doc):
 @gen.coroutine
 def get(doc_id):
     p = partial(
-       c.get,
+       c.get_doc,
        'test_index',
         doc_id,
     )
