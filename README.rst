@@ -36,12 +36,17 @@ Elasticsearch clusters. Here are a few handy commands:
 
     $ cat data.json
     { "index" : { "_index" : "test", "_type" : "type1", "_id" : "1" } }
-    { "field1" : "value1" }
+    { "user" : "foo", "age": 100 }
+    { "index" : { "_index" : "test", "_type" : "type1", "_id" : "2" } }
+    { "user" : "bar", "age": 99 }
 
     $ cat data.json | et index
     {"took":19,"errors":false,"items":[{"index":{"_index":"test","_type":"type1","_id":"1","_version":8,"_shards":{"total":2,"successful":1,"failed":0},"status":200}}]}
 
     # searching
+
+    $ et search -q 'age:99'
+    {"took":5,"timed_out":false,"_shards":{"total":8,"successful":8,"failed":0},"hits":{"total":2,"max_score":1.5108256,"hits":[{"_index":"test","_type":"type1","_id":"2","_score":1.5108256},{"_index":"test","_type":"test_type","_id":"2","_score":1.5108256,"_source":{ "user" : "bar", "age": 99 }}]}}
 
     # cat API
 
