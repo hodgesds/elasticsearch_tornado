@@ -861,43 +861,6 @@ class IndicesClient(BaseClient):
             callback = callback
         )
 
-    def status(self, index=None, params={}, callback=None, **kwargs):
-        """
-        Get a comprehensive status information of one or more indices.
-        `<http://elasticsearch.org/guide/reference/api/admin-indices-_/>`_
-
-        :arg index: A comma-separated list of index names; use `_all` or empty
-            string to perform the operation on all indices
-        :arg allow_no_indices: Whether to ignore if a wildcard indices
-            expression resolves into no concrete indices. (This includes `_all` string or
-            when no indices have been specified)
-        :arg expand_wildcards: Whether to expand wildcard expression to concrete indices
-            that are open, closed or both.
-        :arg ignore_indices: When performed on multiple indices, allows to
-            ignore `missing` ones, default u'none'
-        :arg ignore_unavailable: Whether specified concrete indices should be ignored
-            when unavailable (missing or closed)
-        :arg operation_threading: TODO: ?
-        :arg recovery: Return information about shard recovery
-        :arg snapshot: TODO: ?
-        :arg human: Whether to return time and byte values in human-readable format.
-        """
-
-        query_params = (
-            'allow_no_indices', 'expand_wildcards', 'ignore_indices',
-            'ignore_unavailable', 'operation_threading', 'recovery', 'snapshot',
-            'human',
-        )
-
-        params = self._filter_params(query_params, params)
-
-        url = self.mk_url(*[index, '_status'], **params)
-
-        self.client.fetch(
-            self.mk_req(url, method='GET', **kwargs),
-            callback = callback
-        )
-
     def stats(self, index=None, metric=None, params={}, callback=None, **kwargs):
         """
         Retrieve statistics on different operations happening on an index.

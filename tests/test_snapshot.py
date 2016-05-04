@@ -86,7 +86,6 @@ class SnapshotClientTest(AsyncTestCase):
             "type": "fs",
             "settings": {
                 "location": "/tmp/test",
-                "compress": true
             }
         }
 

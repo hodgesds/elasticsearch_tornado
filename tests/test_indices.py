@@ -335,11 +335,6 @@ class IndicesClientTest(AsyncTestCase):
         c.delete_warmer('test', 'test', callback=h_cb)
         self.wait()
 
-    def test_status(self):
-        c = IndicesClient()
-        c.status(callback=self.handle_cb)
-        self.wait()
-
     def test_stats(self):
         c = IndicesClient()
         c.stats(callback=self.handle_cb)
